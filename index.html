@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Análogos Terrestres · Colombia → Marte y Luna</title>
+  <meta name="description" content="Explorador interactivo de lugares de Colombia que funcionan como análogos de sitios de Marte y de bases lunares permanentes." />
+
+  <!-- Tipografía estilo NASA: Inter (texto) + DM Mono (datos técnicos) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet incluido en el proyecto (funciona sin CDN) -->
+  <link rel="stylesheet" href="lib/leaflet.css" />
+  <link rel="stylesheet" href="css/estilos.css" />
+</head>
+<body>
+  <header class="barra">
+    <div class="barra__marca">
+      <span class="barra__insignia" aria-hidden="true"></span>
+      <div>
+        <p class="sobretitulo">Reto · Análogos terrestres</p>
+        <h1>Colombia como laboratorio de Marte y la Luna</h1>
+      </div>
+    </div>
+    <nav class="pestanas" role="tablist" aria-label="Cuerpo celeste">
+      <button class="pestana activa" role="tab" aria-selected="true" data-cuerpo="marte">Marte</button>
+      <button class="pestana" role="tab" aria-selected="false" data-cuerpo="luna">Luna</button>
+    </nav>
+  </header>
+
+  <main class="tablero">
+    <!-- 1. Mapa del cuerpo celeste -->
+    <section class="tarjeta tarjeta--planeta" aria-labelledby="titulo-planeta">
+      <div class="tarjeta__cabecera">
+        <p class="sobretitulo">Paso 1</p>
+        <h2 id="titulo-planeta">Elige un sitio en <span id="nombre-cuerpo">Marte</span></h2>
+      </div>
+      <div id="mapa-planeta" class="mapa" role="application" aria-label="Mapa interactivo del cuerpo celeste"></div>
+      <div id="aviso-planeta" class="aviso" hidden></div>
+      <article id="ficha-planeta" class="ficha ficha--vacia">
+        <p>Haz clic en un punto del mapa para ver por qué ese sitio es importante y cuáles lugares de Colombia se le parecen.</p>
+      </article>
+    </section>
+
+    <!-- 2. Mapa de Colombia -->
+    <section class="tarjeta tarjeta--colombia" aria-labelledby="titulo-colombia">
+      <div class="tarjeta__cabecera">
+        <p class="sobretitulo">Paso 2</p>
+        <h2 id="titulo-colombia">Análogos en Colombia</h2>
+      </div>
+      <div id="mapa-colombia" class="mapa" role="application" aria-label="Mapa interactivo de Colombia"></div>
+      <div class="leyenda" id="leyenda" aria-label="Leyenda de similitud"></div>
+      <ol id="ranking" class="ranking" aria-label="Ranking de análogos"></ol>
+    </section>
+
+    <!-- 3. Panel de detalle -->
+    <aside class="tarjeta tarjeta--detalle" aria-labelledby="titulo-detalle">
+      <div class="tarjeta__cabecera">
+        <p class="sobretitulo">Paso 3</p>
+        <h2 id="titulo-detalle">Detalle del análogo</h2>
+      </div>
+      <article id="detalle" class="ficha ficha--vacia">
+        <p>Selecciona un lugar de Colombia en el mapa o en el ranking.</p>
+      </article>
+    </aside>
+  </main>
+
+  <section class="metodologia" id="metodologia">
+    <div class="metodologia__col">
+      <p class="sobretitulo">Metodología</p>
+      <h2>¿Cómo medimos la similitud?</h2>
+      <p>Cada sitio (de Marte, la Luna o Colombia) tiene un puntaje de 0 a 1 en varios criterios ambientales y geológicos. La similitud mide <strong>qué parte de lo que hace especial al sitio extraterrestre está presente en el lugar de Colombia</strong>:</p>
+      <p class="formula">similitud = Σ w<sub>k</sub> · min(E<sub>k</sub>, C<sub>k</sub>) ÷ Σ w<sub>k</sub> · E<sub>k</sub></p>
+      <p class="nota">E = sitio extraterrestre, C = lugar en Colombia, w = peso del criterio. Los puntajes actuales son <strong>preliminares</strong> y deben ajustarse con la investigación del equipo.</p>
+    </div>
+    <div class="metodologia__col">
+      <h3>Criterios y pesos</h3>
+      <ul id="lista-criterios" class="criterios"></ul>
+    </div>
+  </section>
+
+  <footer class="pie">
+    <p>Proyecto educativo. Mapas base: © OpenStreetMap, © CARTO, OpenPlanetary / USGS. Las imágenes pertenecen a sus autores (ver crédito en cada ficha).</p>
+  </footer>
+
+  <script src="lib/leaflet.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/similitud.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

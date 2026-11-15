@@ -1,0 +1,127 @@
+{
+  "_nota": "nivel: 'principal' (ficha completa) o 'secundario' (descripción corta + enlace). Atributos 0-1 y datos son PRELIMINARES: verificar con fuentes.",
+  "lugares": [
+    {
+      "id": "tatacoa",
+      "nombre": "Desierto de la Tatacoa",
+      "nivel": "principal",
+      "departamento": "Huila",
+      "lat": 3.23, "lon": -75.17,
+      "resumen": "Bosque seco tropical con paisaje de cárcavas rojas y grises, muy erosionado.",
+      "porque": "Sus capas de sedimentos y arcillas expuestas por erosión se parecen a los depósitos estratificados de cráteres como Gale o Jezero. Es un buen lugar para probar rovers, instrumentos y protocolos de muestreo.",
+      "datos": [
+        { "etiqueta": "Tipo de ambiente", "valor": "Bosque seco tropical / zona árida" },
+        { "etiqueta": "Rasgos clave", "valor": "Cárcavas, sedimentos fosilíferos, arcillas" },
+        { "etiqueta": "Uso como análogo", "valor": "Pruebas de rovers y geología sedimentaria" }
+      ],
+      "atributos": { "aridez": 0.8, "sedimentos": 0.9, "arcillas": 0.7, "sulfatos": 0.2, "sales": 0.2, "frio": 0 },
+      "imagen": "img/colombia/tatacoa.jpg",
+      "credito_imagen": "",
+      "fuentes": [{ "titulo": "Wikipedia: Desierto de la Tatacoa", "url": "https://es.wikipedia.org/wiki/Desierto_de_la_Tatacoa" }]
+    },
+    {
+      "id": "zipaquira",
+      "nombre": "Mina de sal de Zipaquirá",
+      "nivel": "principal",
+      "departamento": "Cundinamarca",
+      "lat": 5.019, "lon": -74.012,
+      "resumen": "Mina subterránea de halita (sal) donde está la Catedral de Sal.",
+      "porque": "Combina depósitos de sal, comparables con los depósitos de cloruros de Marte, con un ambiente subterráneo cerrado, útil para simular hábitats en tubos de lava y estudiar microorganismos que viven en sal.",
+      "datos": [
+        { "etiqueta": "Tipo de ambiente", "valor": "Subterráneo, hipersalino" },
+        { "etiqueta": "Rasgos clave", "valor": "Halita, galerías, oscuridad, humedad estable" },
+        { "etiqueta": "Uso como análogo", "valor": "Hábitats subterráneos, astrobiología de sales" }
+      ],
+      "atributos": { "sales": 1, "subterraneo": 1, "sulfatos": 0.4, "sedimentos": 0.5, "arcillas": 0.3, "frio": 0.2 },
+      "imagen": "img/colombia/zipaquira.jpg",
+      "credito_imagen": "",
+      "fuentes": [{ "titulo": "Wikipedia: Catedral de Sal de Zipaquirá", "url": "https://es.wikipedia.org/wiki/Catedral_de_Sal_de_Zipaquir%C3%A1" }]
+    },
+    {
+      "id": "guajira",
+      "nombre": "Alta Guajira",
+      "nivel": "principal",
+      "departamento": "La Guajira",
+      "lat": 12.2, "lon": -72.0,
+      "resumen": "El desierto más extenso de Colombia, con dunas, llanuras secas y salinas costeras (Manaure).",
+      "porque": "La aridez, la radiación solar intensa, los suelos pobres y las salinas evaporíticas lo hacen análogo de llanuras secas y depósitos salinos de Marte.",
+      "datos": [
+        { "etiqueta": "Tipo de ambiente", "valor": "Desierto costero cálido" },
+        { "etiqueta": "Rasgos clave", "valor": "Dunas, salinas, viento constante, alta radiación" },
+        { "etiqueta": "Uso como análogo", "valor": "Pruebas de energía solar, polvo y evaporitas" }
+      ],
+      "atributos": { "aridez": 1, "sales": 0.7, "sedimentos": 0.7, "sulfatos": 0.3, "arcillas": 0.4 },
+      "imagen": "img/colombia/guajira.jpg",
+      "credito_imagen": "",
+      "fuentes": [{ "titulo": "Wikipedia: Península de La Guajira", "url": "https://es.wikipedia.org/wiki/Pen%C3%ADnsula_de_La_Guajira" }]
+    },
+    {
+      "id": "candelaria",
+      "nombre": "Desierto de la Candelaria",
+      "nivel": "secundario",
+      "departamento": "Boyacá",
+      "lat": 5.53, "lon": -73.65,
+      "resumen": "Zona semiárida cerca de Ráquira con suelos erosionados y arcillosos.",
+      "porque": "Erosión y arcillas expuestas en clima de altura.",
+      "atributos": { "aridez": 0.6, "sedimentos": 0.7, "arcillas": 0.6, "frio": 0.3 },
+      "imagen": "img/colombia/candelaria.jpg",
+      "credito_imagen": "",
+      "fuentes": []
+    },
+    {
+      "id": "ruiz",
+      "nombre": "Nevado del Ruiz",
+      "nivel": "secundario",
+      "departamento": "Caldas / Tolima",
+      "lat": 4.892, "lon": -75.322,
+      "resumen": "Volcán activo con glaciar, en el Parque Nacional Natural Los Nevados.",
+      "porque": "Hielo sobre roca volcánica, frío, altitud y fumarolas: interacción hielo-volcán similar a la propuesta para algunas regiones de Marte.",
+      "atributos": { "hielo": 0.8, "frio": 0.9, "volcanico": 1, "hidrotermal": 0.7, "sulfatos": 0.5 },
+      "imagen": "img/colombia/ruiz.jpg",
+      "credito_imagen": "",
+      "fuentes": [
+        { "titulo": "Artículo (Icarus, ScienceDirect)", "url": "https://www.sciencedirect.com/science/article/abs/pii/S0019103525003318" },
+        { "titulo": "Wikipedia: Nevado del Ruiz", "url": "https://es.wikipedia.org/wiki/Nevado_del_Ruiz" }
+      ]
+    },
+    {
+      "id": "tolima",
+      "nombre": "Nevado del Tolima",
+      "nivel": "secundario",
+      "departamento": "Tolima",
+      "lat": 4.658, "lon": -75.33,
+      "resumen": "Volcán glaciado en el PNN Los Nevados.",
+      "porque": "Hielo, frío y suelos volcánicos de alta montaña.",
+      "atributos": { "hielo": 0.7, "frio": 0.9, "volcanico": 0.8, "hidrotermal": 0.3 },
+      "imagen": "img/colombia/tolima.jpg",
+      "credito_imagen": "",
+      "fuentes": [{ "titulo": "Wikipedia: Nevado del Tolima", "url": "https://es.wikipedia.org/wiki/Nevado_del_Tolima" }]
+    },
+    {
+      "id": "gorgona",
+      "nombre": "Isla Gorgona",
+      "nivel": "secundario",
+      "departamento": "Cauca",
+      "lat": 2.97, "lon": -78.18,
+      "resumen": "Isla del Pacífico famosa por sus komatiitas, lavas ultramáficas muy raras.",
+      "porque": "Las komatiitas se formaron a temperaturas muy altas, como lavas antiguas de otros planetas.",
+      "atributos": { "volcanico": 0.6, "hidrotermal": 0.2 },
+      "imagen": "img/colombia/gorgona.jpg",
+      "credito_imagen": "",
+      "fuentes": [{ "titulo": "Wikipedia: Isla Gorgona", "url": "https://es.wikipedia.org/wiki/Isla_Gorgona" }]
+    },
+    {
+      "id": "paipa",
+      "nombre": "Aguas termales de Paipa",
+      "nivel": "secundario",
+      "departamento": "Boyacá",
+      "lat": 5.78, "lon": -73.12,
+      "resumen": "Manantiales termales ricos en sales y sulfatos.",
+      "porque": "Los sistemas hidrotermales son candidatos a haber albergado vida en Marte antiguo.",
+      "atributos": { "hidrotermal": 1, "sales": 0.6, "sulfatos": 0.5, "frio": 0.2 },
+      "imagen": "img/colombia/paipa.jpg",
+      "credito_imagen": "",
+      "fuentes": []
+    }
+  ]
+}
