@@ -10,6 +10,12 @@
       "lon": -75.17,
       "resumen": "Tropical dry forest with a heavily eroded landscape of red and gray gullies.",
       "porque": "Its layers of sediments and clays exposed by erosion resemble the stratified deposits of craters such as Gale or Jezero. It is a good place to test rovers, instruments and sampling protocols.",
+      "citas": [
+        {
+          "ref": "bolivar2026",
+          "nota": "Proposed as a Mars analog by Bolivar-Torres et al. (2026), for its geomorphology and climate."
+        }
+      ],
       "datos": [
         {
           "etiqueta": "Environment type",
@@ -79,6 +85,12 @@
       "lon": -74.01,
       "resumen": "Underground halite (rock salt) mine that houses the Salt Cathedral.",
       "porque": "It combines salt deposits, comparable to the chloride deposits on Mars, with an enclosed underground environment, useful for simulating lava-tube habitats and studying salt-loving microorganisms.",
+      "citas": [
+        {
+          "ref": "bolivar2026",
+          "nota": "Listed as an extreme (hypersaline) environment for future astrobiology studies by Bolivar-Torres et al. (2026)."
+        }
+      ],
       "datos": [
         {
           "etiqueta": "Environment type",
@@ -149,6 +161,12 @@
       "lon": -71.73,
       "resumen": "Colombia's largest desert, with dunes, dry plains and coastal salt flats (Manaure).",
       "porque": "Aridity, intense sunlight, poor soils and evaporite salt flats make it an analog of the dry plains and salt deposits of Mars.",
+      "citas": [
+        {
+          "ref": "bolivar2026",
+          "nota": "Proposed as a Mars analog by Bolivar-Torres et al. (2026): gypsum substrate and wind-eroded yardangs compared with Gale Crater and Meridiani Planum. The Manaure saltern is also listed as an extreme environment."
+        }
+      ],
       "datos": [
         {
           "etiqueta": "Environment type",
@@ -218,6 +236,12 @@
       "lon": -73.63,
       "resumen": "Semi-arid area near Ráquira with eroded, clay-rich soils.",
       "porque": "Erosion and exposed clays in a high-altitude climate.",
+      "citas": [
+        {
+          "ref": "bolivar2026",
+          "nota": "Described as a potential analog location by Bolivar-Torres et al. (2026), with endolithic microbes in a semi-arid setting."
+        }
+      ],
       "atributos": {
         "sedimentos": 0.7,
         "arcillas": 0.6
@@ -271,6 +295,12 @@
       "lon": -75.32,
       "resumen": "Active glacier-capped volcano in Los Nevados National Park.",
       "porque": "Ice over volcanic rock, cold, altitude and fumaroles: an ice-volcano interaction similar to the one proposed for some regions of Mars.",
+      "citas": [
+        {
+          "ref": "leal2026",
+          "nota": "Proposed as a Mars analog by Leal et al. (2026): biogeochemistry of its periglacial slopes."
+        }
+      ],
       "atributos": {
         "hielo": 0.8,
         "volcanico": 1,
@@ -316,10 +346,6 @@
           "url": "https://www.parquesnacionales.gov.co/portal/es/parques-nacionales/parque-nacional-natural-los-nevados/"
         },
         {
-          "titulo": "Scientific article (Icarus, 2025)",
-          "url": "https://www.sciencedirect.com/science/article/abs/pii/S0019103525003318"
-        },
-        {
           "titulo": "NASA POWER · climate 2020–2026",
           "url": "https://power.larc.nasa.gov/"
         },
@@ -338,6 +364,12 @@
       "lon": -75.33,
       "resumen": "Glaciated volcano in Los Nevados National Park.",
       "porque": "Ice, cold and high-mountain volcanic soils.",
+      "citas": [
+        {
+          "ref": "bolivar2026",
+          "nota": "Los Nevados National Park is cited as a Mars analog for its multiple extremophile conditions by Bolivar-Torres et al. (2026)."
+        }
+      ],
       "atributos": {
         "hielo": 0.7,
         "volcanico": 0.8,
@@ -396,6 +428,12 @@
       "lon": -78.18,
       "resumen": "Pacific island known for its komatiites, very rare ultramafic lavas.",
       "porque": "Komatiites formed at very high temperatures, like ancient lavas on other planets.",
+      "citas": [
+        {
+          "ref": "tovar2026",
+          "nota": "Proposed as a terrestrial analog of Syrtis Major (Mars) by Tovar et al. (2026), based on geochemical meta-analyses and compositional figures of merit."
+        }
+      ],
       "atributos": {
         "volcanico": 0.6,
         "hidrotermal": 0.2
@@ -453,6 +491,12 @@
       "lon": -73.11,
       "resumen": "Hot springs rich in salts and sulfates.",
       "porque": "Hydrothermal systems are candidates for having hosted life on ancient Mars.",
+      "citas": [
+        {
+          "ref": "bolivar2026",
+          "nota": "Described as the most studied geothermal site in Colombia's Eastern Cordillera, with thermophilic microbes, by Bolivar-Torres et al. (2026)."
+        }
+      ],
       "atributos": {
         "hidrotermal": 1,
         "sales": 0.6,
@@ -497,6 +541,50 @@
           "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
         }
       ]
+    }
+  ],
+  "referencias": [
+    {
+      "id": "bolivar2026",
+      "corta": "Bolivar-Torres et al. (2026)",
+      "tipo": "paper",
+      "texto": "Bolivar-Torres HH, Suárez-Valencia JE, Ramos-Madrigal C, et al. Extreme environments of Latin America: natural laboratories for astrobiology. International Journal of Astrobiology. 2026;25:e10.",
+      "doi": "10.1017/S1473550426100330"
+    },
+    {
+      "id": "leal2026",
+      "corta": "Leal et al. (2026)",
+      "tipo": "paper",
+      "texto": "Leal MA, Tovar D, de Pablo MA, Bonilla MA, Bolaños J, Ruíz E, Sánchez J, Buitrago J, Leone G, Tchegliakova N, Molina A, San Martín J, Chacón Z, Abrevaya X, Vélez F, Torres A, Reyes R, Cancino-Escalante G, Acevedo-Barrios R. Biogeochemical study of the periglacial slopes of the Nevado del Ruíz volcano (Colombia) as a terrestrial analog of Mars. Icarus. 2026;443:116783.",
+      "doi": "10.1016/j.icarus.2025.116783"
+    },
+    {
+      "id": "tovar2026",
+      "corta": "Tovar et al. (2026)",
+      "tipo": "paper",
+      "texto": "Tovar D, Leal MA, de Pablo MA, San Martin-Lobos J, Tchegliakova N, Vélez F, Molina A, Leone G, Sánchez J, Torres A, Bonilla MA, Acevedo-Barrios R, Cancino-Escalante G. Gorgona Island (Colombia) as a terrestrial analog of Syrtis Major (Mars): Evidence from geochemical meta-analyses and compositional figures of merit. Icarus. 2026;456:117133.",
+      "doi": "10.1016/j.icarus.2026.117133"
+    },
+    {
+      "id": "power",
+      "corta": "NASA POWER Project",
+      "tipo": "datos",
+      "texto": "NASA POWER Project. Prediction Of Worldwide Energy Resources (POWER), NASA Langley Research Center. Parameters T2M, T2M_MAX, T2M_MIN, RH2M, ALLSKY_SFC_SW_DWN, PRECTOTCORR; monthly averages 2020–2026.",
+      "url": "https://power.larc.nasa.gov/"
+    },
+    {
+      "id": "mod11a2",
+      "corta": "Wan, Hook & Hulley (MOD11A2 v061)",
+      "tipo": "datos",
+      "texto": "Wan Z, Hook S, Hulley G. MODIS/Terra Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V061 (MOD11A2). NASA EOSDIS Land Processes Distributed Active Archive Center (LP DAAC).",
+      "doi": "10.5067/MODIS/MOD11A2.061"
+    },
+    {
+      "id": "appeears",
+      "corta": "AppEEARS Team (2026)",
+      "tipo": "datos",
+      "texto": "AppEEARS Team. Application for Extracting and Exploring Analysis Ready Samples (AppEEARS). NASA EOSDIS Land Processes Distributed Active Archive Center (LP DAAC), 2026.",
+      "url": "https://appeears.earthdatacloud.nasa.gov/"
     }
   ],
   "cita_datos": "NASA POWER Project; Wan, Z., Hook, S., Hulley, G. MOD11A2 v061, NASA LP DAAC; AppEEARS Team (2026), NASA LP DAAC."

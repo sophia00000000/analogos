@@ -216,6 +216,29 @@ code { font-family: var(--mono); font-size: 0.85em; color: var(--tenue); }
 }
 .cita { font-style: italic; }
 
+/* ---------- citations and references ---------- */
+.cita-sitio {
+  font-size: 0.85rem; border-left: 3px solid var(--azul-claro);
+  background: var(--superficie-2); padding: 6px 10px; border-radius: 0 var(--radio) var(--radio) 0;
+}
+.cita-sitio a { white-space: nowrap; margin-left: 4px; }
+.cita-sitio__num { font-family: var(--mono); }
+.cita-sitio--vacia { border-left-color: var(--borde); color: var(--tenue); }
+.referencias {
+  margin: 18px 28px 0; padding: 28px; background: var(--superficie);
+  border: 1px solid var(--borde); border-top: 3px solid var(--rojo); border-radius: var(--radio);
+}
+.referencias h2 { font-size: 1.4rem; margin-bottom: 10px; }
+.referencias__lista { margin: 12px 0 0; padding-left: 22px; }
+.referencias__lista li { margin-bottom: 10px; font-size: 0.9rem; line-height: 1.5; scroll-margin-top: 16px; }
+.referencias__lista li:target { background: rgba(79,156,249,.12); outline: 1px solid var(--azul-claro); }
+.referencias__lista a { word-break: break-all; }
+.referencias__uso { display: block; font-family: var(--mono); font-size: 0.72rem; color: var(--tenue); }
+.nota-ia {
+  margin: 18px 28px 0; padding: 12px 16px; font-size: 0.85rem; color: var(--texto);
+  background: rgba(11,61,145,.25); border: 1px solid var(--azul); border-radius: var(--radio);
+}
+
 /* ---------- methodology and footer ---------- */
 .lista-metodo { font-family: var(--mono); font-size: 0.82rem; color: var(--azul-claro); padding-left: 18px; }
 .lista-metodo li { margin-bottom: 4px; }
@@ -287,5 +310,7 @@ code { font-family: var(--mono); font-size: 0.85em; color: var(--tenue); }
   .tablero { grid-template-columns: 1fr; }
   .mapa, .tarjeta--colombia .mapa { height: 360px; }
   .metodologia { grid-template-columns: 1fr; margin: 10px 14px 0; padding: 20px; }
+  .referencias { margin: 14px 14px 0; padding: 20px; }
+  .nota-ia { margin: 14px 14px 0; }
 }
 @media (prefers-reduced-motion: reduce) { .pin--activo { animation: none; } }

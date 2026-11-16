@@ -61,6 +61,14 @@ def main():
     for l in col:
         revisar(l, modelo, errores, es_colombia=True)
 
+    refs = {r["id"] for r in cargar_json("data/colombia.json").get("referencias", [])}
+    for l in col:
+        for c in l.get("citas", []):
+            if c.get("ref") not in refs:
+                errores.append(f"{l['id']}: citation '{c.get('ref')}' not found in 'referencias'")
+        if not l.get("citas"):
+            print(f"  (warning) no analog reference cited for: {l['nombre']}")
+
     print("\nMissing measurements (null):")
     for l in col:
         faltan = [k for k in MEDIDOS if (l.get("medidos") or {}).get(k) is None]

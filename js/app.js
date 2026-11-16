@@ -6,6 +6,7 @@
     sitios: [],           // Mars sites
     lugares: [],          // Colombian places
     citaDatos: "",        // citation for the measured data sources
+    referencias: [],      // reference list (papers and datasets)
     sitio: null,          // selected Mars site
     lugar: null,          // selected Colombian place
     perfilManual: null,   // null = use the site's profile; "ciencia" | "base" = chosen by the user
@@ -48,6 +49,7 @@
       estado.sitios = extra.marte;
       estado.lugares = col.lugares;
       estado.citaDatos = col.cita_datos || "";
+      estado.referencias = col.referencias || [];
     } catch (err) {
       console.error(err);
       document.body.insertAdjacentHTML(
@@ -62,6 +64,7 @@
     crearMapaPlaneta();
     pintarLeyenda();
     pintarMetodologia();
+    pintarReferencias();
     pintarSelectorPerfil();
     pintarRanking();
 
@@ -374,11 +377,44 @@
         ${bloqueSim}
         <p>${esc(l.resumen)}</p>
         <p class="tenue">${esc(l.porque)}</p>
+        ${citasHTML(l.citas)}
         ${datos ? `<dl class="datos">${datos}</dl>` : ""}
         ${medidosHTML(l)}
         <p class="sobretitulo">Further reading</p>
         ${fuentesHTML(l.fuentes)}
       </div>`;
+  }
+
+  const enlaceRef = (r) => (r.doi ? `https://doi.org/${r.doi}` : r.url);
+  const numeroRef = (id) => estado.referencias.findIndex((r) => r.id === id) + 1;
+
+  /** "Scientific basis" block: which paper proposes this place as an analog. */
+  function citasHTML(citas) {
+    const items = (citas || []).filter((c) => numeroRef(c.ref) > 0);
+    const cuerpo = items.length
+      ? items.map((c) => {
+          const r = estado.referencias[numeroRef(c.ref) - 1];
+          return `<p class="cita-sitio">${esc(c.nota)}
+            <a href="#ref-${esc(r.id)}" class="cita-sitio__num">[${numeroRef(c.ref)}]</a>
+            <a href="${esc(enlaceRef(r))}" target="_blank" rel="noopener">${r.doi ? "doi:" + esc(r.doi) : "link"} ↗</a></p>`;
+        }).join("")
+      : `<p class="cita-sitio cita-sitio--vacia">No peer-reviewed analog study cited yet for this place.</p>`;
+    return `<p class="sobretitulo">Scientific basis</p>${cuerpo}`;
+  }
+
+  function pintarReferencias() {
+    const lista = $("#lista-referencias");
+    if (!lista) return;
+    lista.innerHTML = estado.referencias
+      .map((r) => {
+        const usadoEn = estado.lugares.filter((l) => (l.citas || []).some((c) => c.ref === r.id)).map((l) => l.nombre);
+        const enlace = r.doi
+          ? `<a href="https://doi.org/${esc(r.doi)}" target="_blank" rel="noopener">doi:${esc(r.doi)}</a>`
+          : `<a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.url)}</a>`;
+        return `<li id="ref-${esc(r.id)}">${esc(r.texto)} ${enlace}
+          ${usadoEn.length ? `<span class="referencias__uso">Cited for: ${esc(usadoEn.join(", "))}.</span>` : `<span class="referencias__uso">Measured data source.</span>`}</li>`;
+      })
+      .join("");
   }
 
   /** "Measured data" table (NASA POWER and NASA MODIS). */
