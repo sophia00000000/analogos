@@ -1,5 +1,5 @@
-"""Utilidades compartidas: lee el modelo de js/config.js y calcula la similitud
-igual que js/similitud.js (para que Python y la página den los mismos números)."""
+"""Shared utilities: reads the model from js/config.js and computes similarity
+exactly like js/similitud.js (so Python and the web page give the same numbers)."""
 import json
 import re
 from pathlib import Path
@@ -11,7 +11,7 @@ def cargar_modelo():
     texto = (RAIZ / "js/config.js").read_text(encoding="utf-8")
     m = re.search(r"/\*MODELO-INICIO\*/(.*?)/\*MODELO-FIN\*/", texto, re.S)
     if not m:
-        raise SystemExit("No se encontró el bloque MODELO-INICIO / MODELO-FIN en js/config.js")
+        raise SystemExit("MODELO-INICIO / MODELO-FIN block not found in js/config.js")
     return json.loads(m.group(1))
 
 
@@ -20,8 +20,8 @@ def cargar_json(ruta):
 
 
 def valores_colombia(lugar, modelo):
-    """Une 'atributos' (geología) y 'atributos_operativos' (datos medidos).
-    Un criterio geológico ausente vale 0; uno operativo ausente o null es None (sin dato)."""
+    """Merges 'atributos' (geology) and 'atributos_operativos' (measured data).
+    A missing geological criterion counts as 0; a missing or null measured one is None (no data)."""
     v = {}
     for clave, c in modelo["criterios"].items():
         if c["fuente"] == "operativos":
@@ -32,8 +32,8 @@ def valores_colombia(lugar, modelo):
 
 
 def similitud(sitio, lugar, perfil, modelo):
-    """Σ w·min(E,C) / Σ w·E, excluyendo criterios con C = null.
-    Devuelve (valor, usados, disponibles). disponibles = criterios con w > 0 y E > 0."""
+    """Σ w·min(E,C) / Σ w·E, excluding criteria where C = null.
+    Returns (value, used, available). available = criteria with w > 0 and E > 0."""
     pesos = modelo["perfiles"][perfil]["pesos"]
     c_val = valores_colombia(lugar, modelo)
     num = den = 0.0

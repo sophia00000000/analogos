@@ -3,12 +3,12 @@
   "use strict";
 
   const estado = {
-    sitios: [],           // sitios de Marte
-    lugares: [],          // lugares de Colombia
-    citaDatos: "",        // cita de las fuentes de los datos medidos
-    sitio: null,          // sitio de Marte seleccionado
-    lugar: null,          // lugar de Colombia seleccionado
-    perfilManual: null,   // null = usar el perfil del sitio; "ciencia" | "base" = elegido por el usuario
+    sitios: [],           // Mars sites
+    lugares: [],          // Colombian places
+    citaDatos: "",        // citation for the measured data sources
+    sitio: null,          // selected Mars site
+    lugar: null,          // selected Colombian place
+    perfilManual: null,   // null = use the site's profile; "ciencia" | "base" = chosen by the user
     mapaPlaneta: null,
     capaSitios: null,
     mapaColombia: null,
@@ -23,7 +23,7 @@
   const pct = (v) => `${Math.round(v * 100)}%`;
   const nombrePerfil = (p) => CONFIG.perfiles[p].nombre;
 
-  /** Perfil activo: el elegido en el selector o, si no, el del sitio. */
+  /** Active profile: the one chosen in the selector or, otherwise, the site's own. */
   function perfilActivo() {
     return estado.perfilManual || (estado.sitio ? estado.sitio.perfil : "ciencia");
   }
@@ -32,13 +32,13 @@
     return estado.sitio ? Similitud.calcular(estado.sitio, lugar, perfilActivo(), CONFIG) : null;
   }
 
-  const textoCobertura = (r) => `calculado con ${r.usados} de ${r.disponibles} criterios`;
+  const textoCobertura = (r) => `computed with ${r.usados} of ${r.disponibles} criteria`;
   const avisoIncompleto = (r) =>
-    `Datos incompletos (${r.usados} de ${r.disponibles} criterios): faltan datos medidos de ` +
+    `Incomplete data (${r.usados} of ${r.disponibles} criteria): missing measured data for ` +
     r.faltantes.map((k) => CONFIG.criterios[k].nombre.toLowerCase()).join(", ") +
-    ". El porcentaje solo usa los criterios con dato y puede exagerar el parecido.";
+    ". The percentage only uses the criteria with data and may overstate the similarity.";
 
-  // ---------------------------------------------------------------- inicio
+  // ---------------------------------------------------------------- startup
   async function iniciar() {
     try {
       const [extra, col] = await Promise.all([
@@ -52,8 +52,8 @@
       console.error(err);
       document.body.insertAdjacentHTML(
         "afterbegin",
-        `<div class="error-carga">No se pudieron cargar los datos. Abre el proyecto con un servidor local
-         (<code>python -m http.server 8000</code>) en vez de hacer doble clic en index.html.</div>`
+        `<div class="error-carga">The data could not be loaded. Open the project through a local server
+         (<code>python -m http.server 8000</code>) instead of double-clicking index.html.</div>`
       );
       return;
     }
@@ -71,7 +71,7 @@
     leerEnlace();
   }
 
-  /** Enlace directo: index.html#sitio=gale&perfil=base&lugar=tatacoa */
+  /** Direct link: index.html#sitio=gale&perfil=base&lugar=tatacoa */
   function leerEnlace() {
     const p = new URLSearchParams(location.hash.slice(1));
     if (estado.sitios.some((s) => s.id === p.get("sitio"))) seleccionarSitio(p.get("sitio"));
@@ -88,7 +88,7 @@
     history.replaceState(null, "", hash ? "#" + hash : location.pathname + location.search);
   }
 
-  // ------------------------------------------------------- mapa de Colombia
+  // ------------------------------------------------------------ Colombia map
   function crearMapaColombia() {
     const cfg = CONFIG.colombia;
     const mapa = L.map("mapa-colombia", { zoomControl: true, minZoom: 4 }).setView(cfg.centro, cfg.zoom);
@@ -126,24 +126,24 @@
       const etiqueta = r === null
         ? esc(lugar.nombre)
         : `${esc(lugar.nombre)} · <b>${incompleto ? "⚠ " : ""}${pct(r.valor)}</b>`;
-      m.bindTooltip(etiqueta + (incompleto ? "<br><small>datos incompletos</small>" : ""), { direction: "top", offset: [0, -6] });
+      m.bindTooltip(etiqueta + (incompleto ? "<br><small>incomplete data</small>" : ""), { direction: "top", offset: [0, -6] });
       m.on("click", () => seleccionarLugar(lugar.id));
       m.addTo(estado.capaLugares);
       estado.marcadoresLugar[lugar.id] = m;
 
-      // Los lugares principales llevan una etiqueta permanente
+      // Main places get a permanent label
       if (lugar.nivel === "principal") m.bindTooltip(etiqueta, { permanent: true, direction: "right", className: "etiqueta-principal", offset: [10, 0] });
     });
   }
 
-  // ------------------------------------------------------------ mapa de Marte
+  // ---------------------------------------------------------------- Mars map
   function crearMapaPlaneta() {
     const cfgCuerpo = CONFIG.cuerpos.marte;
     const contenedor = $("#mapa-planeta");
     contenedor.style.background = cfgCuerpo.fondo;
 
-    // Proyección geográfica (EPSG:4326): coincide con los mosaicos de NASA Trek
-    // y muestra los polos.
+    // Geographic projection (EPSG:4326): matches the NASA Trek tiles
+    // and shows the poles.
     const mapa = L.map(contenedor, {
       crs: L.CRS.EPSG4326,
       zoomSnap: 0.25,
@@ -164,15 +164,15 @@
     pintarSitios();
   }
 
-  /** Prueba las fuentes de mapas en orden; si una falla, pasa a la siguiente. */
+  /** Tries the map sources in order; if one fails, moves on to the next. */
   function cargarFuente(mapa, cfgCuerpo, indice) {
     const aviso = $("#aviso-planeta");
     const fuente = cfgCuerpo.fuentes[indice];
     if (!fuente) {
       aviso.hidden = false;
       aviso.textContent =
-        "No se pudo cargar el mapa base de " + cfgCuerpo.nombre +
-        ". Se muestra una cuadrícula de coordenadas; los sitios siguen siendo interactivos.";
+        "The " + cfgCuerpo.nombre + " base map could not be loaded" +
+        ". A coordinate grid is shown instead; the sites are still interactive.";
       return;
     }
     aviso.hidden = true;
@@ -199,7 +199,7 @@
     const estilo = { color: "#ffffff", weight: 0.6, opacity: 0.25, interactive: false, dashArray: "2 4" };
     for (let lat = -60; lat <= 60; lat += 30) L.polyline([[lat, -540], [lat, 540]], estilo).addTo(mapa);
     for (let lon = -540; lon <= 540; lon += 30) L.polyline([[-90, lon], [90, lon]], estilo).addTo(mapa);
-    // Ecuador destacado
+    // Highlighted equator
     L.polyline([[0, -540], [0, 540]], { ...estilo, opacity: 0.45, dashArray: null }).addTo(mapa);
   }
 
@@ -221,10 +221,10 @@
     });
   }
 
-  // ------------------------------------------------------------- acciones
+  // ------------------------------------------------------------- actions
   function seleccionarSitio(id) {
     estado.sitio = estado.sitios.find((s) => s.id === id);
-    estado.perfilManual = null; // cada sitio arranca con su propio perfil
+    estado.perfilManual = null; // each site starts with its own profile
     pintarSitios();
     pintarFichaSitio();
     actualizarComparacion();
@@ -261,12 +261,12 @@
       <figure class="foto">
         <img src="${esc(src)}" alt="${esc(alt)}" loading="lazy"
              onerror="this.parentElement.classList.add('foto--falta'); this.remove();" />
-        ${credito ? `<figcaption>Imagen: ${esc(credito)}</figcaption>` : ""}
+        ${credito ? `<figcaption>Image: ${esc(credito)}</figcaption>` : ""}
       </figure>`;
   }
 
   function fuentesHTML(fuentes) {
-    if (!fuentes || !fuentes.length) return `<p class="nota">Fuentes pendientes.</p>`;
+    if (!fuentes || !fuentes.length) return `<p class="nota">Sources pending.</p>`;
     return `<ul class="fuentes">${fuentes
       .map((f) => `<li><a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.titulo)} ↗</a></li>`)
       .join("")}</ul>`;
@@ -281,12 +281,12 @@
     });
     const nota = $("#perfil-nota");
     if (!estado.sitio) {
-      nota.textContent = "Al elegir un sitio se usa su perfil; luego puedes compararlo con el otro.";
+      nota.textContent = "Choosing a site applies its profile; you can then compare it with the other one.";
     } else if (estado.perfilManual) {
-      nota.innerHTML = `Comparando ${esc(estado.sitio.nombre)} con el perfil <b>${esc(nombrePerfil(activo))}</b> ` +
-        `(su perfil propio es ${esc(nombrePerfil(estado.sitio.perfil))}).`;
+      nota.innerHTML = `Comparing ${esc(estado.sitio.nombre)} with the <b>${esc(nombrePerfil(activo))}</b> profile ` +
+        `(its own profile is ${esc(nombrePerfil(estado.sitio.perfil))}).`;
     } else {
-      nota.innerHTML = `Perfil activo: <b>${esc(nombrePerfil(activo))}</b> (el del sitio elegido).`;
+      nota.innerHTML = `Active profile: <b>${esc(nombrePerfil(activo))}</b> (the selected site's own).`;
     }
   }
 
@@ -301,7 +301,7 @@
       <div class="ficha__cuerpo">
         <p class="sobretitulo">${esc(s.uso)}</p>
         <h3>${esc(s.nombre)}</h3>
-        <p><span class="etiqueta-perfil etiqueta-perfil--${esc(s.perfil)}">Perfil: ${esc(nombrePerfil(s.perfil))}</span></p>
+        <p><span class="etiqueta-perfil etiqueta-perfil--${esc(s.perfil)}">Profile: ${esc(nombrePerfil(s.perfil))}</span></p>
         <p class="coordenadas">${latTexto} · ${lonTexto}</p>
         <p>${esc(s.resumen)}</p>
         <p class="tenue">${esc(s.porque)}</p>
@@ -312,10 +312,10 @@
   function pintarRanking() {
     const lista = $("#ranking");
     if (!estado.sitio) {
-      lista.innerHTML = `<li class="ranking__vacio">Elige un sitio en Marte para ordenar los análogos.</li>`;
+      lista.innerHTML = `<li class="ranking__vacio">Choose a site on Mars to rank the analogs.</li>`;
       return;
     }
-    // Los resultados con datos incompletos van al final para que no parezcan los mejores.
+    // Results with incomplete data go last so they do not look like the best ones.
     const filas = estado.lugares
       .map((l) => ({ l, r: sim(l) }))
       .sort((a, b) => (a.r.incompleto - b.r.incompleto) || (b.r.valor - a.r.valor));
@@ -327,8 +327,8 @@
         const titulo = r.incompleto ? avisoIncompleto(r) : textoCobertura(r);
         return `<li><button class="ranking__fila${activo}${inc}" data-id="${esc(l.id)}" title="${esc(titulo)}">
           <span class="punto" style="background:${cls.color}"></span>
-          <span class="ranking__nombre">${esc(l.nombre)}${l.nivel === "principal" ? ' <span class="chip">principal</span>' : ""}
-            <small class="ranking__cobertura">${r.incompleto ? "⚠ datos incompletos · " : ""}${r.usados} de ${r.disponibles} criterios</small></span>
+          <span class="ranking__nombre">${esc(l.nombre)}${l.nivel === "principal" ? ' <span class="chip">main</span>' : ""}
+            <small class="ranking__cobertura">${r.incompleto ? "⚠ incomplete data · " : ""}${r.usados} of ${r.disponibles} criteria</small></span>
           <span class="barra-sim"><span style="width:${pct(r.valor)};background:${cls.color}"></span></span>
           <span class="ranking__valor">${r.incompleto ? "⚠ " : ""}${pct(r.valor)}</span>
         </button></li>`;
@@ -342,7 +342,7 @@
     const d = $("#detalle");
     d.className = "ficha";
 
-    let bloqueSim = `<p class="nota">Elige un sitio en Marte para ver qué tan parecido es.</p>`;
+    let bloqueSim = `<p class="nota">Choose a site on Mars to see how similar this place is.</p>`;
     if (estado.sitio) {
       const r = sim(l);
       const cls = Similitud.clase(r.valor, CONFIG.clases);
@@ -353,12 +353,12 @@
           <div class="similitud__valor">${r.incompleto ? "⚠ " : ""}${pct(r.valor)}</div>
           <div>
             <p class="similitud__clase">${esc(cls.nombre)}</p>
-            <p class="tenue">frente a ${esc(estado.sitio.nombre)} · perfil ${esc(nombrePerfil(perfilActivo()))}</p>
+            <p class="tenue">vs. ${esc(estado.sitio.nombre)} · ${esc(nombrePerfil(perfilActivo()))} profile</p>
             <p class="tenue">${textoCobertura(r)}</p>
           </div>
         </div>
         ${r.incompleto ? `<p class="aviso-datos">⚠ ${esc(avisoIncompleto(r))}</p>` : ""}
-        ${aportes.length ? `<p class="sobretitulo">Lo que comparten</p>
+        ${aportes.length ? `<p class="sobretitulo">What they share</p>
           <ul class="aportes">${aportes.map((a) => `<li>${esc(a.nombre)}</li>`).join("")}</ul>` : ""}`;
     }
 
@@ -369,55 +369,55 @@
     d.innerHTML = `
       ${imagenHTML(l.imagen, l.nombre, l.credito_imagen)}
       <div class="ficha__cuerpo">
-        <p class="sobretitulo">${esc(l.departamento)} · ${l.nivel === "principal" ? "Investigación principal" : "Análogo secundario"}</p>
+        <p class="sobretitulo">${esc(l.departamento)} · ${l.nivel === "principal" ? "Main research site" : "Secondary analog"}</p>
         <h3>${esc(l.nombre)}</h3>
         ${bloqueSim}
         <p>${esc(l.resumen)}</p>
         <p class="tenue">${esc(l.porque)}</p>
         ${datos ? `<dl class="datos">${datos}</dl>` : ""}
         ${medidosHTML(l)}
-        <p class="sobretitulo">Para profundizar</p>
+        <p class="sobretitulo">Further reading</p>
         ${fuentesHTML(l.fuentes)}
       </div>`;
   }
 
-  /** Tabla "Datos medidos" (NASA POWER y NASA MODIS). */
+  /** "Measured data" table (NASA POWER and NASA MODIS). */
   function medidosHTML(l) {
     const m = l.medidos;
     if (!m) return "";
     const vacio = (v) => v === null || v === undefined;
     const num = (v, u, dec = 1) =>
-      vacio(v) ? "—" : `${Number(v).toFixed(dec).replace(".", ",")}${u ? " " + u : ""}`;
-    const pend = (v, u, dec = 0) => (vacio(v) ? "pendiente" : num(v, u, dec));
+      vacio(v) ? "—" : `${Number(v).toFixed(dec)}${u ? " " + u : ""}`;
+    const pend = (v, u, dec = 0) => (vacio(v) ? "pending" : num(v, u, dec));
     const conPercentil = (med, p) => (vacio(med) ? "—" : `${num(med, "°C")} (${num(p, "°C")})`);
     const grupos = [
-      ["Temperatura", [
-        ["Aire · media", num(m.t_aire_media, "°C")],
-        ["Aire · máx. / mín.", `${num(m.t_aire_max, "°C")} / ${num(m.t_aire_min, "°C")}`],
-        ["Superficie día · mediana (p95)", conPercentil(m.lst_dia_mediana, m.lst_dia_p95)],
-        ["Superficie noche · mediana (p5)", conPercentil(m.lst_noche_mediana, m.lst_noche_p5)],
-        ["Amplitud día-noche (superficie)", num(m.amplitud_termica, "°C")],
+      ["Temperature", [
+        ["Air · mean", num(m.t_aire_media, "°C")],
+        ["Air · max / min", `${num(m.t_aire_max, "°C")} / ${num(m.t_aire_min, "°C")}`],
+        ["Surface, day · median (p95)", conPercentil(m.lst_dia_mediana, m.lst_dia_p95)],
+        ["Surface, night · median (p5)", conPercentil(m.lst_noche_mediana, m.lst_noche_p5)],
+        ["Day-night range (surface)", num(m.amplitud_termica, "°C")],
       ]],
-      ["Humedad y radiación", [
-        ["Humedad relativa", num(m.humedad_relativa, "%", 0)],
-        ["Radiación solar (no entra al cálculo)", num(m.radiacion_kwh_m2_dia, "kWh/m²/día", 2)],
+      ["Humidity and radiation", [
+        ["Relative humidity", num(m.humedad_relativa, "%", 0)],
+        ["Solar radiation (not used in the score)", num(m.radiacion_kwh_m2_dia, "kWh/m²/day", 2)],
       ]],
-      ["Lluvia y erosión", [
-        ["Lluvia anual", num(m.lluvia_anual_mm, "mm", 0)],
-        ["Erosividad (Fournier mod.)", num(m.erosividad_mfi, "", 0)],
+      ["Rainfall and erosion", [
+        ["Annual rainfall", num(m.lluvia_anual_mm, "mm", 0)],
+        ["Erosivity (modified Fournier)", num(m.erosividad_mfi, "", 0)],
       ]],
-      ["Relieve", [
-        ["Elevación", pend(m.elevacion_m, "m")],
-        ["Pendiente media", pend(m.pendiente_media, "°", 1)],
-        ["Pendiente máx.", pend(m.pendiente_max, "°", 1)],
+      ["Topography", [
+        ["Elevation", pend(m.elevacion_m, "m")],
+        ["Mean slope", pend(m.pendiente_media, "°", 1)],
+        ["Max slope", pend(m.pendiente_max, "°", 1)],
       ]],
     ];
     const op = l.atributos_operativos || {};
     const opTxt = ["aridez", "frio", "ciclo_termico", "superficie_estable", "terreno_plano"]
-      .map((k) => `${CONFIG.criterios[k].nombre}: ${vacio(op[k]) ? "sin dato" : op[k].toFixed(2)}`)
+      .map((k) => `${CONFIG.criterios[k].nombre}: ${vacio(op[k]) ? "no data" : op[k].toFixed(2)}`)
       .join(" · ");
     return `
-      <p class="sobretitulo">Datos medidos</p>
+      <p class="sobretitulo">Measured data</p>
       <table class="medidos">
         ${grupos.map(([g, filas]) => `
           <tbody>
@@ -426,24 +426,24 @@
           </tbody>`).join("")}
       </table>
       ${l.notas_datos ? `<p class="aviso-datos">${esc(l.notas_datos)}</p>` : ""}
-      <p class="nota">Observaciones MODIS válidas: día ${num(m.pct_validos_dia, "%", 0)} · noche ${num(m.pct_validos_noche, "%", 0)}.
-        Aire, humedad, radiación y lluvia: NASA POWER, promedio 2020–2026 (celda ~50 km).
-        Superficie: NASA MODIS Terra MOD11A2 v061 (1 km), 2019–2026.</p>
-      <p class="nota"><b>Puntajes calculados (0–1):</b> ${esc(opTxt)}.</p>
-      ${estado.citaDatos ? `<p class="nota cita">Fuente: ${esc(estado.citaDatos)}</p>` : ""}`;
+      <p class="nota">Valid MODIS observations: day ${num(m.pct_validos_dia, "%", 0)} · night ${num(m.pct_validos_noche, "%", 0)}.
+        Air, humidity, radiation and rainfall: NASA POWER, 2020–2026 average (~50 km cell).
+        Surface: NASA MODIS Terra MOD11A2 v061 (1 km), 2019–2026.</p>
+      <p class="nota"><b>Computed scores (0–1):</b> ${esc(opTxt)}.</p>
+      ${estado.citaDatos ? `<p class="nota cita">Source: ${esc(estado.citaDatos)}</p>` : ""}`;
   }
 
   function pintarLeyenda() {
     $("#leyenda").innerHTML = CONFIG.clases
       .map((c) => `<span><i style="background:${c.color};width:${c.radio + 4}px;height:${c.radio + 4}px"></i>${esc(c.nombre)}</span>`)
-      .join("") + `<span><i class="leyenda__incompleto"></i>⚠ Datos incompletos</span>`;
+      .join("") + `<span><i class="leyenda__incompleto"></i>⚠ Incomplete data</span>`;
   }
 
   function pintarMetodologia() {
     const perfiles = Object.entries(CONFIG.perfiles);
-    const origen = (c) => (c.fuente === "operativos" ? "medido" : "geología");
+    const origen = (c) => (c.fuente === "operativos" ? "measured" : "geology");
     $("#tabla-pesos").innerHTML = `
-      <thead><tr><th>Criterio</th><th>Origen</th>${perfiles.map(([, p]) => `<th>${esc(p.nombre)}</th>`).join("")}</tr></thead>
+      <thead><tr><th>Criterion</th><th>Source</th>${perfiles.map(([, p]) => `<th>${esc(p.nombre)}</th>`).join("")}</tr></thead>
       <tbody>${Object.entries(CONFIG.criterios)
         .map(([k, c]) => `<tr><td>${esc(c.nombre)}</td><td class="tenue">${origen(c)}</td>${perfiles
           .map(([, p]) => `<td class="peso${p.pesos[k] ? "" : " peso--cero"}">${(p.pesos[k] || 0).toFixed(1)}</td>`)

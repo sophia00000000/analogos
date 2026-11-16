@@ -1,5 +1,5 @@
-/* Paleta inspirada en el sitio de la NASA: negro espacial, azul institucional,
-   rojo de acento y grises fríos. Tipografía: Inter + DM Mono. */
+/* Palette inspired by the NASA website: space black, institutional blue,
+   accent red and cool grays. Typography: Inter + DM Mono. */
 :root {
   --negro: #07090d;
   --fondo: #0b0d12;
@@ -46,7 +46,7 @@ code { font-family: var(--mono); font-size: 0.85em; color: var(--tenue); }
 .tenue { color: var(--tenue); }
 .nota { color: var(--tenue); font-size: 0.85rem; }
 
-/* ---------- barra superior ---------- */
+/* ---------- top bar ---------- */
 .barra {
   display: flex;
   align-items: center;
@@ -79,7 +79,7 @@ code { font-family: var(--mono); font-size: 0.85em; color: var(--tenue); }
 .pestana.activa { background: var(--rojo); color: #fff; }
 .pestana:focus-visible, .ranking__fila:focus-visible { outline: 2px solid var(--azul-claro); outline-offset: 2px; }
 
-/* ---------- tablero ---------- */
+/* ---------- dashboard ---------- */
 .tablero {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) 360px;
@@ -107,7 +107,7 @@ code { font-family: var(--mono); font-size: 0.85em; color: var(--tenue); }
 }
 .error-carga { background: var(--rojo); color: #fff; padding: 14px 28px; }
 
-/* ---------- fichas ---------- */
+/* ---------- cards ---------- */
 .ficha--vacia { padding: 18px 16px; color: var(--tenue); }
 .ficha__cuerpo { padding: 14px 16px 18px; }
 .coordenadas { font-family: var(--mono); font-size: 0.8rem; color: var(--azul-claro); }
@@ -144,7 +144,7 @@ code { font-family: var(--mono); font-size: 0.85em; color: var(--tenue); }
 .fuentes { margin: 0; padding-left: 18px; }
 .fuentes li { margin-bottom: 4px; font-size: 0.9rem; }
 
-/* ---------- leyenda y ranking ---------- */
+/* ---------- legend and ranking ---------- */
 .leyenda {
   display: flex; flex-wrap: wrap; gap: 14px; padding: 10px 16px;
   font-size: 0.8rem; color: var(--tenue); border-bottom: 1px solid var(--borde);
@@ -166,7 +166,7 @@ code { font-family: var(--mono); font-size: 0.85em; color: var(--tenue); }
 .barra-sim span { display: block; height: 100%; }
 .ranking__valor { font-family: var(--mono); text-align: right; color: var(--tenue); }
 
-/* ---------- selector de perfil ---------- */
+/* ---------- profile selector ---------- */
 .perfil {
   display: inline-flex; gap: 4px; margin-top: 10px;
   background: var(--superficie-2); padding: 3px; border-radius: var(--radio);
@@ -189,7 +189,7 @@ code { font-family: var(--mono); font-size: 0.85em; color: var(--tenue); }
 .etiqueta-perfil--base { color: var(--rojo); border-color: rgba(252,61,33,.5); }
 .etiqueta-perfil--ciencia { color: var(--azul-claro); border-color: rgba(79,156,249,.5); }
 
-/* ---------- datos incompletos ---------- */
+/* ---------- incomplete data ---------- */
 .ranking__nombre small, .ranking__cobertura {
   display: block; font-family: var(--mono); font-size: 0.68rem; color: var(--tenue);
 }
@@ -205,7 +205,7 @@ code { font-family: var(--mono); font-size: 0.85em; color: var(--tenue); }
   border: 1.5px dashed var(--tenue) !important;
 }
 
-/* ---------- tabla de datos medidos ---------- */
+/* ---------- measured data table ---------- */
 .medidos { width: 100%; border-collapse: collapse; margin: 4px 0 10px; font-size: 0.85rem; }
 .medidos th, .medidos td { padding: 4px 0; border-bottom: 1px solid var(--borde); text-align: left; vertical-align: top; }
 .medidos th[scope="row"] { font-weight: 400; color: var(--tenue); padding-right: 10px; }
@@ -216,7 +216,7 @@ code { font-family: var(--mono); font-size: 0.85em; color: var(--tenue); }
 }
 .cita { font-style: italic; }
 
-/* ---------- metodología y pie ---------- */
+/* ---------- methodology and footer ---------- */
 .lista-metodo { font-family: var(--mono); font-size: 0.82rem; color: var(--azul-claro); padding-left: 18px; }
 .lista-metodo li { margin-bottom: 4px; }
 .metodologia h3 { margin-top: 18px; }
@@ -241,7 +241,7 @@ code { font-family: var(--mono); font-size: 0.85em; color: var(--tenue); }
 .peso { font-family: var(--mono); color: var(--rojo); }
 .pie { padding: 22px 28px 30px; color: var(--tenue); font-size: 0.78rem; }
 
-/* ---------- Leaflet en tema oscuro ---------- */
+/* ---------- Leaflet dark theme ---------- */
 .leaflet-container { font-family: var(--sans); background: #1b1f27; }
 .leaflet-control-attribution { background: rgba(7,9,13,.75) !important; color: var(--tenue) !important; }
 .leaflet-control-attribution a { color: var(--azul-claro) !important; }
@@ -260,7 +260,7 @@ code { font-family: var(--mono); font-size: 0.85em; color: var(--tenue); }
 .leaflet-tooltip.etiqueta-principal::before { display: none; }
 .leaflet-control-scale-line { background: rgba(7,9,13,.7); color: var(--tenue); border-color: var(--tenue); }
 
-/* Pines del mapa planetario */
+/* Mars map pins */
 .pin {
   display: block; width: 22px; height: 22px; border-radius: 50%;
   background: rgba(252,61,33,.25); border: 2px solid var(--rojo);

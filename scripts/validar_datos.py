@@ -1,9 +1,9 @@
-"""Valida los JSON de data/ y muestra la matriz de similitud por perfil.
+"""Validates the JSON files in data/ and prints the similarity matrix per profile.
 
-Los criterios y pesos se leen del bloque MODELO de js/config.js, así que no hay
-que duplicarlos aquí. Correr después de scripts/calcular_atributos.py.
+Criteria and weights are read from the MODELO block in js/config.js, so they
+are not duplicated here. Run after scripts/calcular_atributos.py.
 
-Uso:  python scripts/validar_datos.py
+Usage:  python scripts/validar_datos.py
 """
 import sys
 from pathlib import Path
@@ -21,33 +21,33 @@ def revisar(sitio, modelo, errores, es_colombia):
     sid = sitio.get("id", "?")
     for campo in ("id", "nombre", "lat", "lon", "atributos"):
         if campo not in sitio:
-            errores.append(f"{sid}: falta '{campo}'")
+            errores.append(f"{sid}: missing '{campo}'")
     if not -90 <= sitio.get("lat", 0) <= 90 or not -180 <= sitio.get("lon", 0) <= 180:
-        errores.append(f"{sid}: coordenadas fuera de rango")
+        errores.append(f"{sid}: coordinates out of range")
     crit = modelo["criterios"]
     for k, v in sitio.get("atributos", {}).items():
         if k not in crit:
-            errores.append(f"{sid}: criterio desconocido '{k}'")
+            errores.append(f"{sid}: unknown criterion '{k}'")
         elif es_colombia and crit[k]["fuente"] == "operativos":
-            errores.append(f"{sid}: '{k}' es un criterio medido; va en 'atributos_operativos' (lo escribe calcular_atributos.py)")
+            errores.append(f"{sid}: '{k}' is a measured criterion; it belongs in 'atributos_operativos' (written by calcular_atributos.py)")
         if v is not None and not 0 <= v <= 1:
-            errores.append(f"{sid}: '{k}' debe estar entre 0 y 1")
+            errores.append(f"{sid}: '{k}' must be between 0 and 1")
     if es_colombia:
         op = sitio.get("atributos_operativos")
         if op is None:
-            errores.append(f"{sid}: falta 'atributos_operativos' (corre scripts/calcular_atributos.py)")
+            errores.append(f"{sid}: missing 'atributos_operativos' (run scripts/calcular_atributos.py)")
         else:
             for k, v in op.items():
                 if v is not None and not 0 <= v <= 1:
-                    errores.append(f"{sid}: atributo operativo '{k}' fuera de 0-1")
+                    errores.append(f"{sid}: measured attribute '{k}' outside 0-1")
         if "medidos" not in sitio:
-            errores.append(f"{sid}: falta 'medidos'")
+            errores.append(f"{sid}: missing 'medidos'")
     else:
         if sitio.get("perfil") not in modelo["perfiles"]:
-            errores.append(f"{sid}: 'perfil' debe ser uno de {list(modelo['perfiles'])}")
+            errores.append(f"{sid}: 'perfil' must be one of {list(modelo['perfiles'])}")
     imagen = sitio.get("imagen")
     if imagen and not (RAIZ / imagen).exists():
-        print(f"  (aviso) falta imagen: {imagen}")
+        print(f"  (warning) missing image: {imagen}")
 
 
 def main():
@@ -61,14 +61,14 @@ def main():
     for l in col:
         revisar(l, modelo, errores, es_colombia=True)
 
-    print("\nMediciones faltantes (null):")
+    print("\nMissing measurements (null):")
     for l in col:
         faltan = [k for k in MEDIDOS if (l.get("medidos") or {}).get(k) is None]
         print(f"  {l['nombre'][:27]:28} {', '.join(faltan) if faltan else '—'}")
 
     minimo = modelo["cobertura_minima"]
     for perfil, p in modelo["perfiles"].items():
-        print(f"\n=== PERFIL {p['nombre'].upper()} ===   (⚠ = datos incompletos, cobertura < {minimo:.0%})")
+        print(f"\n=== PROFILE {p['nombre'].upper()} ===   (⚠ = incomplete data, coverage < {minimo:.0%})")
         print(f"{'':28}" + "".join(f"{l['id'][:9]:>11}" for l in col))
         for s in marte:
             celdas = []
@@ -78,14 +78,14 @@ def main():
                 celdas.append(f"{marca}{v:>5.0%} {usados}/{disp}")
             propio = "*" if s.get("perfil") == perfil else " "
             print(f"{propio}{s['nombre'][:26]:27}" + "".join(f"{c:>11}" for c in celdas))
-        print("  * = perfil propio del sitio · n/m = criterios usados / disponibles")
+        print("  * = the site's own profile · n/m = criteria used / available")
 
     if errores:
-        print("\nERRORES:")
+        print("\nERRORS:")
         for e in errores:
             print(" -", e)
         sys.exit(1)
-    print("\nDatos válidos ✔")
+    print("\nData valid ✔")
 
 
 if __name__ == "__main__":

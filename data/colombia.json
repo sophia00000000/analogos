@@ -1,27 +1,27 @@
 {
-  "_nota": "nivel: 'principal' o 'secundario'. 'atributos' = criterios geológicos 0-1 asignados por el equipo (PRELIMINARES). 'medidos' = datos de data/datos_completos_8_sitios.xlsx (NASA POWER 2020-2026 y NASA MODIS MOD11A2 v061 vía AppEEARS); null = sin dato. 'atributos_operativos' los escribe scripts/calcular_atributos.py: no editarlos a mano.",
+  "_nota": "nivel: 'principal' (main) or 'secundario' (secondary). 'atributos' = geological criteria 0-1 assigned by the team (PRELIMINARY). 'medidos' = measured data from data/datos_completos_8_sitios.xlsx (NASA POWER 2020-2026 and NASA MODIS MOD11A2 v061 via AppEEARS); null = no data. 'atributos_operativos' is written by scripts/calcular_atributos.py: do not edit by hand.",
   "lugares": [
     {
       "id": "tatacoa",
-      "nombre": "Desierto de la Tatacoa",
+      "nombre": "Tatacoa Desert",
       "nivel": "principal",
       "departamento": "Huila",
       "lat": 3.23,
       "lon": -75.17,
-      "resumen": "Bosque seco tropical con paisaje de cárcavas rojas y grises, muy erosionado.",
-      "porque": "Sus capas de sedimentos y arcillas expuestas por erosión se parecen a los depósitos estratificados de cráteres como Gale o Jezero. Es un buen lugar para probar rovers, instrumentos y protocolos de muestreo.",
+      "resumen": "Tropical dry forest with a heavily eroded landscape of red and gray gullies.",
+      "porque": "Its layers of sediments and clays exposed by erosion resemble the stratified deposits of craters such as Gale or Jezero. It is a good place to test rovers, instruments and sampling protocols.",
       "datos": [
         {
-          "etiqueta": "Tipo de ambiente",
-          "valor": "Bosque seco tropical / zona árida"
+          "etiqueta": "Environment type",
+          "valor": "Tropical dry forest / arid zone"
         },
         {
-          "etiqueta": "Rasgos clave",
-          "valor": "Cárcavas, sedimentos fosilíferos, arcillas"
+          "etiqueta": "Key features",
+          "valor": "Gullies, fossil-bearing sediments, clays"
         },
         {
-          "etiqueta": "Uso como análogo",
-          "valor": "Pruebas de rovers y geología sedimentaria"
+          "etiqueta": "Use as an analog",
+          "valor": "Rover testing and sedimentary geology"
         }
       ],
       "atributos": {
@@ -61,36 +61,36 @@
       "credito_imagen": "",
       "fuentes": [
         {
-          "titulo": "NASA POWER · clima 2020–2026",
+          "titulo": "NASA POWER · climate 2020–2026",
           "url": "https://power.larc.nasa.gov/"
         },
         {
-          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
+          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (land surface temperature)",
           "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
         }
       ]
     },
     {
       "id": "zipaquira",
-      "nombre": "Mina de sal de Zipaquirá",
+      "nombre": "Zipaquirá Salt Mine",
       "nivel": "principal",
       "departamento": "Cundinamarca",
       "lat": 5.02,
       "lon": -74.01,
-      "resumen": "Mina subterránea de halita (sal) donde está la Catedral de Sal.",
-      "porque": "Combina depósitos de sal, comparables con los depósitos de cloruros de Marte, con un ambiente subterráneo cerrado, útil para simular hábitats en tubos de lava y estudiar microorganismos que viven en sal.",
+      "resumen": "Underground halite (rock salt) mine that houses the Salt Cathedral.",
+      "porque": "It combines salt deposits, comparable to the chloride deposits on Mars, with an enclosed underground environment, useful for simulating lava-tube habitats and studying salt-loving microorganisms.",
       "datos": [
         {
-          "etiqueta": "Tipo de ambiente",
-          "valor": "Subterráneo, hipersalino"
+          "etiqueta": "Environment type",
+          "valor": "Underground, hypersaline"
         },
         {
-          "etiqueta": "Rasgos clave",
-          "valor": "Halita, galerías, oscuridad, humedad estable"
+          "etiqueta": "Key features",
+          "valor": "Halite, tunnels, darkness, stable humidity"
         },
         {
-          "etiqueta": "Uso como análogo",
-          "valor": "Hábitats subterráneos, astrobiología de sales"
+          "etiqueta": "Use as an analog",
+          "valor": "Underground habitats, salt astrobiology"
         }
       ],
       "atributos": {
@@ -126,16 +126,16 @@
         "pendiente_media": null,
         "pendiente_max": null
       },
-      "notas_datos": "MODIS mide la superficie del pueblo, no el interior de la mina; su valor como análogo es el ambiente subterráneo estable.",
+      "notas_datos": "MODIS measures the surface of the town, not the inside of the mine; its value as an analog is the stable underground environment.",
       "imagen": "img/colombia/zipaquira.png",
       "credito_imagen": "",
       "fuentes": [
         {
-          "titulo": "NASA POWER · clima 2020–2026",
+          "titulo": "NASA POWER · climate 2020–2026",
           "url": "https://power.larc.nasa.gov/"
         },
         {
-          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
+          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (land surface temperature)",
           "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
         }
       ]
@@ -147,20 +147,20 @@
       "departamento": "La Guajira",
       "lat": 12.47,
       "lon": -71.73,
-      "resumen": "El desierto más extenso de Colombia, con dunas, llanuras secas y salinas costeras (Manaure).",
-      "porque": "La aridez, la radiación solar intensa, los suelos pobres y las salinas evaporíticas lo hacen análogo de llanuras secas y depósitos salinos de Marte.",
+      "resumen": "Colombia's largest desert, with dunes, dry plains and coastal salt flats (Manaure).",
+      "porque": "Aridity, intense sunlight, poor soils and evaporite salt flats make it an analog of the dry plains and salt deposits of Mars.",
       "datos": [
         {
-          "etiqueta": "Tipo de ambiente",
-          "valor": "Desierto costero cálido"
+          "etiqueta": "Environment type",
+          "valor": "Warm coastal desert"
         },
         {
-          "etiqueta": "Rasgos clave",
-          "valor": "Dunas, salinas, viento constante, alta radiación"
+          "etiqueta": "Key features",
+          "valor": "Dunes, salt flats, constant wind, high radiation"
         },
         {
-          "etiqueta": "Uso como análogo",
-          "valor": "Pruebas de energía solar, polvo y evaporitas"
+          "etiqueta": "Use as an analog",
+          "valor": "Testing solar power, dust and evaporites"
         }
       ],
       "atributos": {
@@ -195,29 +195,29 @@
         "pendiente_media": null,
         "pendiente_max": null
       },
-      "notas_datos": "El punto cae sobre el mar; MODIS sin datos. Pendiente reubicar tierra adentro.",
+      "notas_datos": "The sampling point falls over the sea, so there is no MODIS data. It still needs to be moved inland.",
       "imagen": "img/colombia/guajira.jpg",
-      "credito_imagen": "The magnificent sand dunes at Taroa in the Alta Guajira. Photo: María Claudia Peña.",
+      "credito_imagen": "The magnificent sand dunes at Taroa in the Alta Guajira. Photo: María Claudia Peña",
       "fuentes": [
         {
-          "titulo": "NASA POWER · clima 2020–2026",
+          "titulo": "NASA POWER · climate 2020–2026",
           "url": "https://power.larc.nasa.gov/"
         },
         {
-          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
+          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (land surface temperature)",
           "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
         }
       ]
     },
     {
       "id": "candelaria",
-      "nombre": "Desierto de la Candelaria",
+      "nombre": "La Candelaria Desert",
       "nivel": "secundario",
       "departamento": "Boyacá",
       "lat": 5.55,
       "lon": -73.63,
-      "resumen": "Zona semiárida cerca de Ráquira con suelos erosionados y arcillosos.",
-      "porque": "Erosión y arcillas expuestas en clima de altura.",
+      "resumen": "Semi-arid area near Ráquira with eroded, clay-rich soils.",
+      "porque": "Erosion and exposed clays in a high-altitude climate.",
       "atributos": {
         "sedimentos": 0.7,
         "arcillas": 0.6
@@ -253,11 +253,11 @@
       "credito_imagen": "",
       "fuentes": [
         {
-          "titulo": "NASA POWER · clima 2020–2026",
+          "titulo": "NASA POWER · climate 2020–2026",
           "url": "https://power.larc.nasa.gov/"
         },
         {
-          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
+          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (land surface temperature)",
           "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
         }
       ]
@@ -269,8 +269,8 @@
       "departamento": "Caldas / Tolima",
       "lat": 4.89,
       "lon": -75.32,
-      "resumen": "Volcán activo con glaciar, en el Parque Nacional Natural Los Nevados.",
-      "porque": "Hielo sobre roca volcánica, frío, altitud y fumarolas: interacción hielo-volcán similar a la propuesta para algunas regiones de Marte.",
+      "resumen": "Active glacier-capped volcano in Los Nevados National Park.",
+      "porque": "Ice over volcanic rock, cold, altitude and fumaroles: an ice-volcano interaction similar to the one proposed for some regions of Mars.",
       "atributos": {
         "hielo": 0.8,
         "volcanico": 1,
@@ -303,28 +303,28 @@
         "pendiente_media": null,
         "pendiente_max": null
       },
-      "notas_datos": "Temperatura del aire de POWER (celda ~50 km) promedia la región, no la cima; para frío se usa la temperatura de superficie MODIS.",
+      "notas_datos": "POWER air temperature (~50 km cell) averages the region, not the summit; cold is based on MODIS land surface temperature.",
       "imagen": "img/colombia/ruiz.jpg",
-      "credito_imagen": "Vista general del sector Refugio, en el Complejo Volcánico Nevado del Ruiz. Foto: David Tovar, investigador del GCPA de la UNAL",
+      "credito_imagen": "General view of the Refugio sector, Nevado del Ruiz Volcanic Complex. Photo: David Tovar, GCPA researcher, Universidad Nacional de Colombia",
       "fuentes": [
         {
-          "titulo": "Servicio Geológico Colombiano · Volcán Nevado del Ruiz",
+          "titulo": "Colombian Geological Survey (SGC) · Nevado del Ruiz Volcano",
           "url": "https://www2.sgc.gov.co/sgc/volcanes/VolcanNevadoRuiz/"
         },
         {
-          "titulo": "Parques Nacionales Naturales · PNN Los Nevados",
+          "titulo": "Colombian National Parks · Los Nevados National Park",
           "url": "https://www.parquesnacionales.gov.co/portal/es/parques-nacionales/parque-nacional-natural-los-nevados/"
         },
         {
-          "titulo": "Artículo científico (Icarus, 2025)",
+          "titulo": "Scientific article (Icarus, 2025)",
           "url": "https://www.sciencedirect.com/science/article/abs/pii/S0019103525003318"
         },
         {
-          "titulo": "NASA POWER · clima 2020–2026",
+          "titulo": "NASA POWER · climate 2020–2026",
           "url": "https://power.larc.nasa.gov/"
         },
         {
-          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
+          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (land surface temperature)",
           "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
         }
       ]
@@ -336,8 +336,8 @@
       "departamento": "Tolima",
       "lat": 4.66,
       "lon": -75.33,
-      "resumen": "Volcán glaciado en el PNN Los Nevados.",
-      "porque": "Hielo, frío y suelos volcánicos de alta montaña.",
+      "resumen": "Glaciated volcano in Los Nevados National Park.",
+      "porque": "Ice, cold and high-mountain volcanic soils.",
       "atributos": {
         "hielo": 0.7,
         "volcanico": 0.8,
@@ -369,33 +369,33 @@
         "pendiente_media": null,
         "pendiente_max": null
       },
-      "notas_datos": "Temperatura del aire de POWER (celda ~50 km) promedia la región, no la cima; para frío se usa la temperatura de superficie MODIS.",
+      "notas_datos": "POWER air temperature (~50 km cell) averages the region, not the summit; cold is based on MODIS land surface temperature.",
       "imagen": "img/colombia/tolima.jpeg",
-      "credito_imagen": "Parque Natural los Nevados Foto: John Jairo Bonilla.",
+      "credito_imagen": "Los Nevados National Park. Photo: John Jairo Bonilla",
       "fuentes": [
         {
-          "titulo": "Parques Nacionales Naturales · PNN Los Nevados",
+          "titulo": "Colombian National Parks · Los Nevados National Park",
           "url": "https://www.parquesnacionales.gov.co/portal/es/parques-nacionales/parque-nacional-natural-los-nevados/"
         },
         {
-          "titulo": "NASA POWER · clima 2020–2026",
+          "titulo": "NASA POWER · climate 2020–2026",
           "url": "https://power.larc.nasa.gov/"
         },
         {
-          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
+          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (land surface temperature)",
           "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
         }
       ]
     },
     {
       "id": "gorgona",
-      "nombre": "Isla Gorgona",
+      "nombre": "Gorgona Island",
       "nivel": "secundario",
       "departamento": "Cauca",
       "lat": 2.97,
       "lon": -78.18,
-      "resumen": "Isla del Pacífico famosa por sus komatiitas, lavas ultramáficas muy raras.",
-      "porque": "Las komatiitas se formaron a temperaturas muy altas, como lavas antiguas de otros planetas.",
+      "resumen": "Pacific island known for its komatiites, very rare ultramafic lavas.",
+      "porque": "Komatiites formed at very high temperatures, like ancient lavas on other planets.",
       "atributos": {
         "volcanico": 0.6,
         "hidrotermal": 0.2
@@ -426,33 +426,33 @@
         "pendiente_media": null,
         "pendiente_max": null
       },
-      "notas_datos": "Solo 25% de datos nocturnos MODIS válidos por nubosidad.",
+      "notas_datos": "Only 25% of nighttime MODIS observations are valid because of cloud cover.",
       "imagen": "img/colombia/gorgona.jpg",
-      "credito_imagen": "Afloramiento de roca que corresponde a basaltos de la Isla Gorgona. Fotos: David Tovar, candidato a doctor en Ciencias - Geociencias de la UNAL.",
+      "credito_imagen": "Basalt outcrop on Gorgona Island. Photo: David Tovar, PhD candidate in Geosciences, Universidad Nacional de Colombia",
       "fuentes": [
         {
-          "titulo": "Parques Nacionales Naturales · PNN Gorgona",
+          "titulo": "Colombian National Parks · Gorgona National Park",
           "url": "https://www.parquesnacionales.gov.co/portal/es/parques-nacionales/parque-nacional-natural-gorgona/"
         },
         {
-          "titulo": "NASA POWER · clima 2020–2026",
+          "titulo": "NASA POWER · climate 2020–2026",
           "url": "https://power.larc.nasa.gov/"
         },
         {
-          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
+          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (land surface temperature)",
           "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
         }
       ]
     },
     {
       "id": "paipa",
-      "nombre": "Aguas termales de Paipa",
+      "nombre": "Paipa Hot Springs",
       "nivel": "secundario",
       "departamento": "Boyacá",
       "lat": 5.78,
       "lon": -73.11,
-      "resumen": "Manantiales termales ricos en sales y sulfatos.",
-      "porque": "Los sistemas hidrotermales son candidatos a haber albergado vida en Marte antiguo.",
+      "resumen": "Hot springs rich in salts and sulfates.",
+      "porque": "Hydrothermal systems are candidates for having hosted life on ancient Mars.",
       "atributos": {
         "hidrotermal": 1,
         "sales": 0.6,
@@ -486,14 +486,14 @@
       },
       "notas_datos": "",
       "imagen": "img/colombia/paipa.png",
-      "credito_imagen": "Paipa Hot springs, Colombia. Source: Photos taken by Hermes H. Bolivar-Torres",
+      "credito_imagen": "Paipa hot springs, Colombia. Photo: Hermes H. Bolívar-Torres",
       "fuentes": [
         {
-          "titulo": "NASA POWER · clima 2020–2026",
+          "titulo": "NASA POWER · climate 2020–2026",
           "url": "https://power.larc.nasa.gov/"
         },
         {
-          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
+          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (land surface temperature)",
           "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
         }
       ]

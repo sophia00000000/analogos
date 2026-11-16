@@ -1,19 +1,19 @@
 /**
- * Cálculo de similitud entre un sitio de Marte (E) y un lugar de Colombia (C).
+ * Similarity between a Mars site (E) and a place in Colombia (C).
  *
- *   similitud = Σ w_k · min(E_k, C_k) / Σ w_k · E_k
+ *   similarity = Σ w_k · min(E_k, C_k) / Σ w_k · E_k
  *
- * Responde: "¿qué fracción de lo que caracteriza al sitio de Marte
- * está presente en este lugar de Colombia?". Va de 0 a 1.
+ * Answers: "what fraction of what characterizes the Mars site is present in
+ * this Colombian place?". Ranges from 0 to 1.
  *
- * Los pesos w dependen del perfil ("ciencia" o "base"). Si el valor de
- * Colombia es null (no hay dato medido), ese criterio se excluye del
- * numerador Y del denominador. La cobertura = criterios usados / criterios
- * disponibles (los que tienen w > 0 y E > 0 para ese sitio y perfil).
- * Debe coincidir con scripts/modelo.py.
+ * The weights w depend on the profile ("ciencia" = science, "base" = landing
+ * & base). If the Colombian value is null (no measured data), that criterion is
+ * excluded from BOTH the numerator and the denominator. Coverage = criteria used
+ * / criteria available (those with w > 0 and E > 0 for that site and profile).
+ * Must match scripts/modelo.py.
  */
 window.Similitud = (function () {
-  /** Une atributos geológicos (ausente = 0) y operativos (ausente = null). */
+  /** Merges geological attributes (missing = 0) and measured ones (missing = null). */
   function valores(lugar, criterios) {
     const v = {};
     for (const [clave, c] of Object.entries(criterios)) {
@@ -52,7 +52,7 @@ window.Similitud = (function () {
     };
   }
 
-  /** Criterios que más aportan a la similitud (para explicar el resultado). */
+  /** Criteria that contribute most to the similarity (to explain the result). */
   function aportes(sitio, lugar, perfil, config, n = 3) {
     const pesos = config.perfiles[perfil].pesos;
     const c = valores(lugar, config.criterios);

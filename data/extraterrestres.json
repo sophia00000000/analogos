@@ -1,5 +1,5 @@
 {
-  "_nota": "Sitios de Marte. 'perfil': 'base' (aterrizaje y base) o 'ciencia'. Coordenadas en grados (longitud este -180..180). aridez, frio, ciclo_termico y superficie_estable valen 1 (Marte es el extremo); terreno_plano = 1 en los sitios de base. Los demás atributos 0-1 son PRELIMINARES.",
+  "_nota": "Mars sites. 'perfil': 'base' (landing & base) or 'ciencia' (science). Coordinates in degrees (east longitude -180..180). aridez, frio, ciclo_termico and superficie_estable equal 1 (Mars is the extreme); terreno_plano = 1 on base sites. The other 0-1 attributes are PRELIMINARY.",
   "marte": [
     {
       "id": "arcadia",
@@ -7,9 +7,9 @@
       "perfil": "base",
       "lat": 46.7,
       "lon": -175.7,
-      "resumen": "Llanura baja y plana con hielo casi puro a menos de 1 m de profundidad.",
-      "porque": "Es la favorita de muchos estudios, incluido el mapeo SWIM (Subsurface Water Ice Mapping) de la NASA, y una de las zonas que SpaceX ha considerado para Starship.",
-      "uso": "Base permanente / aterrizaje",
+      "resumen": "Low, flat plain with nearly pure ice less than 1 m below the surface.",
+      "porque": "A favorite of many studies, including NASA's SWIM (Subsurface Water Ice Mapping) project, and one of the areas SpaceX has considered for Starship.",
+      "uso": "Permanent base / landing",
       "atributos": {
         "hielo": 1,
         "frio": 1,
@@ -20,7 +20,7 @@
         "terreno_plano": 1
       },
       "imagen": "img/marte/arcadia.jpg",
-      "credito_imagen": "ESA/DLR/FU Berlin, bajo licencia CC BY-SA 3.0 IGO",
+      "credito_imagen": "ESA/DLR/FU Berlin, licensed under CC BY-SA 3.0 IGO",
       "fuentes": [
         {
           "titulo": "NASA/PSI · Subsurface Water Ice Mapping (SWIM)",
@@ -42,9 +42,9 @@
       "perfil": "base",
       "lat": 46.7,
       "lon": 117.5,
-      "resumen": "Llanura enorme y baja con hielo enterrado.",
-      "porque": "Ahí aterrizaron Viking 2 y el rover chino Zhurong, así que ya hay datos de superficie.",
-      "uso": "Base permanente / aterrizaje",
+      "resumen": "Huge low-lying plain with buried ice.",
+      "porque": "Viking 2 and China's Zhurong rover landed here, so surface data already exist.",
+      "uso": "Permanent base / landing",
       "atributos": {
         "hielo": 0.8,
         "frio": 1,
@@ -56,10 +56,10 @@
         "terreno_plano": 1
       },
       "imagen": "img/marte/utopia.jpg",
-      "credito_imagen": "ESA / DLR / FU Berlin / CC BY-SA 3.0 IGO",
+      "credito_imagen": "ESA/DLR/FU Berlin, CC BY-SA 3.0 IGO",
       "fuentes": [
         {
-          "titulo": "NASA · Misión Viking",
+          "titulo": "NASA · Viking mission",
           "url": "https://science.nasa.gov/mission/viking/"
         },
         {
@@ -78,9 +78,9 @@
       "perfil": "base",
       "lat": 43.9,
       "lon": 22.6,
-      "resumen": "Glaciares cubiertos de detritos: grandes cantidades de hielo bajo polvo y roca.",
-      "porque": "Reserva de agua accesible para soporte vital y combustible.",
-      "uso": "Base permanente",
+      "resumen": "Debris-covered glaciers: large amounts of ice under dust and rock.",
+      "porque": "An accessible water reserve for life support and propellant.",
+      "uso": "Permanent base",
       "atributos": {
         "hielo": 1,
         "frio": 1,
@@ -98,7 +98,7 @@
           "url": "https://www.esa.int/Science_Exploration/Space_Science/Mars_Express"
         },
         {
-          "titulo": "NASA · Mars Reconnaissance Orbiter (radar SHARAD)",
+          "titulo": "NASA · Mars Reconnaissance Orbiter (SHARAD radar)",
           "url": "https://science.nasa.gov/mission/mars-reconnaissance-orbiter/"
         },
         {
@@ -109,13 +109,13 @@
     },
     {
       "id": "jezero",
-      "nombre": "Cráter Jezero",
+      "nombre": "Jezero Crater",
       "perfil": "ciencia",
       "lat": 18.38,
       "lon": 77.58,
-      "resumen": "Antiguo lago con delta donde trabaja el rover Perseverance.",
-      "porque": "Tiene mucho valor científico (posible vida pasada) y ya está muy bien cartografiado.",
-      "uso": "Ciencia / astrobiología",
+      "resumen": "Ancient lake with a delta, where the Perseverance rover operates.",
+      "porque": "High scientific value (possible past life) and already very well mapped.",
+      "uso": "Science / astrobiology",
       "atributos": {
         "sedimentos": 1,
         "arcillas": 0.7,
@@ -144,13 +144,13 @@
     },
     {
       "id": "gale",
-      "nombre": "Cráter Gale",
+      "nombre": "Gale Crater",
       "perfil": "ciencia",
       "lat": -5.4,
       "lon": 137.8,
-      "resumen": "Arcillas y sulfatos hidratados; muy estudiado por el rover Curiosity.",
-      "porque": "Sus capas de sedimentos registran la transición de un Marte húmedo a uno seco.",
-      "uso": "Ciencia / astrobiología",
+      "resumen": "Clays and hydrated sulfates; studied in depth by the Curiosity rover.",
+      "porque": "Its sediment layers record the transition from a wet Mars to a dry one.",
+      "uso": "Science / astrobiology",
       "atributos": {
         "sedimentos": 0.9,
         "arcillas": 0.8,
@@ -179,9 +179,9 @@
       "perfil": "ciencia",
       "lat": 22.6,
       "lon": -16.5,
-      "resumen": "Abundantes arcillas: agua ligada en minerales.",
-      "porque": "Una de las mayores exposiciones de arcillas del planeta; buen recurso de agua mineral.",
-      "uso": "Ciencia / recursos",
+      "resumen": "Abundant clays: water bound in minerals.",
+      "porque": "One of the largest clay exposures on the planet; a good source of mineral-bound water.",
+      "uso": "Science / resources",
       "atributos": {
         "arcillas": 1,
         "sedimentos": 0.6,
@@ -213,9 +213,9 @@
       "perfil": "base",
       "lat": -42.4,
       "lon": 70.5,
-      "resumen": "El punto más bajo del planeta, con la atmósfera más densa.",
-      "porque": "Mejor frenado al aterrizar y algo más de protección contra la radiación. Puede tener hielo.",
-      "uso": "Aterrizaje / base",
+      "resumen": "The lowest point on the planet, with the densest atmosphere.",
+      "porque": "Better braking during landing and somewhat more radiation shielding. It may contain ice.",
+      "uso": "Landing / base",
       "atributos": {
         "hielo": 0.6,
         "sedimentos": 0.6,
@@ -226,7 +226,7 @@
         "terreno_plano": 1
       },
       "imagen": "img/marte/hellas.jpg",
-      "credito_imagen": "ESA/DLR/FU",
+      "credito_imagen": "ESA/DLR/FU Berlin",
       "fuentes": [
         {
           "titulo": "ESA · Mars Express",
@@ -244,9 +244,9 @@
       "perfil": "base",
       "lat": -8.26,
       "lon": -120.1,
-      "resumen": "Posibles tubos de lava que servirían de refugio natural.",
-      "porque": "Protección contra radiación y micrometeoritos. Su problema es la altitud, que dificulta el aterrizaje.",
-      "uso": "Hábitat subterráneo",
+      "resumen": "Possible lava tubes that could serve as natural shelters.",
+      "porque": "Protection from radiation and micrometeorites. Its drawback is the high altitude, which makes landing harder.",
+      "uso": "Subsurface habitat",
       "atributos": {
         "volcanico": 1,
         "subterraneo": 0.9,
@@ -264,7 +264,7 @@
           "url": "https://science.nasa.gov/mission/mars-reconnaissance-orbiter/"
         },
         {
-          "titulo": "NASA · Mars Trek (mapas)",
+          "titulo": "NASA · Mars Trek (maps)",
           "url": "https://trek.nasa.gov/mars/"
         },
         {
@@ -279,9 +279,9 @@
       "perfil": "ciencia",
       "lat": -13.9,
       "lon": -59.2,
-      "resumen": "Sulfatos hidratados, buena luz y gran interés geológico.",
-      "porque": "Expone kilómetros de capas de la corteza. Su terreno abrupto hace difícil aterrizar.",
-      "uso": "Ciencia / geología",
+      "resumen": "Hydrated sulfates, good sunlight and great geological interest.",
+      "porque": "Exposes kilometers of crustal layers. Its rugged terrain makes landing difficult.",
+      "uso": "Science / geology",
       "atributos": {
         "sulfatos": 0.9,
         "sedimentos": 0.7,
@@ -293,10 +293,10 @@
         "superficie_estable": 1
       },
       "imagen": "img/marte/valles.jpg",
-      "credito_imagen": "Generada con Celestia (Licencia GNU GPL",
+      "credito_imagen": "Generated with Celestia (GNU GPL license)",
       "fuentes": [
         {
-          "titulo": "NASA · Misión Viking",
+          "titulo": "NASA · Viking mission",
           "url": "https://science.nasa.gov/mission/viking/"
         },
         {

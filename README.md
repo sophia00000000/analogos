@@ -1,293 +1,295 @@
-# Análogos Terrestres · Colombia → Marte
+# Terrestrial Analogs · Colombia → Mars
 
-Explorador web interactivo para el reto *Identify Earth Locations that Analog the Permanent Moon Base Locations and Mars*. Este proyecto se centra solo en **Marte**.
+Interactive web explorer for the challenge *Identify Earth Locations that Analog the Permanent Moon Base Locations and Mars*. This project focuses on **Mars** only.
 
-1. El usuario elige un sitio en **Marte** (mapa interactivo con zoom).
-2. El mapa de **Colombia** colorea los lugares análogos de más a menos parecido y muestra un ranking, según el perfil **Ciencia** o **Aterrizaje y base**.
-3. Al elegir un lugar de Colombia se abre un panel con imagen, por qué es análogo, datos medidos por la NASA y fuentes.
+1. The user picks a site on **Mars** (interactive map with zoom).
+2. The **Colombia** map colors the analog places from most to least similar and shows a ranking, using either the **Science** or the **Landing & base** profile.
+3. Choosing a place in Colombia opens a panel with an image, why it is an analog, NASA measured data and sources.
 
-Es un **sitio estático**: solo HTML, CSS, JavaScript y archivos JSON. No necesita backend ni base de datos.
+It is a **static site**: just HTML, CSS, JavaScript and JSON files. No backend or database is needed.
 
 ---
 
-## Requisitos
+## Requirements
 
-- Un navegador moderno (Chrome, Firefox, Edge o Safari).
-- **Python 3** (para levantar un servidor local y correr los scripts; no hay que instalar librerías).
-- Conexión a internet para ver los mapas base y las fuentes tipográficas. Leaflet ya viene dentro del proyecto, en `lib/`.
+- A modern browser (Chrome, Firefox, Edge or Safari).
+- **Python 3** (to run a local server and the scripts; no libraries to install).
+- An internet connection for the base maps and web fonts. Leaflet is bundled in `lib/`.
 
-## Cómo correrlo en local
+## Running locally
 
 ```bash
-# 1. Entra a la carpeta del proyecto
+# 1. Go to the project folder
 cd analogos
 
-# 2. Si cambiaron los datos medidos, recalcula los puntajes y valida
+# 2. If the measured data changed, recompute the scores and validate
 python scripts/calcular_atributos.py
 python scripts/validar_datos.py
 
-# 3. Levanta un servidor local
-python -m http.server 8000        # en Mac/Linux puede ser: python3 -m http.server 8000
+# 3. Start a local server
+python -m http.server 8000        # on Mac/Linux it may be: python3 -m http.server 8000
 
-# 4. Abre en el navegador
+# 4. Open in the browser
 #    http://localhost:8000
 ```
 
-Para detener el servidor, presiona `Ctrl + C` en la terminal.
+Press `Ctrl + C` in the terminal to stop the server.
 
-> ⚠️ **No abras `index.html` con doble clic.** El navegador bloquea la lectura de los archivos JSON cuando la página se abre como `file://`, y verás un aviso rojo. Usa siempre el servidor local.
+> ⚠️ **Do not open `index.html` by double-clicking it.** Browsers block reading the JSON files when the page is opened as `file://`, and you will see a red warning. Always use the local server.
 
-Alternativa: si usas VS Code, la extensión **Live Server** hace lo mismo (clic derecho sobre `index.html` → *Open with Live Server*).
+Alternative: in VS Code, the **Live Server** extension does the same (right-click `index.html` → *Open with Live Server*).
 
-**Enlace directo:** se puede abrir la página con un sitio, un perfil y un lugar ya elegidos, por ejemplo `http://localhost:8000/#sitio=gale&perfil=base&lugar=tatacoa`. La dirección se actualiza sola al hacer clic, así que sirve para compartir una comparación.
+**Direct link:** the page can be opened with a site, profile and place already selected, e.g. `http://localhost:8000/#sitio=gale&perfil=base&lugar=tatacoa`. The address updates as you click, so it can be used to share a comparison.
 
-### Los dos scripts
+### The two scripts
 
-| Script | Cuándo correrlo | Qué hace |
+| Script | When to run it | What it does |
 |---|---|---|
-| `scripts/calcular_atributos.py` | **Cada vez que cambien los datos medidos** (`medidos` en `colombia.json`) | Calcula aridez, frío, ciclo térmico, superficie estable y terreno plano (0–1) y los guarda en `atributos_operativos`. Imprime los rangos y la tabla de atributos. |
-| `scripts/validar_datos.py` | Después de cualquier cambio en los JSON o en los pesos | Revisa errores (coordenadas, criterios, perfiles, valores fuera de 0–1, imágenes faltantes), lista las mediciones que faltan e imprime la matriz de similitud de cada perfil. |
+| `scripts/calcular_atributos.py` | **Every time the measured data change** (`medidos` in `colombia.json`) | Computes aridity, cold, thermal cycling, surface stability and flat terrain (0–1) and saves them in `atributos_operativos`. Prints the ranges and the attribute table. |
+| `scripts/validar_datos.py` | After any change to the JSON files or the weights | Checks for errors (coordinates, criteria, profiles, values outside 0–1, missing images), lists missing measurements and prints the similarity matrix for each profile. |
 
-Los dos leen los criterios y pesos directamente de `js/config.js`, así que Python y la página siempre dan los mismos números.
+Both read the criteria and weights directly from `js/config.js`, so Python and the web page always give the same numbers.
+
+> Code identifiers and JSON keys are in Spanish (e.g. `atributos`, `medidos`, `perfil`); all text shown to users is in English.
 
 ---
 
-## Qué datos se muestran
+## What data is shown
 
-### Paso 1 · Sitio de Marte
+### Step 1 · Mars site
 
-| Dato | Qué es |
+| Item | Description |
 |---|---|
-| Imagen y crédito | Foto o mosaico orbital del sitio (ESA, NASA, CNSA…). |
-| Uso y **perfil** | Para qué se propone y con qué perfil se compara por defecto: *Ciencia* o *Aterrizaje y base*. |
-| Coordenadas | Latitud y longitud reales del sitio. |
-| Resumen y por qué | Qué tiene el lugar y por qué importa para la exploración. |
-| Fuentes | NASA (Perseverance, Curiosity, Viking, MRO, Mars Trek), ESA Mars Express, NASA/PSI SWIM y el catálogo de nombres planetarios del USGS. |
+| Image and credit | Photo or orbital mosaic of the site (ESA, NASA, CNSA…). |
+| Use and **profile** | What the site is proposed for, and the profile used by default: *Science* or *Landing & base*. |
+| Coordinates | Actual latitude and longitude of the site. |
+| Summary and why | What the place has and why it matters for exploration. |
+| Sources | NASA (Perseverance, Curiosity, Viking, MRO, Mars Trek), ESA Mars Express, NASA/PSI SWIM and the USGS Gazetteer of Planetary Nomenclature. |
 
-| Perfil | Sitios |
+| Profile | Sites |
 |---|---|
-| Aterrizaje y base | Arcadia Planitia, Utopia Planitia, Deuteronilus/Protonilus Mensae, Hellas Planitia, Tharsis/Arsia Mons |
-| Ciencia | Cráter Jezero, cráter Gale, Mawrth Vallis, Valles Marineris |
+| Landing & base | Arcadia Planitia, Utopia Planitia, Deuteronilus/Protonilus Mensae, Hellas Planitia, Tharsis/Arsia Mons |
+| Science | Jezero Crater, Gale Crater, Mawrth Vallis, Valles Marineris |
 
-### Paso 2 · Mapa y ranking de Colombia
+### Step 2 · Colombia map and ranking
 
-- Un selector **Ciencia / Aterrizaje y base**. Al elegir un sitio se activa su perfil, y con el selector se puede comparar el mismo sitio con el otro.
-- Cada lugar se colorea según su similitud y el ranking los ordena de mayor a menor.
-- Cada fila dice con cuántos criterios se calculó ("6 de 7 criterios").
-- Los resultados con **datos incompletos** se marcan con ⚠, se ven atenuados (con borde punteado en el mapa) y van al final del ranking. Al pasar el cursor se explica qué dato falta.
+- A **Science / Landing & base** selector. Choosing a site activates its profile; the selector lets you compare the same site under the other one.
+- Each place is colored by similarity, and the ranking orders them from highest to lowest.
+- Each row says how many criteria were used ("6 of 7 criteria").
+- Results with **incomplete data** are flagged ⚠, dimmed (dashed outline on the map) and moved to the bottom of the ranking. Hovering explains which data are missing.
 
-### Paso 3 · Detalle del lugar de Colombia
+### Step 3 · Colombian place details
 
-| Bloque | Contenido |
+| Block | Content |
 |---|---|
-| Similitud | Porcentaje, clase, perfil usado, "calculado con N de M criterios", aviso ⚠ si los datos están incompletos y los 3 criterios que más aportan. |
-| Descripción | Resumen, por qué es análogo y, en los lugares principales, tipo de ambiente, rasgos clave y uso como análogo. |
-| **Datos medidos** | Tabla agrupada en *Temperatura*, *Humedad y radiación*, *Lluvia y erosión* y *Relieve*. "—" = sin dato; "pendiente" = elevación y pendiente aún no obtenidas. Debajo: notas del dato, % de observaciones MODIS válidas, los puntajes calculados (0–1) y la cita. |
-| Fuentes | NASA POWER, NASA LP DAAC (MODIS) y, según el lugar, Servicio Geológico Colombiano, Parques Nacionales Naturales o artículos científicos. |
+| Similarity | Percentage, class, profile used, "computed with N of M criteria", ⚠ warning if data are incomplete, and the 3 criteria that contribute most. |
+| Description | Summary, why it is an analog and, for the main places, environment type, key features and use as an analog. |
+| **Measured data** | Table grouped into *Temperature*, *Humidity and radiation*, *Rainfall and erosion* and *Topography*. "—" = no data; "pending" = elevation and slope not yet obtained. Below it: data notes, % of valid MODIS observations, the computed scores (0–1) and the citation. |
+| Sources | NASA POWER, NASA LP DAAC (MODIS) and, depending on the place, the Colombian Geological Survey, Colombian National Parks or scientific articles. |
 
-#### Datos medidos (`medidos` en `data/colombia.json`)
+#### Measured data (`medidos` in `data/colombia.json`)
 
-Vienen de `data/datos_completos_8_sitios.xlsx`.
+Taken from `data/datos_completos_8_sitios.xlsx`.
 
-| Campo | Variable | Fuente |
+| Field | Variable | Source |
 |---|---|---|
-| `t_aire_media`, `t_aire_max`, `t_aire_min` | Temperatura del aire a 2 m (°C) | NASA POWER (`T2M`, `T2M_MAX`, `T2M_MIN`), promedio mensual 2020–2026 |
-| `lst_dia_mediana`, `lst_dia_p95` | Temperatura de superficie de día: mediana y percentil 95 (°C) | NASA MODIS Terra MOD11A2 v061 vía AppEEARS, 1 km, composites de 8 días, 27/12/2019–01/11/2026 |
-| `lst_noche_mediana`, `lst_noche_p5` | Temperatura de superficie de noche: mediana y percentil 5 (°C) | ídem |
-| `amplitud_termica` | Superficie día − noche (°C) | calculada con MODIS |
-| `pct_validos_dia`, `pct_validos_noche` | % de observaciones MODIS válidas | MODIS |
-| `humedad_relativa` | Humedad relativa a 2 m (%) | NASA POWER (`RH2M`) |
-| `radiacion_kwh_m2_dia` | Radiación solar en superficie (kWh/m²/día) | NASA POWER (`ALLSKY_SFC_SW_DWN`) |
-| `lluvia_anual_mm` | Lluvia anual promedio (mm) | NASA POWER (`PRECTOTCORR`) |
-| `erosividad_mfi` | Índice de Fournier modificado (agresividad de la lluvia, no erosión total) | calculado con la lluvia mensual de POWER |
-| `elevacion_m`, `pendiente_media`, `pendiente_max` | Relieve | **pendiente de obtener** (`null`) |
+| `t_aire_media`, `t_aire_max`, `t_aire_min` | Air temperature at 2 m (°C) | NASA POWER (`T2M`, `T2M_MAX`, `T2M_MIN`), monthly average 2020–2026 |
+| `lst_dia_mediana`, `lst_dia_p95` | Daytime land surface temperature: median and 95th percentile (°C) | NASA MODIS Terra MOD11A2 v061 via AppEEARS, 1 km, 8-day composites, 2019-12-27 to 2026-11-01 |
+| `lst_noche_mediana`, `lst_noche_p5` | Nighttime land surface temperature: median and 5th percentile (°C) | same |
+| `amplitud_termica` | Surface day − night (°C) | computed from MODIS |
+| `pct_validos_dia`, `pct_validos_noche` | % of valid MODIS observations | MODIS |
+| `humedad_relativa` | Relative humidity at 2 m (%) | NASA POWER (`RH2M`) |
+| `radiacion_kwh_m2_dia` | Surface solar radiation (kWh/m²/day) | NASA POWER (`ALLSKY_SFC_SW_DWN`) |
+| `lluvia_anual_mm` | Average annual rainfall (mm) | NASA POWER (`PRECTOTCORR`) |
+| `erosividad_mfi` | Modified Fournier Index (how aggressive the rainfall is, not total erosion) | computed from POWER monthly rainfall |
+| `elevacion_m`, `pendiente_media`, `pendiente_max` | Topography | **not yet obtained** (`null`) |
 
-`notas_datos` explica las limitaciones de cada lugar:
-- **Alta Guajira:** el punto (12.47, -71.73) cae sobre el mar, así que no hay datos MODIS. Falta reubicarlo tierra adentro.
-- **Isla Gorgona:** solo un 25 % de datos nocturnos MODIS válidos, por la nubosidad.
-- **Zipaquirá:** MODIS mide la superficie del pueblo, no el interior de la mina.
-- **Nevados del Ruiz y del Tolima:** el aire de POWER (celda ~50 km) promedia la región, no la cima. Para el frío se usa la superficie MODIS (1 km).
+`notas_datos` explains each place's limitations:
+- **Alta Guajira:** the point (12.47, -71.73) falls over the sea, so there is no MODIS data. It still needs to be moved inland.
+- **Gorgona Island:** only 25% of nighttime MODIS observations are valid because of cloud cover.
+- **Zipaquirá:** MODIS measures the surface of the town, not the inside of the mine.
+- **Nevado del Ruiz and Nevado del Tolima:** POWER air temperature (~50 km cell) averages the region, not the summit. Cold is based on MODIS surface temperature (1 km).
 
-Las coordenadas de los lugares son las de la tabla de medición.
+The places' coordinates are those of the measurement table.
 
-Cita: *NASA POWER Project; Wan, Z., Hook, S., Hulley, G. MOD11A2 v061, NASA LP DAAC; AppEEARS Team (2026), NASA LP DAAC.* (campo `cita_datos` en `colombia.json`).
+Citation: *NASA POWER Project; Wan, Z., Hook, S., Hulley, G. MOD11A2 v061, NASA LP DAAC; AppEEARS Team (2026), NASA LP DAAC.* (field `cita_datos` in `colombia.json`).
 
 ---
 
-## Cómo se evalúa la similitud
+## How similarity is evaluated
 
-### 1. Criterios
+### 1. Criteria
 
-Hay 13 criterios, cada uno con un puntaje de **0 a 1**. Vienen de dos fuentes:
+There are 13 criteria, each scored from **0 to 1**. They come from two sources:
 
-| Criterio | Clave | Origen en Colombia | Qué mide |
+| Criterion | Key | Source in Colombia | What it measures |
 |---|---|---|---|
-| Hielo / agua congelada | `hielo` | geología (`atributos`) | Presencia de hielo o glaciar |
-| Arcillas | `arcillas` | geología | Agua ligada en minerales |
-| Sulfatos hidratados | `sulfatos` | geología | Minerales formados con agua |
-| Sales / cloruros | `sales` | geología | Evaporitas, halita |
-| Sedimentos, lagos y deltas | `sedimentos` | geología | Capas sedimentarias expuestas |
-| Rocas y relieve volcánico | `volcanico` | geología | Basaltos, volcanes |
-| Refugio subterráneo / tubos | `subterraneo` | geología | Cuevas, minas, tubos de lava |
-| Actividad hidrotermal | `hidrotermal` | geología | Fuentes termales, fumarolas |
-| **Aridez** | `aridez` | **medido** | Poca lluvia y baja humedad |
-| **Frío extremo** | `frio` | **medido** | Superficie fría de noche |
-| **Ciclo térmico día-noche** | `ciclo_termico` | **medido** | Diferencia de temperatura día-noche en la superficie (en Marte es enorme) |
-| **Superficie estable / baja erosión** | `superficie_estable` | **medido** | Lluvia poco agresiva: el terreno cambia poco, como en Marte |
-| **Terreno plano** | `terreno_plano` | **medido** | Pendiente baja, clave para aterrizar y construir (**aún sin dato**) |
+| Ice / frozen water | `hielo` | geology (`atributos`) | Presence of ice or glaciers |
+| Clays | `arcillas` | geology | Water bound in minerals |
+| Hydrated sulfates | `sulfatos` | geology | Minerals formed with water |
+| Salts / chlorides | `sales` | geology | Evaporites, halite |
+| Sediments, lakes and deltas | `sedimentos` | geology | Exposed sedimentary layers |
+| Volcanic rocks and landforms | `volcanico` | geology | Basalts, volcanoes |
+| Subsurface shelter / lava tubes | `subterraneo` | geology | Caves, mines, lava tubes |
+| Hydrothermal activity | `hidrotermal` | geology | Hot springs, fumaroles |
+| **Aridity** | `aridez` | **measured** | Low rainfall and low humidity |
+| **Extreme cold** | `frio` | **measured** | Cold surface at night |
+| **Day-night thermal cycling** | `ciclo_termico` | **measured** | Day-night surface temperature difference (huge on Mars) |
+| **Stable surface / low erosion** | `superficie_estable` | **measured** | Low rainfall erosivity: the terrain changes little, as on Mars |
+| **Flat terrain** | `terreno_plano` | **measured** | Low slope, key for landing and building (**no data yet**) |
 
-- **Geología:** los puntajes los asigna el equipo a partir de la literatura y son **preliminares**. Un criterio que no aparece vale 0.
-- **Medidos:** los calcula `scripts/calcular_atributos.py` y los guarda en `atributos_operativos`. Reemplazan la aridez y el frío que antes se ponían a mano.
-- En **Marte**, `aridez`, `frio`, `ciclo_termico` y `superficie_estable` valen 1, porque Marte es el extremo. `terreno_plano` vale 1 en los sitios de base.
+- **Geology:** scores are assigned by the team from the literature and are **preliminary**. A criterion that is not listed counts as 0.
+- **Measured:** computed by `scripts/calcular_atributos.py` and saved in `atributos_operativos`. They replace the aridity and cold values that used to be set by hand.
+- On **Mars**, `aridez`, `frio`, `ciclo_termico` and `superficie_estable` equal 1, because Mars is the extreme. `terreno_plano` equals 1 on the base sites.
 
-### 2. Cómo se calculan los criterios medidos
+### 2. How the measured criteria are computed
 
-Normalización **min-max entre los 8 lugares de Colombia**, ignorando los `null`:
+**Min-max normalization across the 8 Colombian places**, ignoring `null` values:
 
 ```
-norm(x) = (x − mín) ÷ (máx − mín)        inv(x) = 1 − norm(x)
+norm(x) = (x − min) ÷ (max − min)        inv(x) = 1 − norm(x)
 
-aridez             = 0,7 · inv(lluvia_anual_mm) + 0,3 · inv(humedad_relativa)
+aridez             = 0.7 · inv(lluvia_anual_mm) + 0.3 · inv(humedad_relativa)
 frio               = inv(lst_noche_mediana)
 ciclo_termico      = norm(amplitud_termica)
 superficie_estable = inv(erosividad_mfi)
 terreno_plano      = inv(pendiente_media)
 ```
 
-En cada variable, el lugar colombiano más parecido a Marte vale 1 y el menos parecido vale 0. Por ejemplo, la Alta Guajira tiene la menor lluvia (396 mm) y su aridez da 0,99. Gorgona tiene la mayor lluvia (2704 mm) y su aridez da 0,07. Si falta un insumo, el criterio queda `null`, no 0.
+On each variable, the Colombian place most similar to Mars scores 1 and the least similar scores 0. For example, Alta Guajira has the lowest rainfall (396 mm) and an aridity of 0.99; Gorgona has the highest (2704 mm) and an aridity of 0.07. If an input is missing, the criterion stays `null`, not 0.
 
-> La escala es **relativa**: un 1 significa "el más marciano de los lugares colombianos", no "igual a Marte". Si se agrega o quita un lugar, los puntajes cambian, y hay que volver a correr el script.
+> The scale is **relative**: a 1 means "the most Mars-like of the Colombian places", not "identical to Mars". Adding or removing a place changes the scores, so the script must be run again.
 
-Valores actuales:
+Current values:
 
-| Lugar | aridez | frío | ciclo térmico | superficie estable | terreno plano |
+| Place | aridity | cold | thermal cycling | stable surface | flat terrain |
 |---|---|---|---|---|---|
-| Desierto de la Tatacoa | 0,71 | 0,00 | 0,60 | 0,62 | — |
-| Mina de sal de Zipaquirá | 0,24 | 0,63 | 0,73 | 0,32 | — |
-| Alta Guajira | 0,99 | — | — | 1,00 | — |
-| Desierto de la Candelaria | 0,44 | 0,54 | 0,90 | 0,50 | — |
-| Nevado del Ruiz | 0,27 | 1,00 | 0,54 | 0,50 | — |
-| Nevado del Tolima | 0,33 | 0,94 | 0,65 | 0,57 | — |
-| Isla Gorgona | 0,07 | 0,12 | 0,00 | 0,00 | — |
-| Aguas termales de Paipa | 0,51 | 0,60 | 1,00 | 0,59 | — |
+| Tatacoa Desert | 0.71 | 0.00 | 0.60 | 0.62 | — |
+| Zipaquirá Salt Mine | 0.24 | 0.63 | 0.73 | 0.32 | — |
+| Alta Guajira | 0.99 | — | — | 1.00 | — |
+| La Candelaria Desert | 0.44 | 0.54 | 0.90 | 0.50 | — |
+| Nevado del Ruiz | 0.27 | 1.00 | 0.54 | 0.50 | — |
+| Nevado del Tolima | 0.33 | 0.94 | 0.65 | 0.57 | — |
+| Gorgona Island | 0.07 | 0.12 | 0.00 | 0.00 | — |
+| Paipa Hot Springs | 0.51 | 0.60 | 1.00 | 0.59 | — |
 
-**¿Por qué la radiación solar no entra?** En los 8 lugares varía muy poco (4,3–5,8 kWh/m²/día). Además, la de Marte es de otro tipo: más débil y con más ultravioleta, porque no hay capa de ozono. No sirve para distinguir un análogo de otro, así que solo se muestra como dato.
+Solar radiation is shown as data but is not used in the score.
 
-### 3. Dos perfiles de pesos
+### 3. Two weight profiles
 
-| Criterio | Ciencia | Aterrizaje y base |
+| Criterion | Science | Landing & base |
 |---|---|---|
-| Terreno plano | 0 | 2.0 |
-| Hielo | 1.5 | 1.5 |
-| Aridez | 0.8 | 1.2 |
-| Ciclo térmico | 0 | 1.2 |
-| Frío | 0.8 | 1.0 |
-| Subterráneo | 1.0 | 0.8 |
-| Superficie estable | 0 | 0.6 |
-| Arcillas | 1.2 | 0.3 |
-| Sulfatos | 1.2 | 0.3 |
-| Sales | 1.0 | 0.3 |
-| Sedimentos | 1.0 | 0.3 |
-| Volcánico | 1.0 | 0.3 |
-| Hidrotermal | 1.0 | 0.3 |
+| Flat terrain | 0 | 2.0 |
+| Ice | 1.5 | 1.5 |
+| Aridity | 0.8 | 1.2 |
+| Thermal cycling | 0 | 1.2 |
+| Cold | 0.8 | 1.0 |
+| Subsurface | 1.0 | 0.8 |
+| Stable surface | 0 | 0.6 |
+| Clays | 1.2 | 0.3 |
+| Sulfates | 1.2 | 0.3 |
+| Salts | 1.0 | 0.3 |
+| Sediments | 1.0 | 0.3 |
+| Volcanic | 1.0 | 0.3 |
+| Hydrothermal | 1.0 | 0.3 |
 
-- **Ciencia** busca la geología del agua y la posible vida pasada.
-- **Aterrizaje y base** busca dónde operar: terreno plano, hielo como recurso, y un ambiente seco, frío, con grandes cambios de temperatura y estable.
+- **Science** looks for water-related geology and possible past life.
+- **Landing & base** looks for where to operate: flat terrain, ice as a resource, and a dry, cold, stable environment with large temperature swings.
 
-Los pesos están en el bloque `MODELO` de `js/config.js`. Ese bloque es JSON y lo leen también los scripts de Python: hay que editarlo sin comillas simples ni comas al final.
+The weights live in the `MODELO` block of `js/config.js`. That block is JSON and is also read by the Python scripts: edit it without single quotes or trailing commas.
 
-### 4. Fórmula y datos faltantes
+### 4. Formula and missing data
 
 ```
-similitud = Σ peso_k · min(E_k, C_k)  ÷  Σ peso_k · E_k
+similarity = Σ weight_k · min(E_k, C_k)  ÷  Σ weight_k · E_k
 ```
 
-`E` es el sitio de Marte y `C` el lugar de Colombia. La fórmula responde: *¿qué fracción de lo que caracteriza al sitio de Marte está presente en el lugar colombiano?*
+`E` is the Mars site and `C` the Colombian place. The formula answers: *what fraction of what characterizes the Mars site is present in the Colombian place?*
 
-- `min(E, C)`: un lugar no gana puntos por tener **más** de un rasgo que el sitio de Marte.
-- Un criterio con peso 0 en el perfil, o que el sitio de Marte no tiene (E = 0), no cuenta.
-- **Si el valor de Colombia es `null`, el criterio se excluye del numerador y del denominador.** No se cuenta como 0, porque eso castigaría la falta de dato como si fuera falta del rasgo.
+- `min(E, C)`: a place gains nothing for having **more** of a feature than the Mars site.
+- A criterion with weight 0 in the profile, or that the Mars site does not have (E = 0), does not count.
+- **If the Colombian value is `null`, the criterion is excluded from both the numerator and the denominator.** It does not count as 0, because that would penalize missing data as if the feature were absent.
 
-**Cobertura** = criterios usados ÷ criterios disponibles. Los disponibles son los que tienen peso > 0 en el perfil **y** valor > 0 en el sitio de Marte, es decir, los que de verdad definen ese sitio. Si la cobertura es **menor al 60 %** (`cobertura_minima` en `config.js`), el resultado se marca **⚠ datos incompletos**, se atenúa y va al final del ranking.
+**Coverage** = criteria used ÷ criteria available. Available criteria are those with weight > 0 in the profile **and** a value > 0 on the Mars site, i.e. the ones that actually define that site. If coverage is **below 60%** (`cobertura_minima` in `config.js`), the result is flagged **⚠ incomplete data**, dimmed and moved to the bottom of the ranking.
 
-> Se cuentan solo los criterios que el sitio de Marte tiene. Si se contaran los 13 con peso, a casi ningún lugar le faltaría el 40 % y el aviso nunca saltaría. Por ejemplo, con Arcadia a la Alta Guajira le faltan 3 de 7 criterios (frío, ciclo térmico y terreno plano): su cobertura es 57 % y se marca ⚠.
+> Only criteria the Mars site has are counted. If all 13 weighted criteria were counted, almost no place would miss 40% of them and the warning would never trigger. For example, against Arcadia, Alta Guajira misses 3 of 7 criteria (cold, thermal cycling and flat terrain): its coverage is 57%, so it is flagged ⚠.
 
-Como `terreno_plano` todavía no tiene datos, en el perfil de base **ningún lugar** llega al 100 % de cobertura (por ejemplo, 6 de 7 con Arcadia).
+Because `terreno_plano` has no data yet, in the base profile **no place** reaches 100% coverage (e.g. 6 of 7 against Arcadia).
 
-### 5. Ejemplo: cráter Gale (perfil Ciencia)
+### 5. Example: Gale Crater (Science profile)
 
-| Criterio | Peso | Gale (E) | Tatacoa (C) | peso·E | peso·min | Guajira (C) | peso·E | peso·min |
+| Criterion | Weight | Gale (E) | Tatacoa (C) | w·E | w·min | Guajira (C) | w·E | w·min |
 |---|---|---|---|---|---|---|---|---|
-| Sedimentos | 1.0 | 0.9 | 0.9 | 0.90 | 0.90 | 0.7 | 0.90 | 0.70 |
-| Arcillas | 1.2 | 0.8 | 0.7 | 0.96 | 0.84 | 0.4 | 0.96 | 0.48 |
-| Sulfatos | 1.2 | 0.8 | 0.2 | 0.96 | 0.24 | 0.3 | 0.96 | 0.36 |
-| Aridez | 0.8 | 1 | 0.71 | 0.80 | 0.57 | 0.99 | 0.80 | 0.79 |
-| Frío | 0.8 | 1 | 0.00 | 0.80 | 0 | *null* | — | — |
+| Sediments | 1.0 | 0.9 | 0.9 | 0.90 | 0.90 | 0.7 | 0.90 | 0.70 |
+| Clays | 1.2 | 0.8 | 0.7 | 0.96 | 0.84 | 0.4 | 0.96 | 0.48 |
+| Sulfates | 1.2 | 0.8 | 0.2 | 0.96 | 0.24 | 0.3 | 0.96 | 0.36 |
+| Aridity | 0.8 | 1 | 0.71 | 0.80 | 0.57 | 0.99 | 0.80 | 0.79 |
+| Cold | 0.8 | 1 | 0.00 | 0.80 | 0 | *null* | — | — |
 | **Total** | | | | **4.42** | **2.55** | | **3.62** | **2.33** |
 
-- Tatacoa: 2.55 ÷ 4.42 = **58 %** (5 de 5 criterios).
-- Guajira: 2.33 ÷ 3.62 = **64 %** (4 de 5 criterios, 80 %, sin ⚠). Queda por encima de Tatacoa porque el frío, donde Tatacoa saca 0, no se le cuenta.
+- Tatacoa: 2.55 ÷ 4.42 = **58%** (5 of 5 criteria).
+- Guajira: 2.33 ÷ 3.62 = **64%** (4 of 5 criteria, 80%, no ⚠). It ranks above Tatacoa because cold, where Tatacoa scores 0, is not counted for it.
 
-### 6. Clases de similitud
+### 6. Similarity classes
 
-| Similitud | Clase | Color |
+| Similarity | Class | Color |
 |---|---|---|
-| ≥ 70 % | Muy similar | rojo |
-| 45–69 % | Similar | naranja |
-| 20–44 % | Poco similar | azul |
-| < 20 % | No similar | gris |
+| ≥ 70% | Very similar | red |
+| 45–69% | Similar | orange |
+| 20–44% | Weakly similar | blue |
+| < 20% | Not similar | gray |
 
-El tamaño del marcador también cambia con la clase, para no depender solo del color.
+Marker size also changes with the class, so the map does not rely on color alone.
 
-### Pendientes
+### Pending work
 
-- **Pendiente y elevación** de los 8 lugares (SRTM o NASADEM en NASA Earthdata). Mientras falten, `terreno_plano` no cuenta, aunque es el criterio de mayor peso del perfil de base.
-- **Nuevo punto para la Alta Guajira**, tierra adentro, para tener datos MODIS (frío y ciclo térmico).
-- Revisar los puntajes geológicos preliminares con la investigación del equipo.
+- **Slope and elevation** for the 8 places (SRTM or NASADEM on NASA Earthdata). Until then, `terreno_plano` is not counted, even though it is the highest-weighted criterion in the base profile.
+- **A new inland point for Alta Guajira**, to get MODIS data (cold and thermal cycling).
+- Review the preliminary geology scores with the team's research.
 
 ---
 
-## Estructura
+## Structure
 
 ```
 analogos/
-├── index.html                 ← estructura de la página y metodología
-├── css/estilos.css            ← colores y tipografía (estilo NASA)
+├── index.html                 ← page structure and methodology
+├── css/estilos.css            ← colors and typography (NASA style)
 ├── js/
-│   ├── config.js              ← MODELO (criterios, perfiles, pesos), clases y mapas  ← EDITAR AQUÍ
-│   ├── similitud.js           ← fórmula de similitud y cobertura
-│   └── app.js                 ← mapas, selector de perfil, ranking y paneles
+│   ├── config.js              ← MODELO (criteria, profiles, weights), classes and maps  ← EDIT HERE
+│   ├── similitud.js           ← similarity formula and coverage
+│   └── app.js                 ← maps, profile selector, ranking and panels
 ├── data/
-│   ├── extraterrestres.json   ← sitios de Marte (con perfil)                  ← EDITAR AQUÍ
-│   ├── colombia.json          ← lugares de Colombia + datos medidos           ← EDITAR AQUÍ
-│   └── datos_completos_8_sitios.xlsx  ← datos originales NASA POWER / MODIS
+│   ├── extraterrestres.json   ← Mars sites (with profile)                      ← EDIT HERE
+│   ├── colombia.json          ← Colombian places + measured data               ← EDIT HERE
+│   └── datos_completos_8_sitios.xlsx  ← original NASA POWER / MODIS data
 ├── img/
-│   ├── marte/  colombia/      ← fotos
-├── lib/                       ← Leaflet 1.9.4 (no tocar)
+│   ├── marte/  colombia/      ← photos
+├── lib/                       ← Leaflet 1.9.4 (do not edit)
 └── scripts/
-    ├── calcular_atributos.py  ← datos medidos → atributos_operativos
-    ├── validar_datos.py       ← validador y matriz de similitud por perfil
-    └── modelo.py              ← lectura del modelo y fórmula (compartido)
+    ├── calcular_atributos.py  ← measured data → atributos_operativos
+    ├── validar_datos.py       ← validator and similarity matrix per profile
+    └── modelo.py              ← model loading and formula (shared)
 ```
 
-## Cómo editar el contenido
+## Editing the content
 
-### Agregar o cambiar un lugar de Colombia
+### Adding or changing a Colombian place
 
-Edita `data/colombia.json` y luego corre `python scripts/calcular_atributos.py`:
+Edit `data/colombia.json`, then run `python scripts/calcular_atributos.py`:
 
 ```json
 {
   "id": "tatacoa",
-  "nombre": "Desierto de la Tatacoa",
+  "nombre": "Tatacoa Desert",
   "nivel": "principal",
   "departamento": "Huila",
   "lat": 3.23, "lon": -75.17,
-  "resumen": "Frase corta.",
-  "porque": "Por qué es análogo.",
-  "datos": [{ "etiqueta": "Tipo de ambiente", "valor": "..." }],
+  "resumen": "Short sentence.",
+  "porque": "Why it is an analog.",
+  "datos": [{ "etiqueta": "Environment type", "valor": "..." }],
   "atributos": { "sedimentos": 0.9, "arcillas": 0.7, "sulfatos": 0.2, "sales": 0.2 },
-  "atributos_operativos": { "...": "lo escribe calcular_atributos.py, no editar" },
+  "atributos_operativos": { "...": "written by calcular_atributos.py, do not edit" },
   "medidos": {
     "t_aire_media": 20.46, "t_aire_max": 27.85, "t_aire_min": 15.02,
     "lst_dia_mediana": 36, "lst_dia_p95": 42.23, "lst_noche_mediana": 25.59, "lst_noche_p5": 23.11,
@@ -298,39 +300,39 @@ Edita `data/colombia.json` y luego corre `python scripts/calcular_atributos.py`:
   },
   "notas_datos": "",
   "imagen": "img/colombia/tatacoa.jpeg",
-  "credito_imagen": "Foto: Autor, licencia",
-  "fuentes": [{ "titulo": "Agencia · Página", "url": "https://..." }]
+  "credito_imagen": "Photo: Author, license",
+  "fuentes": [{ "titulo": "Agency · Page", "url": "https://..." }]
 }
 ```
 
-- `nivel`: `"principal"` (Tatacoa, Zipaquirá, Guajira: llevan etiqueta fija en el mapa y ficha completa) o `"secundario"`.
-- `atributos`: solo los criterios **geológicos** (0 a 1). Aridez y frío ya no van aquí: el validador avisa si se ponen.
-- `medidos`: valores tal cual de la fuente. Usen `null` si no hay dato; **nunca inventen ni rellenen**.
-- `fuentes`: preferir agencias y entidades oficiales (NASA, ESA, USGS, SGC, Parques Nacionales) o artículos científicos.
+- `nivel`: `"principal"` (main: Tatacoa, Zipaquirá, Guajira get a permanent label on the map and a full card) or `"secundario"` (secondary).
+- `atributos`: **geological** criteria only (0 to 1). Aridity and cold no longer go here; the validator warns if they do.
+- `medidos`: values exactly as given by the source. Use `null` when there is no data; **never invent or fill in values**.
+- `fuentes`: prefer agencies and official bodies (NASA, ESA, USGS, SGC, National Parks) or scientific articles.
 
-### Agregar o cambiar un sitio de Marte
+### Adding or changing a Mars site
 
-En `data/extraterrestres.json`, cada sitio lleva `"perfil": "ciencia"` o `"base"`, el campo `uso` y sus `atributos`. Además de los geológicos, debe tener `aridez`, `frio`, `ciclo_termico` y `superficie_estable` en 1, y `terreno_plano` en 1 si es de base.
+In `data/extraterrestres.json`, each site has `"perfil": "ciencia"` (science) or `"base"`, a `uso` field and its `atributos`. Besides the geological ones, it must have `aridez`, `frio`, `ciclo_termico` and `superficie_estable` set to 1, and `terreno_plano` set to 1 if it is a base site.
 
-### Imágenes
+### Images
 
-Guarden las fotos con el nombre que indica el campo `imagen` (por ejemplo `img/colombia/tatacoa.jpeg`). Sirven `.jpg`, `.jpeg`, `.png`, `.webp` y `.avif`. Si falta una imagen, la página muestra un recuadro rayado.
+Save photos with the name given in the `imagen` field (e.g. `img/colombia/tatacoa.jpeg`). `.jpg`, `.jpeg`, `.png`, `.webp` and `.avif` all work. If an image is missing, the page shows a striped placeholder.
 
-Pongan siempre el crédito en `credito_imagen`: si está vacío, la foto se muestra sin crédito. **Pendientes:** Tatacoa, Zipaquirá y Candelaria.
+Always fill in `credito_imagen`: if it is empty, the photo is shown without a credit. **Pending:** Tatacoa, Zipaquirá and La Candelaria.
 
-Fuentes recomendadas:
-- Marte: NASA Photojournal (photojournal.jpl.nasa.gov), NASA Image Library (images.nasa.gov) y ESA. Las imágenes de la NASA en general son de dominio público; las de ESA/DLR/FU Berlin suelen ser CC BY-SA 3.0 IGO.
-- Colombia: fotos de entidades oficiales o universidades (con crédito al autor), o fotos propias del equipo.
+Recommended sources:
+- Mars: NASA Photojournal (photojournal.jpl.nasa.gov), NASA Image Library (images.nasa.gov) and ESA. NASA images are generally in the public domain; ESA/DLR/FU Berlin images are usually CC BY-SA 3.0 IGO.
+- Colombia: photos from official bodies or universities (credited to the author), or the team's own photos.
 
-Usen imágenes de unos 1200 px de ancho o menos para que la página cargue rápido.
+Use images about 1200 px wide or smaller so the page loads quickly.
 
 ---
 
-## Mapas
+## Maps
 
-- **Colombia:** Leaflet con dos mapas base (calles de OpenStreetMap y relieve de OpenTopoMap), con nombres de ciudades. Se cambian con el botón de capas, arriba a la derecha.
-- **Marte:** Leaflet con mosaicos de **NASA Mars Trek**: Viking MDIM 2.1 (NASA/JPL/USGS) y, de respaldo, MOLA (NASA/GSFC). Usa proyección geográfica (EPSG:4326), así que se ven los polos. En `js/config.js` hay una **lista de fuentes**: si una falla, la app prueba la siguiente, y si todas fallan dibuja una cuadrícula de coordenadas (los sitios siguen funcionando). Para cambiar o agregar fuentes, editen `CONFIG.cuerpos.marte.fuentes`.
+- **Colombia:** Leaflet with two base maps (OpenStreetMap streets and OpenTopoMap terrain), with city names. Switch them with the layers button at the top right.
+- **Mars:** Leaflet with **NASA Mars Trek** tiles: Viking MDIM 2.1 (NASA/JPL/USGS) and, as a fallback, MOLA (NASA/GSFC). It uses a geographic projection (EPSG:4326), so the poles are visible. `js/config.js` has a **list of sources**: if one fails the app tries the next, and if all fail it draws a coordinate grid (the sites still work). To change or add sources, edit `CONFIG.cuerpos.marte.fuentes`.
 
-## Despliegue
+## Deployment
 
-Como es un sitio estático, se puede publicar gratis en GitHub Pages, Netlify o Vercel subiendo la carpeta tal cual.
+Since it is a static site, it can be published for free on GitHub Pages, Netlify or Vercel by uploading the folder as is.

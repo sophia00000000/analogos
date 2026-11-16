@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Análogos Terrestres · Colombia → Marte</title>
-  <meta name="description" content="Explorador interactivo de lugares de Colombia que funcionan como análogos de sitios de Marte." />
+  <title>Terrestrial Analogs · Colombia → Mars</title>
+  <meta name="description" content="Interactive explorer of places in Colombia that work as analogs of sites on Mars." />
 
-  <!-- Tipografía estilo NASA: Inter (texto) + DM Mono (datos técnicos) -->
+  <!-- NASA-style typography: Inter (text) + DM Mono (technical data) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-  <!-- Leaflet incluido en el proyecto (funciona sin CDN) -->
+  <!-- Leaflet bundled with the project (works without a CDN) -->
   <link rel="stylesheet" href="lib/leaflet.css" />
   <link rel="stylesheet" href="css/estilos.css" />
 </head>
@@ -20,91 +20,91 @@
     <div class="barra__marca">
       <span class="barra__insignia" aria-hidden="true"></span>
       <div>
-        <p class="sobretitulo">Reto · Análogos terrestres</p>
-        <h1>Colombia como laboratorio de Marte</h1>
+        <p class="sobretitulo">Challenge · Terrestrial analogs</p>
+        <h1>Colombia as a laboratory for Mars</h1>
       </div>
     </div>
   </header>
 
   <main class="tablero">
-    <!-- 1. Mapa del cuerpo celeste -->
+    <!-- 1. Mars map -->
     <section class="tarjeta tarjeta--planeta" aria-labelledby="titulo-planeta">
       <div class="tarjeta__cabecera">
-        <p class="sobretitulo">Paso 1</p>
-        <h2 id="titulo-planeta">Elige un sitio en Marte</h2>
+        <p class="sobretitulo">Step 1</p>
+        <h2 id="titulo-planeta">Choose a site on Mars</h2>
       </div>
-      <div id="mapa-planeta" class="mapa" role="application" aria-label="Mapa interactivo de Marte"></div>
+      <div id="mapa-planeta" class="mapa" role="application" aria-label="Interactive map of Mars"></div>
       <div id="aviso-planeta" class="aviso" hidden></div>
       <article id="ficha-planeta" class="ficha ficha--vacia">
-        <p>Haz clic en un punto del mapa para ver por qué ese sitio es importante y cuáles lugares de Colombia se le parecen.</p>
+        <p>Click a point on the map to see why that site matters and which places in Colombia resemble it.</p>
       </article>
     </section>
 
-    <!-- 2. Mapa de Colombia -->
+    <!-- 2. Colombia map -->
     <section class="tarjeta tarjeta--colombia" aria-labelledby="titulo-colombia">
       <div class="tarjeta__cabecera">
-        <p class="sobretitulo">Paso 2</p>
-        <h2 id="titulo-colombia">Análogos en Colombia</h2>
-        <div class="perfil" role="group" aria-label="Perfil de similitud">
-          <button class="perfil__opcion activa" data-perfil="ciencia" aria-pressed="true">Ciencia</button>
-          <button class="perfil__opcion" data-perfil="base" aria-pressed="false">Aterrizaje y base</button>
+        <p class="sobretitulo">Step 2</p>
+        <h2 id="titulo-colombia">Analogs in Colombia</h2>
+        <div class="perfil" role="group" aria-label="Similarity profile">
+          <button class="perfil__opcion activa" data-perfil="ciencia" aria-pressed="true">Science</button>
+          <button class="perfil__opcion" data-perfil="base" aria-pressed="false">Landing &amp; base</button>
         </div>
         <p id="perfil-nota" class="perfil__nota"></p>
       </div>
-      <div id="mapa-colombia" class="mapa" role="application" aria-label="Mapa interactivo de Colombia"></div>
-      <div class="leyenda" id="leyenda" aria-label="Leyenda de similitud"></div>
-      <ol id="ranking" class="ranking" aria-label="Ranking de análogos"></ol>
+      <div id="mapa-colombia" class="mapa" role="application" aria-label="Interactive map of Colombia"></div>
+      <div class="leyenda" id="leyenda" aria-label="Similarity legend"></div>
+      <ol id="ranking" class="ranking" aria-label="Analog ranking"></ol>
     </section>
 
-    <!-- 3. Panel de detalle -->
+    <!-- 3. Detail panel -->
     <aside class="tarjeta tarjeta--detalle" aria-labelledby="titulo-detalle">
       <div class="tarjeta__cabecera">
-        <p class="sobretitulo">Paso 3</p>
-        <h2 id="titulo-detalle">Detalle del análogo</h2>
+        <p class="sobretitulo">Step 3</p>
+        <h2 id="titulo-detalle">Analog details</h2>
       </div>
       <article id="detalle" class="ficha ficha--vacia">
-        <p>Selecciona un lugar de Colombia en el mapa o en el ranking.</p>
+        <p>Select a place in Colombia on the map or in the ranking.</p>
       </article>
     </aside>
   </main>
 
   <section class="metodologia" id="metodologia">
     <div class="metodologia__col">
-      <p class="sobretitulo">Metodología</p>
-      <h2>¿Cómo medimos la similitud?</h2>
-      <p>Cada sitio (de Marte o de Colombia) tiene un puntaje de 0 a 1 en varios criterios. La similitud mide <strong>qué parte de lo que hace especial al sitio de Marte está presente en el lugar de Colombia</strong>:</p>
-      <p class="formula">similitud = Σ w<sub>k</sub> · min(E<sub>k</sub>, C<sub>k</sub>) ÷ Σ w<sub>k</sub> · E<sub>k</sub></p>
-      <p class="nota">E = sitio de Marte, C = lugar en Colombia, w = peso del criterio según el perfil.</p>
+      <p class="sobretitulo">Methodology</p>
+      <h2>How do we measure similarity?</h2>
+      <p>Every site (on Mars or in Colombia) has a score from 0 to 1 on several criteria. Similarity measures <strong>how much of what makes the Mars site special is present in the Colombian place</strong>:</p>
+      <p class="formula">similarity = Σ w<sub>k</sub> · min(E<sub>k</sub>, C<sub>k</sub>) ÷ Σ w<sub>k</sub> · E<sub>k</sub></p>
+      <p class="nota">E = Mars site, C = place in Colombia, w = criterion weight for the profile.</p>
 
-      <h3>Dos perfiles</h3>
-      <p><strong>Ciencia</strong> (Jezero, Gale, Mawrth Vallis, Valles Marineris) da más peso a la geología del agua: arcillas, sulfatos, sales, sedimentos e hidrotermalismo. <strong>Aterrizaje y base</strong> (Arcadia, Utopia, Deuteronilus, Hellas, Arsia) da más peso a las condiciones de operación: terreno plano, hielo, aridez, ciclo térmico, frío y superficie estable. Por defecto se usa el perfil del sitio, pero el selector del Paso 2 permite comparar el mismo sitio con el otro perfil.</p>
+      <h3>Two profiles</h3>
+      <p><strong>Science</strong> (Jezero, Gale, Mawrth Vallis, Valles Marineris) gives more weight to water-related geology: clays, sulfates, salts, sediments and hydrothermal activity. <strong>Landing &amp; base</strong> (Arcadia, Utopia, Deuteronilus, Hellas, Arsia) gives more weight to operating conditions: flat terrain, ice, aridity, thermal cycling, cold and surface stability. By default the site's own profile is used, but the selector in Step 2 lets you compare the same site under the other profile.</p>
 
-      <h3>De dónde salen los puntajes</h3>
-      <p><strong>Geología</strong> (hielo, arcillas, sulfatos, sales, sedimentos, volcánico, subterráneo, hidrotermal): los asigna el equipo a partir de la literatura; son <strong>preliminares</strong>.</p>
-      <p><strong>Medidos</strong> (aridez, frío, ciclo térmico, superficie estable, terreno plano): se calculan con datos de NASA POWER y NASA MODIS, normalizados con <strong>min-max entre los 8 lugares de Colombia</strong>. El lugar más parecido a Marte en cada variable vale 1 y el menos parecido, 0:</p>
+      <h3>Where the scores come from</h3>
+      <p><strong>Geology</strong> (ice, clays, sulfates, salts, sediments, volcanic, subsurface, hydrothermal): assigned by the team from the literature; they are <strong>preliminary</strong>.</p>
+      <p><strong>Measured</strong> (aridity, cold, thermal cycling, surface stability, flat terrain): computed from NASA POWER and NASA MODIS data, normalized <strong>min-max across the 8 Colombian places</strong>. The place most similar to Mars on each variable scores 1 and the least similar scores 0:</p>
       <ul class="lista-metodo">
-        <li>aridez = 0,7 · inv(lluvia anual) + 0,3 · inv(humedad relativa)</li>
-        <li>frío = inv(temperatura de superficie nocturna, MODIS)</li>
-        <li>ciclo térmico = norm(amplitud día-noche de la superficie)</li>
-        <li>superficie estable = inv(erosividad de la lluvia)</li>
-        <li>terreno plano = inv(pendiente media) — pendiente aún sin dato</li>
+        <li>aridity = 0.7 · inv(annual rainfall) + 0.3 · inv(relative humidity)</li>
+        <li>cold = inv(nighttime land surface temperature, MODIS)</li>
+        <li>thermal cycling = norm(day-night surface temperature range)</li>
+        <li>surface stability = inv(rainfall erosivity)</li>
+        <li>flat terrain = inv(mean slope) — slope not yet available</li>
       </ul>
-      <p class="nota">norm(x) = (x − mín) ÷ (máx − mín), inv(x) = 1 − norm(x). En los sitios de Marte estos criterios valen 1, porque Marte es el extremo. Como la escala es relativa, un 1 significa "el más marciano de los lugares colombianos", no "igual a Marte".</p>
+      <p class="nota">norm(x) = (x − min) ÷ (max − min), inv(x) = 1 − norm(x). On the Mars sites these criteria equal 1, because Mars is the extreme. Since the scale is relative, a 1 means "the most Mars-like of the Colombian places", not "identical to Mars".</p>
 
-      <h3>Datos faltantes</h3>
-      <p>Si un lugar no tiene dato medido para un criterio, ese criterio <strong>se excluye del numerador y del denominador</strong> (no cuenta como 0). Cada resultado indica con cuántos de los criterios del sitio de Marte se calculó. Si se usó menos del <span id="cobertura-minima">60%</span>, se marca con ⚠ <strong>datos incompletos</strong>, se atenúa y va al final del ranking. Sin esta regla, Alta Guajira, sin datos de temperatura de superficie, podía salir casi al 100 % solo por su aridez.</p>
+      <h3>Missing data</h3>
+      <p>If a place has no measured value for a criterion, that criterion is <strong>excluded from both the numerator and the denominator</strong> (it does not count as 0). Each result shows how many of the Mars site's criteria were used. If fewer than <span id="cobertura-minima">60%</span> were used, the result is flagged ⚠ <strong>incomplete data</strong>, dimmed and moved to the bottom of the ranking. Without this rule, Alta Guajira, which has no land surface temperature data, could score close to 100% on aridity alone.</p>
 
-  
-      <p class="nota cita">Fuentes de los datos medidos: NASA POWER Project; Wan, Z., Hook, S., Hulley, G. MOD11A2 v061, NASA LP DAAC; AppEEARS Team (2026), NASA LP DAAC.</p>
+
+      <p class="nota cita">Sources of the measured data: NASA POWER Project; Wan, Z., Hook, S., Hulley, G. MOD11A2 v061, NASA LP DAAC; AppEEARS Team (2026), NASA LP DAAC.</p>
     </div>
     <div class="metodologia__col">
-      <h3>Criterios y pesos por perfil</h3>
+      <h3>Criteria and weights by profile</h3>
       <table id="tabla-pesos" class="tabla-pesos"></table>
     </div>
   </section>
 
   <footer class="pie">
-    <p>Proyecto educativo. Mapas base: © OpenStreetMap, © OpenTopoMap, NASA Mars Trek (NASA/JPL/USGS). Datos de clima: NASA POWER y NASA MODIS (LP DAAC). Las imágenes pertenecen a sus autores (ver crédito en cada ficha).</p>
+    <p>Educational project. Base maps: © OpenStreetMap, © OpenTopoMap, NASA Mars Trek (NASA/JPL/USGS). Climate data: NASA POWER and NASA MODIS (LP DAAC). Images belong to their authors (see the credit on each card).</p>
   </footer>
 
   <script src="lib/leaflet.js"></script>
