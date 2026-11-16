@@ -1,5 +1,5 @@
 {
-  "_nota": "nivel: 'principal' o 'secundario'. Atributos 0-1 PRELIMINARES. 'clima' viene de data/datos_completos_8_sitios.xlsx: NASA POWER (aire, humedad, radiación, lluvia; promedio 2020–2026, celda ~50 km) y NASA MODIS MOD11A2 v061 vía AppEEARS (temperatura de superficie, mediana 2019–2026). Erosividad = índice de Fournier modificado. null = dato no obtenido.",
+  "_nota": "nivel: 'principal' o 'secundario'. 'atributos' = criterios geológicos 0-1 asignados por el equipo (PRELIMINARES). 'medidos' = datos de data/datos_completos_8_sitios.xlsx (NASA POWER 2020-2026 y NASA MODIS MOD11A2 v061 vía AppEEARS); null = sin dato. 'atributos_operativos' los escribe scripts/calcular_atributos.py: no editarlos a mano.",
   "lugares": [
     {
       "id": "tatacoa",
@@ -25,13 +25,38 @@
         }
       ],
       "atributos": {
-        "aridez": 0.8,
         "sedimentos": 0.9,
         "arcillas": 0.7,
         "sulfatos": 0.2,
-        "sales": 0.2,
-        "frio": 0
+        "sales": 0.2
       },
+      "atributos_operativos": {
+        "aridez": 0.71,
+        "frio": 0.0,
+        "ciclo_termico": 0.6,
+        "superficie_estable": 0.62,
+        "terreno_plano": null
+      },
+      "medidos": {
+        "t_aire_media": 20.46,
+        "t_aire_max": 27.85,
+        "t_aire_min": 15.02,
+        "lst_dia_mediana": 36,
+        "lst_dia_p95": 42.23,
+        "lst_noche_mediana": 25.59,
+        "lst_noche_p5": 23.11,
+        "amplitud_termica": 10.41,
+        "humedad_relativa": 80.03,
+        "radiacion_kwh_m2_dia": 4.54,
+        "lluvia_anual_mm": 1367.55,
+        "erosividad_mfi": 160.31,
+        "pct_validos_dia": 68.79,
+        "pct_validos_noche": 60.83,
+        "elevacion_m": null,
+        "pendiente_media": null,
+        "pendiente_max": null
+      },
+      "notas_datos": "",
       "imagen": "img/colombia/tatacoa.jpeg",
       "credito_imagen": "",
       "fuentes": [
@@ -43,36 +68,15 @@
           "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
           "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
         }
-      ],
-      "clima": {
-        "temp_aire": {
-          "media": 20.46,
-          "max": 27.85,
-          "min": 15.02
-        },
-        "temp_superficie": {
-          "dia": 36,
-          "noche": 25.59,
-          "amplitud": 10.41
-        },
-        "humedad_relativa": 80.03,
-        "radiacion_solar": 4.54,
-        "lluvia_anual": 1367.55,
-        "erosividad_mfi": 160.31,
-        "punto_muestreo": [
-          3.23,
-          -75.17
-        ],
-        "nota": ""
-      }
+      ]
     },
     {
       "id": "zipaquira",
       "nombre": "Mina de sal de Zipaquirá",
       "nivel": "principal",
       "departamento": "Cundinamarca",
-      "lat": 5.019,
-      "lon": -74.012,
+      "lat": 5.02,
+      "lon": -74.01,
       "resumen": "Mina subterránea de halita (sal) donde está la Catedral de Sal.",
       "porque": "Combina depósitos de sal, comparables con los depósitos de cloruros de Marte, con un ambiente subterráneo cerrado, útil para simular hábitats en tubos de lava y estudiar microorganismos que viven en sal.",
       "datos": [
@@ -94,9 +98,35 @@
         "subterraneo": 1,
         "sulfatos": 0.4,
         "sedimentos": 0.5,
-        "arcillas": 0.3,
-        "frio": 0.2
+        "arcillas": 0.3
       },
+      "atributos_operativos": {
+        "aridez": 0.24,
+        "frio": 0.63,
+        "ciclo_termico": 0.73,
+        "superficie_estable": 0.32,
+        "terreno_plano": null
+      },
+      "medidos": {
+        "t_aire_media": 13.93,
+        "t_aire_max": 20.26,
+        "t_aire_min": 8.08,
+        "lst_dia_mediana": 19.6,
+        "lst_dia_p95": 23.97,
+        "lst_noche_mediana": 7.43,
+        "lst_noche_p5": 1.47,
+        "amplitud_termica": 12.17,
+        "humedad_relativa": 86.54,
+        "radiacion_kwh_m2_dia": 5.05,
+        "lluvia_anual_mm": 1950.34,
+        "erosividad_mfi": 217.58,
+        "pct_validos_dia": 71.34,
+        "pct_validos_noche": 89.49,
+        "elevacion_m": null,
+        "pendiente_media": null,
+        "pendiente_max": null
+      },
+      "notas_datos": "MODIS mide la superficie del pueblo, no el interior de la mina; su valor como análogo es el ambiente subterráneo estable.",
       "imagen": "img/colombia/zipaquira.png",
       "credito_imagen": "",
       "fuentes": [
@@ -108,36 +138,15 @@
           "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
           "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
         }
-      ],
-      "clima": {
-        "temp_aire": {
-          "media": 13.93,
-          "max": 20.26,
-          "min": 8.08
-        },
-        "temp_superficie": {
-          "dia": 19.6,
-          "noche": 7.43,
-          "amplitud": 12.17
-        },
-        "humedad_relativa": 86.54,
-        "radiacion_solar": 5.05,
-        "lluvia_anual": 1950.34,
-        "erosividad_mfi": 217.58,
-        "punto_muestreo": [
-          5.02,
-          -74.01
-        ],
-        "nota": ""
-      }
+      ]
     },
     {
       "id": "guajira",
       "nombre": "Alta Guajira",
       "nivel": "principal",
       "departamento": "La Guajira",
-      "lat": 12.2,
-      "lon": -72.0,
+      "lat": 12.47,
+      "lon": -71.73,
       "resumen": "El desierto más extenso de Colombia, con dunas, llanuras secas y salinas costeras (Manaure).",
       "porque": "La aridez, la radiación solar intensa, los suelos pobres y las salinas evaporíticas lo hacen análogo de llanuras secas y depósitos salinos de Marte.",
       "datos": [
@@ -155,12 +164,38 @@
         }
       ],
       "atributos": {
-        "aridez": 1,
         "sales": 0.7,
         "sedimentos": 0.7,
         "sulfatos": 0.3,
         "arcillas": 0.4
       },
+      "atributos_operativos": {
+        "aridez": 0.99,
+        "frio": null,
+        "ciclo_termico": null,
+        "superficie_estable": 1.0,
+        "terreno_plano": null
+      },
+      "medidos": {
+        "t_aire_media": 27.72,
+        "t_aire_max": 30.04,
+        "t_aire_min": 26.04,
+        "lst_dia_mediana": null,
+        "lst_dia_p95": null,
+        "lst_noche_mediana": null,
+        "lst_noche_p5": null,
+        "amplitud_termica": null,
+        "humedad_relativa": 80.27,
+        "radiacion_kwh_m2_dia": 5.79,
+        "lluvia_anual_mm": 395.91,
+        "erosividad_mfi": 86.73,
+        "pct_validos_dia": 0,
+        "pct_validos_noche": 0,
+        "elevacion_m": null,
+        "pendiente_media": null,
+        "pendiente_max": null
+      },
+      "notas_datos": "El punto cae sobre el mar; MODIS sin datos. Pendiente reubicar tierra adentro.",
       "imagen": "img/colombia/guajira.jpg",
       "credito_imagen": "The magnificent sand dunes at Taroa in the Alta Guajira. Photo: María Claudia Peña.",
       "fuentes": [
@@ -172,44 +207,48 @@
           "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
           "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
         }
-      ],
-      "clima": {
-        "temp_aire": {
-          "media": 27.72,
-          "max": 30.04,
-          "min": 26.04
-        },
-        "temp_superficie": {
-          "dia": null,
-          "noche": null,
-          "amplitud": null
-        },
-        "humedad_relativa": 80.27,
-        "radiacion_solar": 5.79,
-        "lluvia_anual": 395.91,
-        "erosividad_mfi": 86.73,
-        "punto_muestreo": [
-          12.47,
-          -71.73
-        ],
-        "nota": "Sin temperatura de superficie MODIS: el punto de muestreo (Punta Gallinas) cae sobre el mar."
-      }
+      ]
     },
     {
       "id": "candelaria",
       "nombre": "Desierto de la Candelaria",
       "nivel": "secundario",
       "departamento": "Boyacá",
-      "lat": 5.53,
-      "lon": -73.65,
+      "lat": 5.55,
+      "lon": -73.63,
       "resumen": "Zona semiárida cerca de Ráquira con suelos erosionados y arcillosos.",
       "porque": "Erosión y arcillas expuestas en clima de altura.",
       "atributos": {
-        "aridez": 0.6,
         "sedimentos": 0.7,
-        "arcillas": 0.6,
-        "frio": 0.3
+        "arcillas": 0.6
       },
+      "atributos_operativos": {
+        "aridez": 0.44,
+        "frio": 0.54,
+        "ciclo_termico": 0.9,
+        "superficie_estable": 0.5,
+        "terreno_plano": null
+      },
+      "medidos": {
+        "t_aire_media": 15.72,
+        "t_aire_max": 22.58,
+        "t_aire_min": 9.38,
+        "lst_dia_mediana": 24.95,
+        "lst_dia_p95": 29.89,
+        "lst_noche_mediana": 10.27,
+        "lst_noche_p5": 4.11,
+        "amplitud_termica": 14.68,
+        "humedad_relativa": 83.86,
+        "radiacion_kwh_m2_dia": 4.56,
+        "lluvia_anual_mm": 1685.8,
+        "erosividad_mfi": 183.47,
+        "pct_validos_dia": 93.95,
+        "pct_validos_noche": 86.94,
+        "elevacion_m": null,
+        "pendiente_media": null,
+        "pendiente_max": null
+      },
+      "notas_datos": "",
       "imagen": "img/colombia/candelaria.jpg",
       "credito_imagen": "",
       "fuentes": [
@@ -221,45 +260,50 @@
           "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
           "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
         }
-      ],
-      "clima": {
-        "temp_aire": {
-          "media": 15.72,
-          "max": 22.58,
-          "min": 9.38
-        },
-        "temp_superficie": {
-          "dia": 24.95,
-          "noche": 10.27,
-          "amplitud": 14.68
-        },
-        "humedad_relativa": 83.86,
-        "radiacion_solar": 4.56,
-        "lluvia_anual": 1685.8,
-        "erosividad_mfi": 183.47,
-        "punto_muestreo": [
-          5.55,
-          -73.63
-        ],
-        "nota": ""
-      }
+      ]
     },
     {
       "id": "ruiz",
       "nombre": "Nevado del Ruiz",
       "nivel": "secundario",
       "departamento": "Caldas / Tolima",
-      "lat": 4.892,
-      "lon": -75.322,
+      "lat": 4.89,
+      "lon": -75.32,
       "resumen": "Volcán activo con glaciar, en el Parque Nacional Natural Los Nevados.",
       "porque": "Hielo sobre roca volcánica, frío, altitud y fumarolas: interacción hielo-volcán similar a la propuesta para algunas regiones de Marte.",
       "atributos": {
         "hielo": 0.8,
-        "frio": 0.9,
         "volcanico": 1,
         "hidrotermal": 0.7,
         "sulfatos": 0.5
       },
+      "atributos_operativos": {
+        "aridez": 0.27,
+        "frio": 1.0,
+        "ciclo_termico": 0.54,
+        "superficie_estable": 0.5,
+        "terreno_plano": null
+      },
+      "medidos": {
+        "t_aire_media": 16.46,
+        "t_aire_max": 23.02,
+        "t_aire_min": 11.03,
+        "lst_dia_mediana": 6.52,
+        "lst_dia_p95": 14.99,
+        "lst_noche_mediana": -3.03,
+        "lst_noche_p5": -5.99,
+        "amplitud_termica": 9.55,
+        "humedad_relativa": 86.75,
+        "radiacion_kwh_m2_dia": 4.5,
+        "lluvia_anual_mm": 1809.1,
+        "erosividad_mfi": 184.1,
+        "pct_validos_dia": 65.61,
+        "pct_validos_noche": 84.71,
+        "elevacion_m": null,
+        "pendiente_media": null,
+        "pendiente_max": null
+      },
+      "notas_datos": "Temperatura del aire de POWER (celda ~50 km) promedia la región, no la cima; para frío se usa la temperatura de superficie MODIS.",
       "imagen": "img/colombia/ruiz.jpg",
       "credito_imagen": "Vista general del sector Refugio, en el Complejo Volcánico Nevado del Ruiz. Foto: David Tovar, investigador del GCPA de la UNAL",
       "fuentes": [
@@ -283,44 +327,49 @@
           "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
           "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
         }
-      ],
-      "clima": {
-        "temp_aire": {
-          "media": 16.46,
-          "max": 23.02,
-          "min": 11.03
-        },
-        "temp_superficie": {
-          "dia": 6.52,
-          "noche": -3.03,
-          "amplitud": 9.55
-        },
-        "humedad_relativa": 86.75,
-        "radiacion_solar": 4.5,
-        "lluvia_anual": 1809.1,
-        "erosividad_mfi": 184.1,
-        "punto_muestreo": [
-          4.89,
-          -75.32
-        ],
-        "nota": "La temperatura del aire (NASA POWER, celda ~50 km) promedia la región, no la cima del nevado."
-      }
+      ]
     },
     {
       "id": "tolima",
       "nombre": "Nevado del Tolima",
       "nivel": "secundario",
       "departamento": "Tolima",
-      "lat": 4.658,
+      "lat": 4.66,
       "lon": -75.33,
       "resumen": "Volcán glaciado en el PNN Los Nevados.",
       "porque": "Hielo, frío y suelos volcánicos de alta montaña.",
       "atributos": {
         "hielo": 0.7,
-        "frio": 0.9,
         "volcanico": 0.8,
         "hidrotermal": 0.3
       },
+      "atributos_operativos": {
+        "aridez": 0.33,
+        "frio": 0.94,
+        "ciclo_termico": 0.65,
+        "superficie_estable": 0.57,
+        "terreno_plano": null
+      },
+      "medidos": {
+        "t_aire_media": 15.47,
+        "t_aire_max": 21.86,
+        "t_aire_min": 9.99,
+        "lst_dia_mediana": 9.89,
+        "lst_dia_p95": 18.37,
+        "lst_noche_mediana": -1.17,
+        "lst_noche_p5": -3.55,
+        "amplitud_termica": 11.06,
+        "humedad_relativa": 86.8,
+        "radiacion_kwh_m2_dia": 4.5,
+        "lluvia_anual_mm": 1615.01,
+        "erosividad_mfi": 170.6,
+        "pct_validos_dia": 49.36,
+        "pct_validos_noche": 83.44,
+        "elevacion_m": null,
+        "pendiente_media": null,
+        "pendiente_max": null
+      },
+      "notas_datos": "Temperatura del aire de POWER (celda ~50 km) promedia la región, no la cima; para frío se usa la temperatura de superficie MODIS.",
       "imagen": "img/colombia/tolima.jpeg",
       "credito_imagen": "Parque Natural los Nevados Foto: John Jairo Bonilla.",
       "fuentes": [
@@ -336,28 +385,7 @@
           "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
           "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
         }
-      ],
-      "clima": {
-        "temp_aire": {
-          "media": 15.47,
-          "max": 21.86,
-          "min": 9.99
-        },
-        "temp_superficie": {
-          "dia": 9.89,
-          "noche": -1.17,
-          "amplitud": 11.06
-        },
-        "humedad_relativa": 86.8,
-        "radiacion_solar": 4.5,
-        "lluvia_anual": 1615.01,
-        "erosividad_mfi": 170.6,
-        "punto_muestreo": [
-          4.66,
-          -75.33
-        ],
-        "nota": "La temperatura del aire (NASA POWER, celda ~50 km) promedia la región, no la cima del nevado."
-      }
+      ]
     },
     {
       "id": "gorgona",
@@ -372,6 +400,33 @@
         "volcanico": 0.6,
         "hidrotermal": 0.2
       },
+      "atributos_operativos": {
+        "aridez": 0.07,
+        "frio": 0.12,
+        "ciclo_termico": 0.0,
+        "superficie_estable": 0.0,
+        "terreno_plano": null
+      },
+      "medidos": {
+        "t_aire_media": 26.86,
+        "t_aire_max": 28.41,
+        "t_aire_min": 25.25,
+        "lst_dia_mediana": 23.89,
+        "lst_dia_p95": 26.57,
+        "lst_noche_mediana": 22.05,
+        "lst_noche_p5": 18.6,
+        "amplitud_termica": 1.84,
+        "humedad_relativa": 85.31,
+        "radiacion_kwh_m2_dia": 4.27,
+        "lluvia_anual_mm": 2704.2,
+        "erosividad_mfi": 280.29,
+        "pct_validos_dia": 44.27,
+        "pct_validos_noche": 25.16,
+        "elevacion_m": null,
+        "pendiente_media": null,
+        "pendiente_max": null
+      },
+      "notas_datos": "Solo 25% de datos nocturnos MODIS válidos por nubosidad.",
       "imagen": "img/colombia/gorgona.jpg",
       "credito_imagen": "Afloramiento de roca que corresponde a basaltos de la Isla Gorgona. Fotos: David Tovar, candidato a doctor en Ciencias - Geociencias de la UNAL.",
       "fuentes": [
@@ -387,28 +442,7 @@
           "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
           "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
         }
-      ],
-      "clima": {
-        "temp_aire": {
-          "media": 26.86,
-          "max": 28.41,
-          "min": 25.25
-        },
-        "temp_superficie": {
-          "dia": 23.89,
-          "noche": 22.05,
-          "amplitud": 1.84
-        },
-        "humedad_relativa": 85.31,
-        "radiacion_solar": 4.27,
-        "lluvia_anual": 2704.2,
-        "erosividad_mfi": 280.29,
-        "punto_muestreo": [
-          2.97,
-          -78.18
-        ],
-        "nota": "Solo 25 % de datos nocturnos MODIS válidos por nubosidad."
-      }
+      ]
     },
     {
       "id": "paipa",
@@ -416,15 +450,41 @@
       "nivel": "secundario",
       "departamento": "Boyacá",
       "lat": 5.78,
-      "lon": -73.12,
+      "lon": -73.11,
       "resumen": "Manantiales termales ricos en sales y sulfatos.",
       "porque": "Los sistemas hidrotermales son candidatos a haber albergado vida en Marte antiguo.",
       "atributos": {
         "hidrotermal": 1,
         "sales": 0.6,
-        "sulfatos": 0.5,
-        "frio": 0.2
+        "sulfatos": 0.5
       },
+      "atributos_operativos": {
+        "aridez": 0.51,
+        "frio": 0.6,
+        "ciclo_termico": 1.0,
+        "superficie_estable": 0.59,
+        "terreno_plano": null
+      },
+      "medidos": {
+        "t_aire_media": 14.58,
+        "t_aire_max": 21.89,
+        "t_aire_min": 7.49,
+        "lst_dia_mediana": 24.45,
+        "lst_dia_p95": 30.39,
+        "lst_noche_mediana": 8.38,
+        "lst_noche_p5": 0.92,
+        "amplitud_termica": 16.07,
+        "humedad_relativa": 82.84,
+        "radiacion_kwh_m2_dia": 4.56,
+        "lluvia_anual_mm": 1591.16,
+        "erosividad_mfi": 165.48,
+        "pct_validos_dia": 91.72,
+        "pct_validos_noche": 87.26,
+        "elevacion_m": null,
+        "pendiente_media": null,
+        "pendiente_max": null
+      },
+      "notas_datos": "",
       "imagen": "img/colombia/paipa.png",
       "credito_imagen": "Paipa Hot springs, Colombia. Source: Photos taken by Hermes H. Bolivar-Torres",
       "fuentes": [
@@ -436,28 +496,8 @@
           "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
           "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
         }
-      ],
-      "clima": {
-        "temp_aire": {
-          "media": 14.58,
-          "max": 21.89,
-          "min": 7.49
-        },
-        "temp_superficie": {
-          "dia": 24.45,
-          "noche": 8.38,
-          "amplitud": 16.07
-        },
-        "humedad_relativa": 82.84,
-        "radiacion_solar": 4.56,
-        "lluvia_anual": 1591.16,
-        "erosividad_mfi": 165.48,
-        "punto_muestreo": [
-          5.78,
-          -73.11
-        ],
-        "nota": ""
-      }
+      ]
     }
-  ]
+  ],
+  "cita_datos": "NASA POWER Project; Wan, Z., Hook, S., Hulley, G. MOD11A2 v061, NASA LP DAAC; AppEEARS Team (2026), NASA LP DAAC."
 }

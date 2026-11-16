@@ -166,7 +166,65 @@ code { font-family: var(--mono); font-size: 0.85em; color: var(--tenue); }
 .barra-sim span { display: block; height: 100%; }
 .ranking__valor { font-family: var(--mono); text-align: right; color: var(--tenue); }
 
+/* ---------- selector de perfil ---------- */
+.perfil {
+  display: inline-flex; gap: 4px; margin-top: 10px;
+  background: var(--superficie-2); padding: 3px; border-radius: var(--radio);
+}
+.perfil__opcion {
+  font: 600 0.74rem var(--sans); text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--tenue); background: transparent; border: 0;
+  padding: 7px 12px; border-radius: 3px; cursor: pointer;
+}
+.perfil__opcion:hover { color: var(--texto); }
+.perfil__opcion.activa { background: var(--rojo); color: #fff; }
+.perfil__opcion:focus-visible { outline: 2px solid var(--azul-claro); outline-offset: 2px; }
+.perfil__nota { font-size: 0.8rem; color: var(--tenue); margin: 6px 0 0; }
+
+.etiqueta-perfil {
+  display: inline-block; font-family: var(--mono); font-size: 0.72rem;
+  text-transform: uppercase; letter-spacing: .08em;
+  padding: 2px 8px; border-radius: 99px; border: 1px solid;
+}
+.etiqueta-perfil--base { color: var(--rojo); border-color: rgba(252,61,33,.5); }
+.etiqueta-perfil--ciencia { color: var(--azul-claro); border-color: rgba(79,156,249,.5); }
+
+/* ---------- datos incompletos ---------- */
+.ranking__nombre small, .ranking__cobertura {
+  display: block; font-family: var(--mono); font-size: 0.68rem; color: var(--tenue);
+}
+.ranking__fila--incompleta { opacity: 0.55; }
+.ranking__fila--incompleta .ranking__valor { color: #ffb4a8; }
+.similitud--incompleta { opacity: 0.75; border-left-style: dashed; }
+.aviso-datos {
+  font-size: 0.82rem; color: #ffb4a8; background: rgba(252,61,33,.1);
+  border-left: 3px solid var(--rojo); padding: 6px 10px; border-radius: 0 var(--radio) var(--radio) 0;
+}
+.leyenda__incompleto {
+  width: 12px; height: 12px; background: rgba(163,172,189,.3) !important;
+  border: 1.5px dashed var(--tenue) !important;
+}
+
+/* ---------- tabla de datos medidos ---------- */
+.medidos { width: 100%; border-collapse: collapse; margin: 4px 0 10px; font-size: 0.85rem; }
+.medidos th, .medidos td { padding: 4px 0; border-bottom: 1px solid var(--borde); text-align: left; vertical-align: top; }
+.medidos th[scope="row"] { font-weight: 400; color: var(--tenue); padding-right: 10px; }
+.medidos td { font-family: var(--mono); text-align: right; white-space: nowrap; }
+.medidos__grupo {
+  font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--azul-claro); padding-top: 10px !important;
+}
+.cita { font-style: italic; }
+
 /* ---------- metodología y pie ---------- */
+.lista-metodo { font-family: var(--mono); font-size: 0.82rem; color: var(--azul-claro); padding-left: 18px; }
+.lista-metodo li { margin-bottom: 4px; }
+.metodologia h3 { margin-top: 18px; }
+.tabla-pesos { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.tabla-pesos th, .tabla-pesos td { padding: 6px 4px; border-bottom: 1px solid var(--borde); text-align: left; }
+.tabla-pesos th { font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: .1em; color: var(--tenue); font-weight: 500; }
+.tabla-pesos td.peso, .tabla-pesos th:nth-child(n+3) { text-align: right; }
+.peso--cero { opacity: 0.35; }
 .metodologia {
   display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px;
   margin: 10px 28px 0; padding: 28px; background: var(--superficie);

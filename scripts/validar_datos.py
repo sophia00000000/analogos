@@ -1,56 +1,84 @@
-"""Valida los JSON de data/ y muestra la matriz de similitud en consola.
+"""Valida los JSON de data/ y muestra la matriz de similitud por perfil.
+
+Los criterios y pesos se leen del bloque MODELO de js/config.js, así que no hay
+que duplicarlos aquí. Correr después de scripts/calcular_atributos.py.
 
 Uso:  python scripts/validar_datos.py
 """
-import json
 import sys
 from pathlib import Path
 
-RAIZ = Path(__file__).resolve().parent.parent
-# Deben coincidir con CONFIG.criterios en js/config.js
-PESOS = {
-    "hielo": 1.5, "arcillas": 1.2, "sulfatos": 1.2, "sales": 1.0, "sedimentos": 1.0,
-    "aridez": 0.8, "frio": 0.8, "volcanico": 1.0, "subterraneo": 1.0, "hidrotermal": 1.0,
-}
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from modelo import RAIZ, cargar_json, cargar_modelo, similitud, utf8_consola  # noqa: E402
+
+MEDIDOS = ["t_aire_media", "t_aire_max", "t_aire_min", "lst_dia_mediana", "lst_dia_p95",
+           "lst_noche_mediana", "lst_noche_p5", "amplitud_termica", "humedad_relativa",
+           "radiacion_kwh_m2_dia", "lluvia_anual_mm", "erosividad_mfi", "pct_validos_dia",
+           "pct_validos_noche", "elevacion_m", "pendiente_media", "pendiente_max"]
 
 
-def similitud(extra, col):
-    num = sum(p * min(extra["atributos"].get(k, 0), col["atributos"].get(k, 0)) for k, p in PESOS.items())
-    den = sum(p * extra["atributos"].get(k, 0) for k, p in PESOS.items())
-    return num / den if den else 0
-
-
-def revisar(sitio, errores):
+def revisar(sitio, modelo, errores, es_colombia):
+    sid = sitio.get("id", "?")
     for campo in ("id", "nombre", "lat", "lon", "atributos"):
         if campo not in sitio:
-            errores.append(f"{sitio.get('id', '?')}: falta '{campo}'")
+            errores.append(f"{sid}: falta '{campo}'")
     if not -90 <= sitio.get("lat", 0) <= 90 or not -180 <= sitio.get("lon", 0) <= 180:
-        errores.append(f"{sitio['id']}: coordenadas fuera de rango")
+        errores.append(f"{sid}: coordenadas fuera de rango")
+    crit = modelo["criterios"]
     for k, v in sitio.get("atributos", {}).items():
-        if k not in PESOS:
-            errores.append(f"{sitio['id']}: criterio desconocido '{k}'")
-        if not 0 <= v <= 1:
-            errores.append(f"{sitio['id']}: '{k}' debe estar entre 0 y 1")
+        if k not in crit:
+            errores.append(f"{sid}: criterio desconocido '{k}'")
+        elif es_colombia and crit[k]["fuente"] == "operativos":
+            errores.append(f"{sid}: '{k}' es un criterio medido; va en 'atributos_operativos' (lo escribe calcular_atributos.py)")
+        if v is not None and not 0 <= v <= 1:
+            errores.append(f"{sid}: '{k}' debe estar entre 0 y 1")
+    if es_colombia:
+        op = sitio.get("atributos_operativos")
+        if op is None:
+            errores.append(f"{sid}: falta 'atributos_operativos' (corre scripts/calcular_atributos.py)")
+        else:
+            for k, v in op.items():
+                if v is not None and not 0 <= v <= 1:
+                    errores.append(f"{sid}: atributo operativo '{k}' fuera de 0-1")
+        if "medidos" not in sitio:
+            errores.append(f"{sid}: falta 'medidos'")
+    else:
+        if sitio.get("perfil") not in modelo["perfiles"]:
+            errores.append(f"{sid}: 'perfil' debe ser uno de {list(modelo['perfiles'])}")
     imagen = sitio.get("imagen")
     if imagen and not (RAIZ / imagen).exists():
         print(f"  (aviso) falta imagen: {imagen}")
 
 
 def main():
-    extra = json.loads((RAIZ / "data/extraterrestres.json").read_text(encoding="utf-8"))
-    col = json.loads((RAIZ / "data/colombia.json").read_text(encoding="utf-8"))["lugares"]
+    utf8_consola()
+    modelo = cargar_modelo()
+    marte = cargar_json("data/extraterrestres.json")["marte"]
+    col = cargar_json("data/colombia.json")["lugares"]
     errores = []
-    for cuerpo in ("marte",):
-        for s in extra[cuerpo]:
-            revisar(s, errores)
+    for s in marte:
+        revisar(s, modelo, errores, es_colombia=False)
     for l in col:
-        revisar(l, errores)
+        revisar(l, modelo, errores, es_colombia=True)
 
-    for cuerpo in ("marte",):
-        print(f"\n=== {cuerpo.upper()} ===")
-        print(f"{'':28}" + "".join(f"{l['id'][:9]:>10}" for l in col))
-        for s in extra[cuerpo]:
-            print(f"{s['nombre'][:27]:28}" + "".join(f"{similitud(s, l):>10.0%}" for l in col))
+    print("\nMediciones faltantes (null):")
+    for l in col:
+        faltan = [k for k in MEDIDOS if (l.get("medidos") or {}).get(k) is None]
+        print(f"  {l['nombre'][:27]:28} {', '.join(faltan) if faltan else '—'}")
+
+    minimo = modelo["cobertura_minima"]
+    for perfil, p in modelo["perfiles"].items():
+        print(f"\n=== PERFIL {p['nombre'].upper()} ===   (⚠ = datos incompletos, cobertura < {minimo:.0%})")
+        print(f"{'':28}" + "".join(f"{l['id'][:9]:>11}" for l in col))
+        for s in marte:
+            celdas = []
+            for l in col:
+                v, usados, disp = similitud(s, l, perfil, modelo)
+                marca = "⚠" if disp and usados / disp < minimo else " "
+                celdas.append(f"{marca}{v:>5.0%} {usados}/{disp}")
+            propio = "*" if s.get("perfil") == perfil else " "
+            print(f"{propio}{s['nombre'][:26]:27}" + "".join(f"{c:>11}" for c in celdas))
+        print("  * = perfil propio del sitio · n/m = criterios usados / disponibles")
 
     if errores:
         print("\nERRORES:")

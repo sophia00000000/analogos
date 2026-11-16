@@ -45,6 +45,11 @@
       <div class="tarjeta__cabecera">
         <p class="sobretitulo">Paso 2</p>
         <h2 id="titulo-colombia">Análogos en Colombia</h2>
+        <div class="perfil" role="group" aria-label="Perfil de similitud">
+          <button class="perfil__opcion activa" data-perfil="ciencia" aria-pressed="true">Ciencia</button>
+          <button class="perfil__opcion" data-perfil="base" aria-pressed="false">Aterrizaje y base</button>
+        </div>
+        <p id="perfil-nota" class="perfil__nota"></p>
       </div>
       <div id="mapa-colombia" class="mapa" role="application" aria-label="Mapa interactivo de Colombia"></div>
       <div class="leyenda" id="leyenda" aria-label="Leyenda de similitud"></div>
@@ -67,13 +72,34 @@
     <div class="metodologia__col">
       <p class="sobretitulo">Metodología</p>
       <h2>¿Cómo medimos la similitud?</h2>
-      <p>Cada sitio (de Marte o de Colombia) tiene un puntaje de 0 a 1 en varios criterios ambientales y geológicos. La similitud mide <strong>qué parte de lo que hace especial al sitio extraterrestre está presente en el lugar de Colombia</strong>:</p>
+      <p>Cada sitio (de Marte o de Colombia) tiene un puntaje de 0 a 1 en varios criterios. La similitud mide <strong>qué parte de lo que hace especial al sitio de Marte está presente en el lugar de Colombia</strong>:</p>
       <p class="formula">similitud = Σ w<sub>k</sub> · min(E<sub>k</sub>, C<sub>k</sub>) ÷ Σ w<sub>k</sub> · E<sub>k</sub></p>
-      <p class="nota">E = sitio de Marte, C = lugar en Colombia, w = peso del criterio. Los puntajes actuales son <strong>preliminares</strong> y deben ajustarse con la investigación del equipo.</p>
+      <p class="nota">E = sitio de Marte, C = lugar en Colombia, w = peso del criterio según el perfil.</p>
+
+      <h3>Dos perfiles</h3>
+      <p><strong>Ciencia</strong> (Jezero, Gale, Mawrth Vallis, Valles Marineris) da más peso a la geología del agua: arcillas, sulfatos, sales, sedimentos e hidrotermalismo. <strong>Aterrizaje y base</strong> (Arcadia, Utopia, Deuteronilus, Hellas, Arsia) da más peso a las condiciones de operación: terreno plano, hielo, aridez, ciclo térmico, frío y superficie estable. Por defecto se usa el perfil del sitio, pero el selector del Paso 2 permite comparar el mismo sitio con el otro perfil.</p>
+
+      <h3>De dónde salen los puntajes</h3>
+      <p><strong>Geología</strong> (hielo, arcillas, sulfatos, sales, sedimentos, volcánico, subterráneo, hidrotermal): los asigna el equipo a partir de la literatura; son <strong>preliminares</strong>.</p>
+      <p><strong>Medidos</strong> (aridez, frío, ciclo térmico, superficie estable, terreno plano): se calculan con datos de NASA POWER y NASA MODIS, normalizados con <strong>min-max entre los 8 lugares de Colombia</strong>. El lugar más parecido a Marte en cada variable vale 1 y el menos parecido, 0:</p>
+      <ul class="lista-metodo">
+        <li>aridez = 0,7 · inv(lluvia anual) + 0,3 · inv(humedad relativa)</li>
+        <li>frío = inv(temperatura de superficie nocturna, MODIS)</li>
+        <li>ciclo térmico = norm(amplitud día-noche de la superficie)</li>
+        <li>superficie estable = inv(erosividad de la lluvia)</li>
+        <li>terreno plano = inv(pendiente media) — pendiente aún sin dato</li>
+      </ul>
+      <p class="nota">norm(x) = (x − mín) ÷ (máx − mín), inv(x) = 1 − norm(x). En los sitios de Marte estos criterios valen 1, porque Marte es el extremo. Como la escala es relativa, un 1 significa "el más marciano de los lugares colombianos", no "igual a Marte".</p>
+
+      <h3>Datos faltantes</h3>
+      <p>Si un lugar no tiene dato medido para un criterio, ese criterio <strong>se excluye del numerador y del denominador</strong> (no cuenta como 0). Cada resultado indica con cuántos de los criterios del sitio de Marte se calculó. Si se usó menos del <span id="cobertura-minima">60%</span>, se marca con ⚠ <strong>datos incompletos</strong>, se atenúa y va al final del ranking. Sin esta regla, Alta Guajira, sin datos de temperatura de superficie, podía salir casi al 100 % solo por su aridez.</p>
+
+  
+      <p class="nota cita">Fuentes de los datos medidos: NASA POWER Project; Wan, Z., Hook, S., Hulley, G. MOD11A2 v061, NASA LP DAAC; AppEEARS Team (2026), NASA LP DAAC.</p>
     </div>
     <div class="metodologia__col">
-      <h3>Criterios y pesos</h3>
-      <ul id="lista-criterios" class="criterios"></ul>
+      <h3>Criterios y pesos por perfil</h3>
+      <table id="tabla-pesos" class="tabla-pesos"></table>
     </div>
   </section>
 

@@ -3,11 +3,12 @@
   "use strict";
 
   const estado = {
-    cuerpo: "marte",
-    datosExtra: null,     // { marte: [...] }
+    sitios: [],           // sitios de Marte
     lugares: [],          // lugares de Colombia
-    sitio: null,          // sitio extraterrestre seleccionado
+    citaDatos: "",        // cita de las fuentes de los datos medidos
+    sitio: null,          // sitio de Marte seleccionado
     lugar: null,          // lugar de Colombia seleccionado
+    perfilManual: null,   // null = usar el perfil del sitio; "ciencia" | "base" = elegido por el usuario
     mapaPlaneta: null,
     capaSitios: null,
     mapaColombia: null,
@@ -20,6 +21,22 @@
   const esc = (t) =>
     String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const pct = (v) => `${Math.round(v * 100)}%`;
+  const nombrePerfil = (p) => CONFIG.perfiles[p].nombre;
+
+  /** Perfil activo: el elegido en el selector o, si no, el del sitio. */
+  function perfilActivo() {
+    return estado.perfilManual || (estado.sitio ? estado.sitio.perfil : "ciencia");
+  }
+
+  function sim(lugar) {
+    return estado.sitio ? Similitud.calcular(estado.sitio, lugar, perfilActivo(), CONFIG) : null;
+  }
+
+  const textoCobertura = (r) => `calculado con ${r.usados} de ${r.disponibles} criterios`;
+  const avisoIncompleto = (r) =>
+    `Datos incompletos (${r.usados} de ${r.disponibles} criterios): faltan datos medidos de ` +
+    r.faltantes.map((k) => CONFIG.criterios[k].nombre.toLowerCase()).join(", ") +
+    ". El porcentaje solo usa los criterios con dato y puede exagerar el parecido.";
 
   // ---------------------------------------------------------------- inicio
   async function iniciar() {
@@ -28,8 +45,9 @@
         fetch("data/extraterrestres.json").then((r) => r.json()),
         fetch("data/colombia.json").then((r) => r.json()),
       ]);
-      estado.datosExtra = extra;
+      estado.sitios = extra.marte;
       estado.lugares = col.lugares;
+      estado.citaDatos = col.cita_datos || "";
     } catch (err) {
       console.error(err);
       document.body.insertAdjacentHTML(
@@ -43,8 +61,31 @@
     crearMapaColombia();
     crearMapaPlaneta();
     pintarLeyenda();
-    pintarCriterios();
+    pintarMetodologia();
+    pintarSelectorPerfil();
     pintarRanking();
+
+    document.querySelectorAll(".perfil__opcion").forEach((b) =>
+      b.addEventListener("click", () => cambiarPerfil(b.dataset.perfil))
+    );
+    leerEnlace();
+  }
+
+  /** Enlace directo: index.html#sitio=gale&perfil=base&lugar=tatacoa */
+  function leerEnlace() {
+    const p = new URLSearchParams(location.hash.slice(1));
+    if (estado.sitios.some((s) => s.id === p.get("sitio"))) seleccionarSitio(p.get("sitio"));
+    if (CONFIG.perfiles[p.get("perfil")]) cambiarPerfil(p.get("perfil"));
+    if (estado.lugares.some((l) => l.id === p.get("lugar"))) seleccionarLugar(p.get("lugar"), false);
+  }
+
+  function escribirEnlace() {
+    const p = new URLSearchParams();
+    if (estado.sitio) p.set("sitio", estado.sitio.id);
+    if (estado.perfilManual) p.set("perfil", estado.perfilManual);
+    if (estado.lugar) p.set("lugar", estado.lugar.id);
+    const hash = p.toString();
+    history.replaceState(null, "", hash ? "#" + hash : location.pathname + location.search);
   }
 
   // ------------------------------------------------------- mapa de Colombia
@@ -69,19 +110,23 @@
     estado.marcadoresLugar = {};
 
     estado.lugares.forEach((lugar) => {
-      const sim = estado.sitio ? Similitud.calcular(estado.sitio, lugar, CONFIG.criterios) : null;
-      const cls = sim === null ? null : Similitud.clase(sim, CONFIG.clases);
+      const r = sim(lugar);
+      const cls = r === null ? null : Similitud.clase(r.valor, CONFIG.clases);
+      const incompleto = r !== null && r.incompleto;
       const seleccionado = estado.lugar && estado.lugar.id === lugar.id;
 
       const m = L.circleMarker([lugar.lat, lugar.lon], {
         radius: cls ? cls.radio : 7,
-        color: seleccionado ? "#ffffff" : "#0b0d12",
+        color: seleccionado ? "#ffffff" : incompleto ? "#a3acbd" : "#0b0d12",
         weight: seleccionado ? 3 : 1.5,
+        dashArray: incompleto ? "3 3" : null,
         fillColor: cls ? cls.color : "#C9D1DE",
-        fillOpacity: 0.92,
+        fillOpacity: incompleto ? 0.3 : 0.92,
       });
-      const etiqueta = sim === null ? esc(lugar.nombre) : `${esc(lugar.nombre)} · <b>${pct(sim)}</b>`;
-      m.bindTooltip(etiqueta, { direction: "top", offset: [0, -6] });
+      const etiqueta = r === null
+        ? esc(lugar.nombre)
+        : `${esc(lugar.nombre)} · <b>${incompleto ? "⚠ " : ""}${pct(r.valor)}</b>`;
+      m.bindTooltip(etiqueta + (incompleto ? "<br><small>datos incompletos</small>" : ""), { direction: "top", offset: [0, -6] });
       m.on("click", () => seleccionarLugar(lugar.id));
       m.addTo(estado.capaLugares);
       estado.marcadoresLugar[lugar.id] = m;
@@ -91,11 +136,9 @@
     });
   }
 
-  // ------------------------------------------------- mapa del cuerpo celeste
+  // ------------------------------------------------------------ mapa de Marte
   function crearMapaPlaneta() {
-    const cfgCuerpo = CONFIG.cuerpos[estado.cuerpo];
-    if (estado.mapaPlaneta) estado.mapaPlaneta.remove();
-
+    const cfgCuerpo = CONFIG.cuerpos.marte;
     const contenedor = $("#mapa-planeta");
     contenedor.style.background = cfgCuerpo.fondo;
 
@@ -112,7 +155,6 @@
     });
     mapa.attributionControl.setPrefix(false);
     estado.mapaPlaneta = mapa;
-    // Encuadra todo el planeta (incluidos los sitios polares)
     mapa.fitBounds([[-90, -180], [90, 180]]);
 
     cargarFuente(mapa, cfgCuerpo, 0);
@@ -164,7 +206,7 @@
   function pintarSitios() {
     estado.capaSitios.clearLayers();
     estado.marcadoresSitio = {};
-    estado.datosExtra[estado.cuerpo].forEach((sitio) => {
+    estado.sitios.forEach((sitio) => {
       const icono = L.divIcon({
         className: "",
         html: `<span class="pin${estado.sitio && estado.sitio.id === sitio.id ? " pin--activo" : ""}"></span>`,
@@ -172,7 +214,7 @@
         iconAnchor: [11, 11],
       });
       const m = L.marker([sitio.lat, sitio.lon], { icon: icono, keyboard: true, title: sitio.nombre });
-      m.bindTooltip(esc(sitio.nombre), { direction: "top", offset: [0, -10] });
+      m.bindTooltip(`${esc(sitio.nombre)}<br><small>${esc(nombrePerfil(sitio.perfil))}</small>`, { direction: "top", offset: [0, -10] });
       m.on("click", () => seleccionarSitio(sitio.id));
       m.addTo(estado.capaSitios);
       estado.marcadoresSitio[sitio.id] = m;
@@ -181,21 +223,36 @@
 
   // ------------------------------------------------------------- acciones
   function seleccionarSitio(id) {
-    estado.sitio = estado.datosExtra[estado.cuerpo].find((s) => s.id === id);
+    estado.sitio = estado.sitios.find((s) => s.id === id);
+    estado.perfilManual = null; // cada sitio arranca con su propio perfil
     pintarSitios();
     pintarFichaSitio();
+    actualizarComparacion();
+  }
+
+  function cambiarPerfil(perfil) {
+    estado.perfilManual = estado.sitio && perfil === estado.sitio.perfil ? null : perfil;
+    actualizarComparacion();
+  }
+
+  function actualizarComparacion() {
+    pintarSelectorPerfil();
     pintarLugares();
     pintarRanking();
     if (estado.lugar) pintarDetalle();
+    escribirEnlace();
   }
 
-  function seleccionarLugar(id) {
+  function seleccionarLugar(id, animar = true) {
     estado.lugar = estado.lugares.find((l) => l.id === id);
     pintarLugares();
     pintarRanking();
     pintarDetalle();
-    estado.mapaColombia.flyTo([estado.lugar.lat, estado.lugar.lon], Math.max(estado.mapaColombia.getZoom(), 7), { duration: 0.8 });
-    if (window.matchMedia("(max-width: 1100px)").matches) $("#detalle").scrollIntoView({ behavior: "smooth" });
+    escribirEnlace();
+    const zoom = Math.max(estado.mapaColombia.getZoom(), 7);
+    if (animar) estado.mapaColombia.flyTo([estado.lugar.lat, estado.lugar.lon], zoom, { duration: 0.8 });
+    else estado.mapaColombia.setView([estado.lugar.lat, estado.lugar.lon], zoom);
+    if (animar && window.matchMedia("(max-width: 1100px)").matches) $("#detalle").scrollIntoView({ behavior: "smooth" });
   }
 
   // ------------------------------------------------------------- render
@@ -215,6 +272,24 @@
       .join("")}</ul>`;
   }
 
+  function pintarSelectorPerfil() {
+    const activo = perfilActivo();
+    document.querySelectorAll(".perfil__opcion").forEach((b) => {
+      const sel = b.dataset.perfil === activo;
+      b.classList.toggle("activa", sel);
+      b.setAttribute("aria-pressed", String(sel));
+    });
+    const nota = $("#perfil-nota");
+    if (!estado.sitio) {
+      nota.textContent = "Al elegir un sitio se usa su perfil; luego puedes compararlo con el otro.";
+    } else if (estado.perfilManual) {
+      nota.innerHTML = `Comparando ${esc(estado.sitio.nombre)} con el perfil <b>${esc(nombrePerfil(activo))}</b> ` +
+        `(su perfil propio es ${esc(nombrePerfil(estado.sitio.perfil))}).`;
+    } else {
+      nota.innerHTML = `Perfil activo: <b>${esc(nombrePerfil(activo))}</b> (el del sitio elegido).`;
+    }
+  }
+
   function pintarFichaSitio() {
     const s = estado.sitio;
     const lonTexto = `${Math.abs(s.lon).toFixed(2)}° ${s.lon >= 0 ? "E" : "O"}`;
@@ -226,6 +301,7 @@
       <div class="ficha__cuerpo">
         <p class="sobretitulo">${esc(s.uso)}</p>
         <h3>${esc(s.nombre)}</h3>
+        <p><span class="etiqueta-perfil etiqueta-perfil--${esc(s.perfil)}">Perfil: ${esc(nombrePerfil(s.perfil))}</span></p>
         <p class="coordenadas">${latTexto} · ${lonTexto}</p>
         <p>${esc(s.resumen)}</p>
         <p class="tenue">${esc(s.porque)}</p>
@@ -236,21 +312,25 @@
   function pintarRanking() {
     const lista = $("#ranking");
     if (!estado.sitio) {
-      lista.innerHTML = `<li class="ranking__vacio">Elige un sitio en ${esc(CONFIG.cuerpos[estado.cuerpo].nombre)} para ordenar los análogos.</li>`;
+      lista.innerHTML = `<li class="ranking__vacio">Elige un sitio en Marte para ordenar los análogos.</li>`;
       return;
     }
+    // Los resultados con datos incompletos van al final para que no parezcan los mejores.
     const filas = estado.lugares
-      .map((l) => ({ l, sim: Similitud.calcular(estado.sitio, l, CONFIG.criterios) }))
-      .sort((a, b) => b.sim - a.sim);
+      .map((l) => ({ l, r: sim(l) }))
+      .sort((a, b) => (a.r.incompleto - b.r.incompleto) || (b.r.valor - a.r.valor));
     lista.innerHTML = filas
-      .map(({ l, sim }) => {
-        const cls = Similitud.clase(sim, CONFIG.clases);
+      .map(({ l, r }) => {
+        const cls = Similitud.clase(r.valor, CONFIG.clases);
         const activo = estado.lugar && estado.lugar.id === l.id ? " activo" : "";
-        return `<li><button class="ranking__fila${activo}" data-id="${esc(l.id)}">
+        const inc = r.incompleto ? " ranking__fila--incompleta" : "";
+        const titulo = r.incompleto ? avisoIncompleto(r) : textoCobertura(r);
+        return `<li><button class="ranking__fila${activo}${inc}" data-id="${esc(l.id)}" title="${esc(titulo)}">
           <span class="punto" style="background:${cls.color}"></span>
-          <span class="ranking__nombre">${esc(l.nombre)}${l.nivel === "principal" ? ' <span class="chip">principal</span>' : ""}</span>
-          <span class="barra-sim"><span style="width:${pct(sim)};background:${cls.color}"></span></span>
-          <span class="ranking__valor">${pct(sim)}</span>
+          <span class="ranking__nombre">${esc(l.nombre)}${l.nivel === "principal" ? ' <span class="chip">principal</span>' : ""}
+            <small class="ranking__cobertura">${r.incompleto ? "⚠ datos incompletos · " : ""}${r.usados} de ${r.disponibles} criterios</small></span>
+          <span class="barra-sim"><span style="width:${pct(r.valor)};background:${cls.color}"></span></span>
+          <span class="ranking__valor">${r.incompleto ? "⚠ " : ""}${pct(r.valor)}</span>
         </button></li>`;
       })
       .join("");
@@ -262,19 +342,22 @@
     const d = $("#detalle");
     d.className = "ficha";
 
-    let bloqueSim = `<p class="nota">Elige un sitio en ${esc(CONFIG.cuerpos[estado.cuerpo].nombre)} para ver qué tan parecido es.</p>`;
+    let bloqueSim = `<p class="nota">Elige un sitio en Marte para ver qué tan parecido es.</p>`;
     if (estado.sitio) {
-      const sim = Similitud.calcular(estado.sitio, l, CONFIG.criterios);
-      const cls = Similitud.clase(sim, CONFIG.clases);
-      const aportes = Similitud.aportes(estado.sitio, l, CONFIG.criterios);
+      const r = sim(l);
+      const cls = Similitud.clase(r.valor, CONFIG.clases);
+      const aportes = Similitud.aportes(estado.sitio, l, perfilActivo(), CONFIG);
       bloqueSim = `
-        <div class="similitud" style="--c:${cls.color}">
-          <div class="similitud__valor">${pct(sim)}</div>
+        <div class="similitud${r.incompleto ? " similitud--incompleta" : ""}" style="--c:${cls.color}"
+             ${r.incompleto ? `title="${esc(avisoIncompleto(r))}"` : ""}>
+          <div class="similitud__valor">${r.incompleto ? "⚠ " : ""}${pct(r.valor)}</div>
           <div>
             <p class="similitud__clase">${esc(cls.nombre)}</p>
-            <p class="tenue">frente a ${esc(estado.sitio.nombre)}</p>
+            <p class="tenue">frente a ${esc(estado.sitio.nombre)} · perfil ${esc(nombrePerfil(perfilActivo()))}</p>
+            <p class="tenue">${textoCobertura(r)}</p>
           </div>
         </div>
+        ${r.incompleto ? `<p class="aviso-datos">⚠ ${esc(avisoIncompleto(r))}</p>` : ""}
         ${aportes.length ? `<p class="sobretitulo">Lo que comparten</p>
           <ul class="aportes">${aportes.map((a) => `<li>${esc(a.nombre)}</li>`).join("")}</ul>` : ""}`;
     }
@@ -292,47 +375,81 @@
         <p>${esc(l.resumen)}</p>
         <p class="tenue">${esc(l.porque)}</p>
         ${datos ? `<dl class="datos">${datos}</dl>` : ""}
-        ${climaHTML(l.clima)}
+        ${medidosHTML(l)}
         <p class="sobretitulo">Para profundizar</p>
         ${fuentesHTML(l.fuentes)}
       </div>`;
   }
 
-  /** Datos oficiales de clima y superficie (NASA POWER y NASA MODIS). */
-  function climaHTML(c) {
-    if (!c) return "";
-    const n = (v, u, dec = 1) =>
-      v === null || v === undefined ? "sin dato" : `${Number(v).toFixed(dec).replace(".", ",")} ${u}`;
-    const filas = [
-      ["Aire · media", n(c.temp_aire.media, "°C")],
-      ["Aire · máx / mín", `${n(c.temp_aire.max, "°C")} / ${n(c.temp_aire.min, "°C")}`],
-      ["Superficie · día", n(c.temp_superficie.dia, "°C")],
-      ["Superficie · noche", n(c.temp_superficie.noche, "°C")],
-      ["Amplitud día-noche", n(c.temp_superficie.amplitud, "°C")],
-      ["Humedad relativa", n(c.humedad_relativa, "%", 0)],
-      ["Radiación solar", n(c.radiacion_solar, "kWh/m²/día", 2)],
-      ["Lluvia anual", n(c.lluvia_anual, "mm", 0)],
-      ["Erosividad (Fournier mod.)", n(c.erosividad_mfi, "", 0).trim()],
+  /** Tabla "Datos medidos" (NASA POWER y NASA MODIS). */
+  function medidosHTML(l) {
+    const m = l.medidos;
+    if (!m) return "";
+    const vacio = (v) => v === null || v === undefined;
+    const num = (v, u, dec = 1) =>
+      vacio(v) ? "—" : `${Number(v).toFixed(dec).replace(".", ",")}${u ? " " + u : ""}`;
+    const pend = (v, u, dec = 0) => (vacio(v) ? "pendiente" : num(v, u, dec));
+    const conPercentil = (med, p) => (vacio(med) ? "—" : `${num(med, "°C")} (${num(p, "°C")})`);
+    const grupos = [
+      ["Temperatura", [
+        ["Aire · media", num(m.t_aire_media, "°C")],
+        ["Aire · máx. / mín.", `${num(m.t_aire_max, "°C")} / ${num(m.t_aire_min, "°C")}`],
+        ["Superficie día · mediana (p95)", conPercentil(m.lst_dia_mediana, m.lst_dia_p95)],
+        ["Superficie noche · mediana (p5)", conPercentil(m.lst_noche_mediana, m.lst_noche_p5)],
+        ["Amplitud día-noche (superficie)", num(m.amplitud_termica, "°C")],
+      ]],
+      ["Humedad y radiación", [
+        ["Humedad relativa", num(m.humedad_relativa, "%", 0)],
+        ["Radiación solar (no entra al cálculo)", num(m.radiacion_kwh_m2_dia, "kWh/m²/día", 2)],
+      ]],
+      ["Lluvia y erosión", [
+        ["Lluvia anual", num(m.lluvia_anual_mm, "mm", 0)],
+        ["Erosividad (Fournier mod.)", num(m.erosividad_mfi, "", 0)],
+      ]],
+      ["Relieve", [
+        ["Elevación", pend(m.elevacion_m, "m")],
+        ["Pendiente media", pend(m.pendiente_media, "°", 1)],
+        ["Pendiente máx.", pend(m.pendiente_max, "°", 1)],
+      ]],
     ];
+    const op = l.atributos_operativos || {};
+    const opTxt = ["aridez", "frio", "ciclo_termico", "superficie_estable", "terreno_plano"]
+      .map((k) => `${CONFIG.criterios[k].nombre}: ${vacio(op[k]) ? "sin dato" : op[k].toFixed(2)}`)
+      .join(" · ");
     return `
-      <p class="sobretitulo">Datos oficiales · NASA POWER y MODIS</p>
-      <dl class="datos datos--clima">${filas
-        .map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`)
-        .join("")}</dl>
-      <p class="nota">Aire, humedad, radiación y lluvia: NASA POWER, promedio 2020–2026 (celda ~50 km).
-        Superficie: NASA MODIS Terra MOD11A2 v061 (1 km), mediana 2019–2026.${c.nota ? " " + esc(c.nota) : ""}</p>`;
+      <p class="sobretitulo">Datos medidos</p>
+      <table class="medidos">
+        ${grupos.map(([g, filas]) => `
+          <tbody>
+            <tr><th colspan="2" class="medidos__grupo">${esc(g)}</th></tr>
+            ${filas.map(([k, v]) => `<tr><th scope="row">${esc(k)}</th><td>${esc(v)}</td></tr>`).join("")}
+          </tbody>`).join("")}
+      </table>
+      ${l.notas_datos ? `<p class="aviso-datos">${esc(l.notas_datos)}</p>` : ""}
+      <p class="nota">Observaciones MODIS válidas: día ${num(m.pct_validos_dia, "%", 0)} · noche ${num(m.pct_validos_noche, "%", 0)}.
+        Aire, humedad, radiación y lluvia: NASA POWER, promedio 2020–2026 (celda ~50 km).
+        Superficie: NASA MODIS Terra MOD11A2 v061 (1 km), 2019–2026.</p>
+      <p class="nota"><b>Puntajes calculados (0–1):</b> ${esc(opTxt)}.</p>
+      ${estado.citaDatos ? `<p class="nota cita">Fuente: ${esc(estado.citaDatos)}</p>` : ""}`;
   }
 
   function pintarLeyenda() {
     $("#leyenda").innerHTML = CONFIG.clases
       .map((c) => `<span><i style="background:${c.color};width:${c.radio + 4}px;height:${c.radio + 4}px"></i>${esc(c.nombre)}</span>`)
-      .join("");
+      .join("") + `<span><i class="leyenda__incompleto"></i>⚠ Datos incompletos</span>`;
   }
 
-  function pintarCriterios() {
-    $("#lista-criterios").innerHTML = Object.values(CONFIG.criterios)
-      .map((c) => `<li><span>${esc(c.nombre)}</span><span class="peso">×${c.peso.toFixed(1)}</span></li>`)
-      .join("");
+  function pintarMetodologia() {
+    const perfiles = Object.entries(CONFIG.perfiles);
+    const origen = (c) => (c.fuente === "operativos" ? "medido" : "geología");
+    $("#tabla-pesos").innerHTML = `
+      <thead><tr><th>Criterio</th><th>Origen</th>${perfiles.map(([, p]) => `<th>${esc(p.nombre)}</th>`).join("")}</tr></thead>
+      <tbody>${Object.entries(CONFIG.criterios)
+        .map(([k, c]) => `<tr><td>${esc(c.nombre)}</td><td class="tenue">${origen(c)}</td>${perfiles
+          .map(([, p]) => `<td class="peso${p.pesos[k] ? "" : " peso--cero"}">${(p.pesos[k] || 0).toFixed(1)}</td>`)
+          .join("")}</tr>`)
+        .join("")}</tbody>`;
+    $("#cobertura-minima").textContent = pct(CONFIG.coberturaMinima);
   }
 
   document.addEventListener("DOMContentLoaded", iniciar);

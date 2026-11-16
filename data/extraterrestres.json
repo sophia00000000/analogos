@@ -1,9 +1,10 @@
 {
-  "_nota": "Sitios de Marte. Coordenadas en grados (latitud, longitud este en rango -180..180). Atributos 0-1 PRELIMINARES: ajustar con la investigación del equipo.",
+  "_nota": "Sitios de Marte. 'perfil': 'base' (aterrizaje y base) o 'ciencia'. Coordenadas en grados (longitud este -180..180). aridez, frio, ciclo_termico y superficie_estable valen 1 (Marte es el extremo); terreno_plano = 1 en los sitios de base. Los demás atributos 0-1 son PRELIMINARES.",
   "marte": [
     {
       "id": "arcadia",
       "nombre": "Arcadia Planitia",
+      "perfil": "base",
       "lat": 46.7,
       "lon": -175.7,
       "resumen": "Llanura baja y plana con hielo casi puro a menos de 1 m de profundidad.",
@@ -11,9 +12,12 @@
       "uso": "Base permanente / aterrizaje",
       "atributos": {
         "hielo": 1,
-        "frio": 0.9,
-        "aridez": 0.7,
-        "sedimentos": 0.3
+        "frio": 1,
+        "aridez": 1,
+        "sedimentos": 0.3,
+        "ciclo_termico": 1,
+        "superficie_estable": 1,
+        "terreno_plano": 1
       },
       "imagen": "img/marte/arcadia.jpg",
       "credito_imagen": "ESA/DLR/FU Berlin, bajo licencia CC BY-SA 3.0 IGO",
@@ -35,6 +39,7 @@
     {
       "id": "utopia",
       "nombre": "Utopia Planitia",
+      "perfil": "base",
       "lat": 46.7,
       "lon": 117.5,
       "resumen": "Llanura enorme y baja con hielo enterrado.",
@@ -42,10 +47,13 @@
       "uso": "Base permanente / aterrizaje",
       "atributos": {
         "hielo": 0.8,
-        "frio": 0.8,
-        "aridez": 0.7,
+        "frio": 1,
+        "aridez": 1,
         "sedimentos": 0.5,
-        "volcanico": 0.3
+        "volcanico": 0.3,
+        "ciclo_termico": 1,
+        "superficie_estable": 1,
+        "terreno_plano": 1
       },
       "imagen": "img/marte/utopia.jpg",
       "credito_imagen": "ESA / DLR / FU Berlin / CC BY-SA 3.0 IGO",
@@ -67,6 +75,7 @@
     {
       "id": "deuteronilus",
       "nombre": "Deuteronilus / Protonilus Mensae",
+      "perfil": "base",
       "lat": 43.9,
       "lon": 22.6,
       "resumen": "Glaciares cubiertos de detritos: grandes cantidades de hielo bajo polvo y roca.",
@@ -74,9 +83,12 @@
       "uso": "Base permanente",
       "atributos": {
         "hielo": 1,
-        "frio": 0.9,
-        "aridez": 0.6,
-        "sedimentos": 0.4
+        "frio": 1,
+        "aridez": 1,
+        "sedimentos": 0.4,
+        "ciclo_termico": 1,
+        "superficie_estable": 1,
+        "terreno_plano": 1
       },
       "imagen": "img/marte/deuteronilus.jpg",
       "credito_imagen": "CNSA/CLEP/PEC/MoRIC",
@@ -98,6 +110,7 @@
     {
       "id": "jezero",
       "nombre": "Cráter Jezero",
+      "perfil": "ciencia",
       "lat": 18.38,
       "lon": 77.58,
       "resumen": "Antiguo lago con delta donde trabaja el rover Perseverance.",
@@ -106,9 +119,11 @@
       "atributos": {
         "sedimentos": 1,
         "arcillas": 0.7,
-        "aridez": 0.8,
+        "aridez": 1,
         "hidrotermal": 0.3,
-        "frio": 0.6
+        "frio": 1,
+        "ciclo_termico": 1,
+        "superficie_estable": 1
       },
       "imagen": "img/marte/jezero.jpg",
       "credito_imagen": "ESA/DLR/FU Berlin, CC BY-SA 3.0 IGO",
@@ -130,6 +145,7 @@
     {
       "id": "gale",
       "nombre": "Cráter Gale",
+      "perfil": "ciencia",
       "lat": -5.4,
       "lon": 137.8,
       "resumen": "Arcillas y sulfatos hidratados; muy estudiado por el rover Curiosity.",
@@ -139,8 +155,10 @@
         "sedimentos": 0.9,
         "arcillas": 0.8,
         "sulfatos": 0.8,
-        "aridez": 0.8,
-        "frio": 0.6
+        "aridez": 1,
+        "frio": 1,
+        "ciclo_termico": 1,
+        "superficie_estable": 1
       },
       "imagen": "img/marte/gale.jpg",
       "credito_imagen": "NASA/JPL-Caltech/ESA/DLR/FU Berlin/MSSS",
@@ -158,6 +176,7 @@
     {
       "id": "mawrth",
       "nombre": "Mawrth Vallis",
+      "perfil": "ciencia",
       "lat": 22.6,
       "lon": -16.5,
       "resumen": "Abundantes arcillas: agua ligada en minerales.",
@@ -166,8 +185,10 @@
       "atributos": {
         "arcillas": 1,
         "sedimentos": 0.6,
-        "aridez": 0.8,
-        "frio": 0.6
+        "aridez": 1,
+        "frio": 1,
+        "ciclo_termico": 1,
+        "superficie_estable": 1
       },
       "imagen": "img/marte/Perspective_view_of_Mawrth_Vallis_3.jpg",
       "credito_imagen": "ESA/DLR/FU Berlin",
@@ -189,6 +210,7 @@
     {
       "id": "hellas",
       "nombre": "Hellas Planitia",
+      "perfil": "base",
       "lat": -42.4,
       "lon": 70.5,
       "resumen": "El punto más bajo del planeta, con la atmósfera más densa.",
@@ -197,8 +219,11 @@
       "atributos": {
         "hielo": 0.6,
         "sedimentos": 0.6,
-        "aridez": 0.7,
-        "frio": 0.6
+        "aridez": 1,
+        "frio": 1,
+        "ciclo_termico": 1,
+        "superficie_estable": 1,
+        "terreno_plano": 1
       },
       "imagen": "img/marte/hellas.jpg",
       "credito_imagen": "ESA/DLR/FU",
@@ -216,6 +241,7 @@
     {
       "id": "arsia",
       "nombre": "Tharsis / Arsia Mons",
+      "perfil": "base",
       "lat": -8.26,
       "lon": -120.1,
       "resumen": "Posibles tubos de lava que servirían de refugio natural.",
@@ -224,8 +250,11 @@
       "atributos": {
         "volcanico": 1,
         "subterraneo": 0.9,
-        "aridez": 0.9,
-        "frio": 0.8
+        "aridez": 1,
+        "frio": 1,
+        "ciclo_termico": 1,
+        "superficie_estable": 1,
+        "terreno_plano": 1
       },
       "imagen": "img/marte/arsia.jpg",
       "credito_imagen": "NASA/JPL/USGS",
@@ -247,6 +276,7 @@
     {
       "id": "valles",
       "nombre": "Valles Marineris",
+      "perfil": "ciencia",
       "lat": -13.9,
       "lon": -59.2,
       "resumen": "Sulfatos hidratados, buena luz y gran interés geológico.",
@@ -255,10 +285,12 @@
       "atributos": {
         "sulfatos": 0.9,
         "sedimentos": 0.7,
-        "aridez": 0.8,
+        "aridez": 1,
         "arcillas": 0.3,
         "sales": 0.3,
-        "frio": 0.5
+        "frio": 1,
+        "ciclo_termico": 1,
+        "superficie_estable": 1
       },
       "imagen": "img/marte/valles.jpg",
       "credito_imagen": "Generada con Celestia (Licencia GNU GPL",
