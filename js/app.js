@@ -4,7 +4,7 @@
 
   const estado = {
     cuerpo: "marte",
-    datosExtra: null,     // { marte: [...], luna: [...] }
+    datosExtra: null,     // { marte: [...] }
     lugares: [],          // lugares de Colombia
     sitio: null,          // sitio extraterrestre seleccionado
     lugar: null,          // lugar de Colombia seleccionado
@@ -45,10 +45,6 @@
     pintarLeyenda();
     pintarCriterios();
     pintarRanking();
-
-    document.querySelectorAll(".pestana").forEach((b) =>
-      b.addEventListener("click", () => cambiarCuerpo(b.dataset.cuerpo))
-    );
   }
 
   // ------------------------------------------------------- mapa de Colombia
@@ -103,18 +99,21 @@
     const contenedor = $("#mapa-planeta");
     contenedor.style.background = cfgCuerpo.fondo;
 
+    // Proyección geográfica (EPSG:4326): coincide con los mosaicos de NASA Trek
+    // y muestra los polos.
     const mapa = L.map(contenedor, {
+      crs: L.CRS.EPSG4326,
       zoomSnap: 0.25,
-      minZoom: 0.5,
-      maxZoom: 10,
+      minZoom: 0,
+      maxZoom: 9,
       worldCopyJump: true,
-      maxBounds: [[-88, -360], [88, 360]],
+      maxBounds: [[-90, -360], [90, 360]],
       attributionControl: true,
     });
     mapa.attributionControl.setPrefix(false);
     estado.mapaPlaneta = mapa;
     // Encuadra todo el planeta (incluidos los sitios polares)
-    mapa.fitBounds([[-84, -180], [84, 180]]);
+    mapa.fitBounds([[-90, -180], [90, 180]]);
 
     cargarFuente(mapa, cfgCuerpo, 0);
     dibujarCuadricula(mapa);
@@ -157,7 +156,7 @@
   function dibujarCuadricula(mapa) {
     const estilo = { color: "#ffffff", weight: 0.6, opacity: 0.25, interactive: false, dashArray: "2 4" };
     for (let lat = -60; lat <= 60; lat += 30) L.polyline([[lat, -540], [lat, 540]], estilo).addTo(mapa);
-    for (let lon = -540; lon <= 540; lon += 30) L.polyline([[-85, lon], [85, lon]], estilo).addTo(mapa);
+    for (let lon = -540; lon <= 540; lon += 30) L.polyline([[-90, lon], [90, lon]], estilo).addTo(mapa);
     // Ecuador destacado
     L.polyline([[0, -540], [0, 540]], { ...estilo, opacity: 0.45, dashArray: null }).addTo(mapa);
   }
@@ -166,16 +165,13 @@
     estado.capaSitios.clearLayers();
     estado.marcadoresSitio = {};
     estado.datosExtra[estado.cuerpo].forEach((sitio) => {
-      // La proyección del mapa no llega a los polos: los sitios polares se
-      // dibujan en el borde (±80°) y se avisa en la ficha.
-      const latVisible = Math.max(-80, Math.min(80, sitio.lat));
       const icono = L.divIcon({
         className: "",
         html: `<span class="pin${estado.sitio && estado.sitio.id === sitio.id ? " pin--activo" : ""}"></span>`,
         iconSize: [22, 22],
         iconAnchor: [11, 11],
       });
-      const m = L.marker([latVisible, sitio.lon], { icon: icono, keyboard: true, title: sitio.nombre });
+      const m = L.marker([sitio.lat, sitio.lon], { icon: icono, keyboard: true, title: sitio.nombre });
       m.bindTooltip(esc(sitio.nombre), { direction: "top", offset: [0, -10] });
       m.on("click", () => seleccionarSitio(sitio.id));
       m.addTo(estado.capaSitios);
@@ -184,24 +180,6 @@
   }
 
   // ------------------------------------------------------------- acciones
-  function cambiarCuerpo(cuerpo) {
-    if (cuerpo === estado.cuerpo) return;
-    estado.cuerpo = cuerpo;
-    estado.sitio = null;
-    document.querySelectorAll(".pestana").forEach((b) => {
-      const activa = b.dataset.cuerpo === cuerpo;
-      b.classList.toggle("activa", activa);
-      b.setAttribute("aria-selected", activa);
-    });
-    $("#nombre-cuerpo").textContent = CONFIG.cuerpos[cuerpo].nombre;
-    $("#ficha-planeta").className = "ficha ficha--vacia";
-    $("#ficha-planeta").innerHTML = "<p>Haz clic en un punto del mapa para ver sus análogos en Colombia.</p>";
-    crearMapaPlaneta();
-    pintarLugares();
-    pintarRanking();
-    if (estado.lugar) pintarDetalle();
-  }
-
   function seleccionarSitio(id) {
     estado.sitio = estado.datosExtra[estado.cuerpo].find((s) => s.id === id);
     pintarSitios();
@@ -226,7 +204,7 @@
       <figure class="foto">
         <img src="${esc(src)}" alt="${esc(alt)}" loading="lazy"
              onerror="this.parentElement.classList.add('foto--falta'); this.remove();" />
-        <figcaption>${credito ? esc(credito) : "Agrega la imagen en <code>" + esc(src) + "</code>"}</figcaption>
+        ${credito ? `<figcaption>Imagen: ${esc(credito)}</figcaption>` : ""}
       </figure>`;
   }
 
@@ -239,7 +217,6 @@
 
   function pintarFichaSitio() {
     const s = estado.sitio;
-    const polar = Math.abs(s.lat) > 80;
     const lonTexto = `${Math.abs(s.lon).toFixed(2)}° ${s.lon >= 0 ? "E" : "O"}`;
     const latTexto = `${Math.abs(s.lat).toFixed(2)}° ${s.lat >= 0 ? "N" : "S"}`;
     const ficha = $("#ficha-planeta");
@@ -249,7 +226,7 @@
       <div class="ficha__cuerpo">
         <p class="sobretitulo">${esc(s.uso)}</p>
         <h3>${esc(s.nombre)}</h3>
-        <p class="coordenadas">${latTexto} · ${lonTexto}${polar ? " · polar (marcador en el borde del mapa)" : ""}</p>
+        <p class="coordenadas">${latTexto} · ${lonTexto}</p>
         <p>${esc(s.resumen)}</p>
         <p class="tenue">${esc(s.porque)}</p>
         ${fuentesHTML(s.fuentes)}
@@ -315,9 +292,35 @@
         <p>${esc(l.resumen)}</p>
         <p class="tenue">${esc(l.porque)}</p>
         ${datos ? `<dl class="datos">${datos}</dl>` : ""}
+        ${climaHTML(l.clima)}
         <p class="sobretitulo">Para profundizar</p>
         ${fuentesHTML(l.fuentes)}
       </div>`;
+  }
+
+  /** Datos oficiales de clima y superficie (NASA POWER y NASA MODIS). */
+  function climaHTML(c) {
+    if (!c) return "";
+    const n = (v, u, dec = 1) =>
+      v === null || v === undefined ? "sin dato" : `${Number(v).toFixed(dec).replace(".", ",")} ${u}`;
+    const filas = [
+      ["Aire · media", n(c.temp_aire.media, "°C")],
+      ["Aire · máx / mín", `${n(c.temp_aire.max, "°C")} / ${n(c.temp_aire.min, "°C")}`],
+      ["Superficie · día", n(c.temp_superficie.dia, "°C")],
+      ["Superficie · noche", n(c.temp_superficie.noche, "°C")],
+      ["Amplitud día-noche", n(c.temp_superficie.amplitud, "°C")],
+      ["Humedad relativa", n(c.humedad_relativa, "%", 0)],
+      ["Radiación solar", n(c.radiacion_solar, "kWh/m²/día", 2)],
+      ["Lluvia anual", n(c.lluvia_anual, "mm", 0)],
+      ["Erosividad (Fournier mod.)", n(c.erosividad_mfi, "", 0).trim()],
+    ];
+    return `
+      <p class="sobretitulo">Datos oficiales · NASA POWER y MODIS</p>
+      <dl class="datos datos--clima">${filas
+        .map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`)
+        .join("")}</dl>
+      <p class="nota">Aire, humedad, radiación y lluvia: NASA POWER, promedio 2020–2026 (celda ~50 km).
+        Superficie: NASA MODIS Terra MOD11A2 v061 (1 km), mediana 2019–2026.${c.nota ? " " + esc(c.nota) : ""}</p>`;
   }
 
   function pintarLeyenda() {

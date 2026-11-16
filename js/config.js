@@ -26,34 +26,23 @@ window.CONFIG = {
     { min: 0.00, nombre: "No similar",   color: "#8A94A6", radio: 6 },
   ],
 
-  // Mapas base del cuerpo celeste. Se prueban en orden: si una fuente falla,
-  // se pasa a la siguiente. Si todas fallan se dibuja una cuadrícula para que
-  // el mapa siga siendo usable.
+  // Mapas base de Marte (NASA Trek, proyección geográfica EPSG:4326, cubre los
+  // polos). Se prueban en orden: si una fuente falla, se pasa a la siguiente.
+  // Si todas fallan se dibuja una cuadrícula para que el mapa siga siendo usable.
   cuerpos: {
     marte: {
       nombre: "Marte",
       fondo: "#7a3b20",
       fuentes: [
         {
-          url: "https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-mars-basemap-v0-2/all/{z}/{x}/{y}.png",
-          opciones: { tms: false, maxNativeZoom: 9 },
-          atribucion: "OpenPlanetary · NASA/USGS MOLA",
+          url: "https://trek.nasa.gov/tiles/Mars/EQ/Mars_Viking_MDIM21_ClrMosaic_global_232m/1.0.0/default/default028mm/{z}/{y}/{x}.jpg",
+          opciones: { maxNativeZoom: 7 },
+          atribucion: "NASA/JPL/USGS · Viking MDIM 2.1 vía NASA Mars Trek",
         },
         {
-          url: "https://s3-eu-west-1.amazonaws.com/whereonmars.cartodb.net/viking_mdim21_global/{z}/{x}/{y}.png",
-          opciones: { tms: true, maxNativeZoom: 7 },
-          atribucion: "NASA/USGS Viking MDIM 2.1 · OpenPlanetary",
-        },
-      ],
-    },
-    luna: {
-      nombre: "la Luna",
-      fondo: "#3b3f47",
-      fuentes: [
-        {
-          url: "https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-moon-basemap-v0-1/all/{z}/{x}/{y}.png",
-          opciones: { tms: false, maxNativeZoom: 8 },
-          atribucion: "OpenPlanetary · NASA/USGS LRO",
+          url: "https://trek.nasa.gov/tiles/Mars/EQ/Mars_MGS_MOLA_ClrShade_merge_global_463m/1.0.0/default/default028mm/{z}/{y}/{x}.jpg",
+          opciones: { maxNativeZoom: 5 },
+          atribucion: "NASA/GSFC · MGS MOLA vía NASA Mars Trek",
         },
       ],
     },
@@ -64,10 +53,6 @@ window.CONFIG = {
     centro: [4.6, -74.1],
     zoom: 6,
     capas: {
-      "Oscuro (CARTO)": {
-        url: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-        atribucion: "© OpenStreetMap · © CARTO",
-      },
       "Calles (OpenStreetMap)": {
         url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         atribucion: "© OpenStreetMap",

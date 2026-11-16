@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Análogos Terrestres · Colombia → Marte y Luna</title>
-  <meta name="description" content="Explorador interactivo de lugares de Colombia que funcionan como análogos de sitios de Marte y de bases lunares permanentes." />
+  <title>Análogos Terrestres · Colombia → Marte</title>
+  <meta name="description" content="Explorador interactivo de lugares de Colombia que funcionan como análogos de sitios de Marte." />
 
   <!-- Tipografía estilo NASA: Inter (texto) + DM Mono (datos técnicos) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,13 +21,9 @@
       <span class="barra__insignia" aria-hidden="true"></span>
       <div>
         <p class="sobretitulo">Reto · Análogos terrestres</p>
-        <h1>Colombia como laboratorio de Marte y la Luna</h1>
+        <h1>Colombia como laboratorio de Marte</h1>
       </div>
     </div>
-    <nav class="pestanas" role="tablist" aria-label="Cuerpo celeste">
-      <button class="pestana activa" role="tab" aria-selected="true" data-cuerpo="marte">Marte</button>
-      <button class="pestana" role="tab" aria-selected="false" data-cuerpo="luna">Luna</button>
-    </nav>
   </header>
 
   <main class="tablero">
@@ -35,9 +31,9 @@
     <section class="tarjeta tarjeta--planeta" aria-labelledby="titulo-planeta">
       <div class="tarjeta__cabecera">
         <p class="sobretitulo">Paso 1</p>
-        <h2 id="titulo-planeta">Elige un sitio en <span id="nombre-cuerpo">Marte</span></h2>
+        <h2 id="titulo-planeta">Elige un sitio en Marte</h2>
       </div>
-      <div id="mapa-planeta" class="mapa" role="application" aria-label="Mapa interactivo del cuerpo celeste"></div>
+      <div id="mapa-planeta" class="mapa" role="application" aria-label="Mapa interactivo de Marte"></div>
       <div id="aviso-planeta" class="aviso" hidden></div>
       <article id="ficha-planeta" class="ficha ficha--vacia">
         <p>Haz clic en un punto del mapa para ver por qué ese sitio es importante y cuáles lugares de Colombia se le parecen.</p>
@@ -71,9 +67,9 @@
     <div class="metodologia__col">
       <p class="sobretitulo">Metodología</p>
       <h2>¿Cómo medimos la similitud?</h2>
-      <p>Cada sitio (de Marte, la Luna o Colombia) tiene un puntaje de 0 a 1 en varios criterios ambientales y geológicos. La similitud mide <strong>qué parte de lo que hace especial al sitio extraterrestre está presente en el lugar de Colombia</strong>:</p>
+      <p>Cada sitio (de Marte o de Colombia) tiene un puntaje de 0 a 1 en varios criterios ambientales y geológicos. La similitud mide <strong>qué parte de lo que hace especial al sitio extraterrestre está presente en el lugar de Colombia</strong>:</p>
       <p class="formula">similitud = Σ w<sub>k</sub> · min(E<sub>k</sub>, C<sub>k</sub>) ÷ Σ w<sub>k</sub> · E<sub>k</sub></p>
-      <p class="nota">E = sitio extraterrestre, C = lugar en Colombia, w = peso del criterio. Los puntajes actuales son <strong>preliminares</strong> y deben ajustarse con la investigación del equipo.</p>
+      <p class="nota">E = sitio de Marte, C = lugar en Colombia, w = peso del criterio. Los puntajes actuales son <strong>preliminares</strong> y deben ajustarse con la investigación del equipo.</p>
     </div>
     <div class="metodologia__col">
       <h3>Criterios y pesos</h3>
@@ -82,7 +78,7 @@
   </section>
 
   <footer class="pie">
-    <p>Proyecto educativo. Mapas base: © OpenStreetMap, © CARTO, OpenPlanetary / USGS. Las imágenes pertenecen a sus autores (ver crédito en cada ficha).</p>
+    <p>Proyecto educativo. Mapas base: © OpenStreetMap, © OpenTopoMap, NASA Mars Trek (NASA/JPL/USGS). Datos de clima: NASA POWER y NASA MODIS (LP DAAC). Las imágenes pertenecen a sus autores (ver crédito en cada ficha).</p>
   </footer>
 
   <script src="lib/leaflet.js"></script>

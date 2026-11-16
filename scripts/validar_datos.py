@@ -40,13 +40,13 @@ def main():
     extra = json.loads((RAIZ / "data/extraterrestres.json").read_text(encoding="utf-8"))
     col = json.loads((RAIZ / "data/colombia.json").read_text(encoding="utf-8"))["lugares"]
     errores = []
-    for cuerpo in ("marte", "luna"):
+    for cuerpo in ("marte",):
         for s in extra[cuerpo]:
             revisar(s, errores)
     for l in col:
         revisar(l, errores)
 
-    for cuerpo in ("marte", "luna"):
+    for cuerpo in ("marte",):
         print(f"\n=== {cuerpo.upper()} ===")
         print(f"{'':28}" + "".join(f"{l['id'][:9]:>10}" for l in col))
         for s in extra[cuerpo]:

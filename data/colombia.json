@@ -1,127 +1,463 @@
 {
-  "_nota": "nivel: 'principal' (ficha completa) o 'secundario' (descripción corta + enlace). Atributos 0-1 y datos son PRELIMINARES: verificar con fuentes.",
+  "_nota": "nivel: 'principal' o 'secundario'. Atributos 0-1 PRELIMINARES. 'clima' viene de data/datos_completos_8_sitios.xlsx: NASA POWER (aire, humedad, radiación, lluvia; promedio 2020–2026, celda ~50 km) y NASA MODIS MOD11A2 v061 vía AppEEARS (temperatura de superficie, mediana 2019–2026). Erosividad = índice de Fournier modificado. null = dato no obtenido.",
   "lugares": [
     {
       "id": "tatacoa",
       "nombre": "Desierto de la Tatacoa",
       "nivel": "principal",
       "departamento": "Huila",
-      "lat": 3.23, "lon": -75.17,
+      "lat": 3.23,
+      "lon": -75.17,
       "resumen": "Bosque seco tropical con paisaje de cárcavas rojas y grises, muy erosionado.",
       "porque": "Sus capas de sedimentos y arcillas expuestas por erosión se parecen a los depósitos estratificados de cráteres como Gale o Jezero. Es un buen lugar para probar rovers, instrumentos y protocolos de muestreo.",
       "datos": [
-        { "etiqueta": "Tipo de ambiente", "valor": "Bosque seco tropical / zona árida" },
-        { "etiqueta": "Rasgos clave", "valor": "Cárcavas, sedimentos fosilíferos, arcillas" },
-        { "etiqueta": "Uso como análogo", "valor": "Pruebas de rovers y geología sedimentaria" }
+        {
+          "etiqueta": "Tipo de ambiente",
+          "valor": "Bosque seco tropical / zona árida"
+        },
+        {
+          "etiqueta": "Rasgos clave",
+          "valor": "Cárcavas, sedimentos fosilíferos, arcillas"
+        },
+        {
+          "etiqueta": "Uso como análogo",
+          "valor": "Pruebas de rovers y geología sedimentaria"
+        }
       ],
-      "atributos": { "aridez": 0.8, "sedimentos": 0.9, "arcillas": 0.7, "sulfatos": 0.2, "sales": 0.2, "frio": 0 },
-      "imagen": "img/colombia/tatacoa.jpg",
+      "atributos": {
+        "aridez": 0.8,
+        "sedimentos": 0.9,
+        "arcillas": 0.7,
+        "sulfatos": 0.2,
+        "sales": 0.2,
+        "frio": 0
+      },
+      "imagen": "img/colombia/tatacoa.jpeg",
       "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Desierto de la Tatacoa", "url": "https://es.wikipedia.org/wiki/Desierto_de_la_Tatacoa" }]
+      "fuentes": [
+        {
+          "titulo": "NASA POWER · clima 2020–2026",
+          "url": "https://power.larc.nasa.gov/"
+        },
+        {
+          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
+          "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
+        }
+      ],
+      "clima": {
+        "temp_aire": {
+          "media": 20.46,
+          "max": 27.85,
+          "min": 15.02
+        },
+        "temp_superficie": {
+          "dia": 36,
+          "noche": 25.59,
+          "amplitud": 10.41
+        },
+        "humedad_relativa": 80.03,
+        "radiacion_solar": 4.54,
+        "lluvia_anual": 1367.55,
+        "erosividad_mfi": 160.31,
+        "punto_muestreo": [
+          3.23,
+          -75.17
+        ],
+        "nota": ""
+      }
     },
     {
       "id": "zipaquira",
       "nombre": "Mina de sal de Zipaquirá",
       "nivel": "principal",
       "departamento": "Cundinamarca",
-      "lat": 5.019, "lon": -74.012,
+      "lat": 5.019,
+      "lon": -74.012,
       "resumen": "Mina subterránea de halita (sal) donde está la Catedral de Sal.",
       "porque": "Combina depósitos de sal, comparables con los depósitos de cloruros de Marte, con un ambiente subterráneo cerrado, útil para simular hábitats en tubos de lava y estudiar microorganismos que viven en sal.",
       "datos": [
-        { "etiqueta": "Tipo de ambiente", "valor": "Subterráneo, hipersalino" },
-        { "etiqueta": "Rasgos clave", "valor": "Halita, galerías, oscuridad, humedad estable" },
-        { "etiqueta": "Uso como análogo", "valor": "Hábitats subterráneos, astrobiología de sales" }
+        {
+          "etiqueta": "Tipo de ambiente",
+          "valor": "Subterráneo, hipersalino"
+        },
+        {
+          "etiqueta": "Rasgos clave",
+          "valor": "Halita, galerías, oscuridad, humedad estable"
+        },
+        {
+          "etiqueta": "Uso como análogo",
+          "valor": "Hábitats subterráneos, astrobiología de sales"
+        }
       ],
-      "atributos": { "sales": 1, "subterraneo": 1, "sulfatos": 0.4, "sedimentos": 0.5, "arcillas": 0.3, "frio": 0.2 },
-      "imagen": "img/colombia/zipaquira.jpg",
+      "atributos": {
+        "sales": 1,
+        "subterraneo": 1,
+        "sulfatos": 0.4,
+        "sedimentos": 0.5,
+        "arcillas": 0.3,
+        "frio": 0.2
+      },
+      "imagen": "img/colombia/zipaquira.png",
       "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Catedral de Sal de Zipaquirá", "url": "https://es.wikipedia.org/wiki/Catedral_de_Sal_de_Zipaquir%C3%A1" }]
+      "fuentes": [
+        {
+          "titulo": "NASA POWER · clima 2020–2026",
+          "url": "https://power.larc.nasa.gov/"
+        },
+        {
+          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
+          "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
+        }
+      ],
+      "clima": {
+        "temp_aire": {
+          "media": 13.93,
+          "max": 20.26,
+          "min": 8.08
+        },
+        "temp_superficie": {
+          "dia": 19.6,
+          "noche": 7.43,
+          "amplitud": 12.17
+        },
+        "humedad_relativa": 86.54,
+        "radiacion_solar": 5.05,
+        "lluvia_anual": 1950.34,
+        "erosividad_mfi": 217.58,
+        "punto_muestreo": [
+          5.02,
+          -74.01
+        ],
+        "nota": ""
+      }
     },
     {
       "id": "guajira",
       "nombre": "Alta Guajira",
       "nivel": "principal",
       "departamento": "La Guajira",
-      "lat": 12.2, "lon": -72.0,
+      "lat": 12.2,
+      "lon": -72.0,
       "resumen": "El desierto más extenso de Colombia, con dunas, llanuras secas y salinas costeras (Manaure).",
       "porque": "La aridez, la radiación solar intensa, los suelos pobres y las salinas evaporíticas lo hacen análogo de llanuras secas y depósitos salinos de Marte.",
       "datos": [
-        { "etiqueta": "Tipo de ambiente", "valor": "Desierto costero cálido" },
-        { "etiqueta": "Rasgos clave", "valor": "Dunas, salinas, viento constante, alta radiación" },
-        { "etiqueta": "Uso como análogo", "valor": "Pruebas de energía solar, polvo y evaporitas" }
+        {
+          "etiqueta": "Tipo de ambiente",
+          "valor": "Desierto costero cálido"
+        },
+        {
+          "etiqueta": "Rasgos clave",
+          "valor": "Dunas, salinas, viento constante, alta radiación"
+        },
+        {
+          "etiqueta": "Uso como análogo",
+          "valor": "Pruebas de energía solar, polvo y evaporitas"
+        }
       ],
-      "atributos": { "aridez": 1, "sales": 0.7, "sedimentos": 0.7, "sulfatos": 0.3, "arcillas": 0.4 },
+      "atributos": {
+        "aridez": 1,
+        "sales": 0.7,
+        "sedimentos": 0.7,
+        "sulfatos": 0.3,
+        "arcillas": 0.4
+      },
       "imagen": "img/colombia/guajira.jpg",
-      "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Península de La Guajira", "url": "https://es.wikipedia.org/wiki/Pen%C3%ADnsula_de_La_Guajira" }]
+      "credito_imagen": "The magnificent sand dunes at Taroa in the Alta Guajira. Photo: María Claudia Peña.",
+      "fuentes": [
+        {
+          "titulo": "NASA POWER · clima 2020–2026",
+          "url": "https://power.larc.nasa.gov/"
+        },
+        {
+          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
+          "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
+        }
+      ],
+      "clima": {
+        "temp_aire": {
+          "media": 27.72,
+          "max": 30.04,
+          "min": 26.04
+        },
+        "temp_superficie": {
+          "dia": null,
+          "noche": null,
+          "amplitud": null
+        },
+        "humedad_relativa": 80.27,
+        "radiacion_solar": 5.79,
+        "lluvia_anual": 395.91,
+        "erosividad_mfi": 86.73,
+        "punto_muestreo": [
+          12.47,
+          -71.73
+        ],
+        "nota": "Sin temperatura de superficie MODIS: el punto de muestreo (Punta Gallinas) cae sobre el mar."
+      }
     },
     {
       "id": "candelaria",
       "nombre": "Desierto de la Candelaria",
       "nivel": "secundario",
       "departamento": "Boyacá",
-      "lat": 5.53, "lon": -73.65,
+      "lat": 5.53,
+      "lon": -73.65,
       "resumen": "Zona semiárida cerca de Ráquira con suelos erosionados y arcillosos.",
       "porque": "Erosión y arcillas expuestas en clima de altura.",
-      "atributos": { "aridez": 0.6, "sedimentos": 0.7, "arcillas": 0.6, "frio": 0.3 },
+      "atributos": {
+        "aridez": 0.6,
+        "sedimentos": 0.7,
+        "arcillas": 0.6,
+        "frio": 0.3
+      },
       "imagen": "img/colombia/candelaria.jpg",
       "credito_imagen": "",
-      "fuentes": []
+      "fuentes": [
+        {
+          "titulo": "NASA POWER · clima 2020–2026",
+          "url": "https://power.larc.nasa.gov/"
+        },
+        {
+          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
+          "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
+        }
+      ],
+      "clima": {
+        "temp_aire": {
+          "media": 15.72,
+          "max": 22.58,
+          "min": 9.38
+        },
+        "temp_superficie": {
+          "dia": 24.95,
+          "noche": 10.27,
+          "amplitud": 14.68
+        },
+        "humedad_relativa": 83.86,
+        "radiacion_solar": 4.56,
+        "lluvia_anual": 1685.8,
+        "erosividad_mfi": 183.47,
+        "punto_muestreo": [
+          5.55,
+          -73.63
+        ],
+        "nota": ""
+      }
     },
     {
       "id": "ruiz",
       "nombre": "Nevado del Ruiz",
       "nivel": "secundario",
       "departamento": "Caldas / Tolima",
-      "lat": 4.892, "lon": -75.322,
+      "lat": 4.892,
+      "lon": -75.322,
       "resumen": "Volcán activo con glaciar, en el Parque Nacional Natural Los Nevados.",
       "porque": "Hielo sobre roca volcánica, frío, altitud y fumarolas: interacción hielo-volcán similar a la propuesta para algunas regiones de Marte.",
-      "atributos": { "hielo": 0.8, "frio": 0.9, "volcanico": 1, "hidrotermal": 0.7, "sulfatos": 0.5 },
+      "atributos": {
+        "hielo": 0.8,
+        "frio": 0.9,
+        "volcanico": 1,
+        "hidrotermal": 0.7,
+        "sulfatos": 0.5
+      },
       "imagen": "img/colombia/ruiz.jpg",
-      "credito_imagen": "",
+      "credito_imagen": "Vista general del sector Refugio, en el Complejo Volcánico Nevado del Ruiz. Foto: David Tovar, investigador del GCPA de la UNAL",
       "fuentes": [
-        { "titulo": "Artículo (Icarus, ScienceDirect)", "url": "https://www.sciencedirect.com/science/article/abs/pii/S0019103525003318" },
-        { "titulo": "Wikipedia: Nevado del Ruiz", "url": "https://es.wikipedia.org/wiki/Nevado_del_Ruiz" }
-      ]
+        {
+          "titulo": "Servicio Geológico Colombiano · Volcán Nevado del Ruiz",
+          "url": "https://www2.sgc.gov.co/sgc/volcanes/VolcanNevadoRuiz/"
+        },
+        {
+          "titulo": "Parques Nacionales Naturales · PNN Los Nevados",
+          "url": "https://www.parquesnacionales.gov.co/portal/es/parques-nacionales/parque-nacional-natural-los-nevados/"
+        },
+        {
+          "titulo": "Artículo científico (Icarus, 2025)",
+          "url": "https://www.sciencedirect.com/science/article/abs/pii/S0019103525003318"
+        },
+        {
+          "titulo": "NASA POWER · clima 2020–2026",
+          "url": "https://power.larc.nasa.gov/"
+        },
+        {
+          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
+          "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
+        }
+      ],
+      "clima": {
+        "temp_aire": {
+          "media": 16.46,
+          "max": 23.02,
+          "min": 11.03
+        },
+        "temp_superficie": {
+          "dia": 6.52,
+          "noche": -3.03,
+          "amplitud": 9.55
+        },
+        "humedad_relativa": 86.75,
+        "radiacion_solar": 4.5,
+        "lluvia_anual": 1809.1,
+        "erosividad_mfi": 184.1,
+        "punto_muestreo": [
+          4.89,
+          -75.32
+        ],
+        "nota": "La temperatura del aire (NASA POWER, celda ~50 km) promedia la región, no la cima del nevado."
+      }
     },
     {
       "id": "tolima",
       "nombre": "Nevado del Tolima",
       "nivel": "secundario",
       "departamento": "Tolima",
-      "lat": 4.658, "lon": -75.33,
+      "lat": 4.658,
+      "lon": -75.33,
       "resumen": "Volcán glaciado en el PNN Los Nevados.",
       "porque": "Hielo, frío y suelos volcánicos de alta montaña.",
-      "atributos": { "hielo": 0.7, "frio": 0.9, "volcanico": 0.8, "hidrotermal": 0.3 },
-      "imagen": "img/colombia/tolima.jpg",
-      "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Nevado del Tolima", "url": "https://es.wikipedia.org/wiki/Nevado_del_Tolima" }]
+      "atributos": {
+        "hielo": 0.7,
+        "frio": 0.9,
+        "volcanico": 0.8,
+        "hidrotermal": 0.3
+      },
+      "imagen": "img/colombia/tolima.jpeg",
+      "credito_imagen": "Parque Natural los Nevados Foto: John Jairo Bonilla.",
+      "fuentes": [
+        {
+          "titulo": "Parques Nacionales Naturales · PNN Los Nevados",
+          "url": "https://www.parquesnacionales.gov.co/portal/es/parques-nacionales/parque-nacional-natural-los-nevados/"
+        },
+        {
+          "titulo": "NASA POWER · clima 2020–2026",
+          "url": "https://power.larc.nasa.gov/"
+        },
+        {
+          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
+          "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
+        }
+      ],
+      "clima": {
+        "temp_aire": {
+          "media": 15.47,
+          "max": 21.86,
+          "min": 9.99
+        },
+        "temp_superficie": {
+          "dia": 9.89,
+          "noche": -1.17,
+          "amplitud": 11.06
+        },
+        "humedad_relativa": 86.8,
+        "radiacion_solar": 4.5,
+        "lluvia_anual": 1615.01,
+        "erosividad_mfi": 170.6,
+        "punto_muestreo": [
+          4.66,
+          -75.33
+        ],
+        "nota": "La temperatura del aire (NASA POWER, celda ~50 km) promedia la región, no la cima del nevado."
+      }
     },
     {
       "id": "gorgona",
       "nombre": "Isla Gorgona",
       "nivel": "secundario",
       "departamento": "Cauca",
-      "lat": 2.97, "lon": -78.18,
+      "lat": 2.97,
+      "lon": -78.18,
       "resumen": "Isla del Pacífico famosa por sus komatiitas, lavas ultramáficas muy raras.",
       "porque": "Las komatiitas se formaron a temperaturas muy altas, como lavas antiguas de otros planetas.",
-      "atributos": { "volcanico": 0.6, "hidrotermal": 0.2 },
+      "atributos": {
+        "volcanico": 0.6,
+        "hidrotermal": 0.2
+      },
       "imagen": "img/colombia/gorgona.jpg",
-      "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Isla Gorgona", "url": "https://es.wikipedia.org/wiki/Isla_Gorgona" }]
+      "credito_imagen": "Afloramiento de roca que corresponde a basaltos de la Isla Gorgona. Fotos: David Tovar, candidato a doctor en Ciencias - Geociencias de la UNAL.",
+      "fuentes": [
+        {
+          "titulo": "Parques Nacionales Naturales · PNN Gorgona",
+          "url": "https://www.parquesnacionales.gov.co/portal/es/parques-nacionales/parque-nacional-natural-gorgona/"
+        },
+        {
+          "titulo": "NASA POWER · clima 2020–2026",
+          "url": "https://power.larc.nasa.gov/"
+        },
+        {
+          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
+          "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
+        }
+      ],
+      "clima": {
+        "temp_aire": {
+          "media": 26.86,
+          "max": 28.41,
+          "min": 25.25
+        },
+        "temp_superficie": {
+          "dia": 23.89,
+          "noche": 22.05,
+          "amplitud": 1.84
+        },
+        "humedad_relativa": 85.31,
+        "radiacion_solar": 4.27,
+        "lluvia_anual": 2704.2,
+        "erosividad_mfi": 280.29,
+        "punto_muestreo": [
+          2.97,
+          -78.18
+        ],
+        "nota": "Solo 25 % de datos nocturnos MODIS válidos por nubosidad."
+      }
     },
     {
       "id": "paipa",
       "nombre": "Aguas termales de Paipa",
       "nivel": "secundario",
       "departamento": "Boyacá",
-      "lat": 5.78, "lon": -73.12,
+      "lat": 5.78,
+      "lon": -73.12,
       "resumen": "Manantiales termales ricos en sales y sulfatos.",
       "porque": "Los sistemas hidrotermales son candidatos a haber albergado vida en Marte antiguo.",
-      "atributos": { "hidrotermal": 1, "sales": 0.6, "sulfatos": 0.5, "frio": 0.2 },
-      "imagen": "img/colombia/paipa.jpg",
-      "credito_imagen": "",
-      "fuentes": []
+      "atributos": {
+        "hidrotermal": 1,
+        "sales": 0.6,
+        "sulfatos": 0.5,
+        "frio": 0.2
+      },
+      "imagen": "img/colombia/paipa.png",
+      "credito_imagen": "Paipa Hot springs, Colombia. Source: Photos taken by Hermes H. Bolivar-Torres",
+      "fuentes": [
+        {
+          "titulo": "NASA POWER · clima 2020–2026",
+          "url": "https://power.larc.nasa.gov/"
+        },
+        {
+          "titulo": "NASA LP DAAC · MODIS MOD11A2 v061 (temperatura de superficie)",
+          "url": "https://lpdaac.usgs.gov/products/mod11a2v061/"
+        }
+      ],
+      "clima": {
+        "temp_aire": {
+          "media": 14.58,
+          "max": 21.89,
+          "min": 7.49
+        },
+        "temp_superficie": {
+          "dia": 24.45,
+          "noche": 8.38,
+          "amplitud": 16.07
+        },
+        "humedad_relativa": 82.84,
+        "radiacion_solar": 4.56,
+        "lluvia_anual": 1591.16,
+        "erosividad_mfi": 165.48,
+        "punto_muestreo": [
+          5.78,
+          -73.11
+        ],
+        "nota": ""
+      }
     }
   ]
 }

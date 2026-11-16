@@ -3,7 +3,7 @@
  *
  *   similitud = Σ w_k · min(E_k, C_k) / Σ w_k · E_k
  *
- * Responde: "¿qué fracción de lo que caracteriza al sitio de Marte/Luna
+ * Responde: "¿qué fracción de lo que caracteriza al sitio de Marte
  * está presente en este lugar de Colombia?". Va de 0 a 1.
  */
 window.Similitud = (function () {

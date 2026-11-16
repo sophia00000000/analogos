@@ -1,163 +1,281 @@
 {
-  "_nota": "Coordenadas en grados (latitud, longitud este en rango -180..180). Atributos 0-1 PRELIMINARES: ajustar con la investigación del equipo.",
+  "_nota": "Sitios de Marte. Coordenadas en grados (latitud, longitud este en rango -180..180). Atributos 0-1 PRELIMINARES: ajustar con la investigación del equipo.",
   "marte": [
     {
       "id": "arcadia",
       "nombre": "Arcadia Planitia",
-      "lat": 46.7, "lon": -175.7,
+      "lat": 46.7,
+      "lon": -175.7,
       "resumen": "Llanura baja y plana con hielo casi puro a menos de 1 m de profundidad.",
       "porque": "Es la favorita de muchos estudios, incluido el mapeo SWIM (Subsurface Water Ice Mapping) de la NASA, y una de las zonas que SpaceX ha considerado para Starship.",
       "uso": "Base permanente / aterrizaje",
-      "atributos": { "hielo": 1, "frio": 0.9, "aridez": 0.7, "sedimentos": 0.3 },
+      "atributos": {
+        "hielo": 1,
+        "frio": 0.9,
+        "aridez": 0.7,
+        "sedimentos": 0.3
+      },
       "imagen": "img/marte/arcadia.jpg",
-      "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Arcadia Planitia", "url": "https://en.wikipedia.org/wiki/Arcadia_Planitia" }]
+      "credito_imagen": "ESA/DLR/FU Berlin, bajo licencia CC BY-SA 3.0 IGO",
+      "fuentes": [
+        {
+          "titulo": "NASA/PSI · Subsurface Water Ice Mapping (SWIM)",
+          "url": "https://swim.psi.edu/"
+        },
+        {
+          "titulo": "ESA · Mars Express",
+          "url": "https://www.esa.int/Science_Exploration/Space_Science/Mars_Express"
+        },
+        {
+          "titulo": "USGS · Gazetteer of Planetary Nomenclature",
+          "url": "https://planetarynames.wr.usgs.gov/Page/MARS/target"
+        }
+      ]
     },
     {
       "id": "utopia",
       "nombre": "Utopia Planitia",
-      "lat": 46.7, "lon": 117.5,
+      "lat": 46.7,
+      "lon": 117.5,
       "resumen": "Llanura enorme y baja con hielo enterrado.",
       "porque": "Ahí aterrizaron Viking 2 y el rover chino Zhurong, así que ya hay datos de superficie.",
       "uso": "Base permanente / aterrizaje",
-      "atributos": { "hielo": 0.8, "frio": 0.8, "aridez": 0.7, "sedimentos": 0.5, "volcanico": 0.3 },
+      "atributos": {
+        "hielo": 0.8,
+        "frio": 0.8,
+        "aridez": 0.7,
+        "sedimentos": 0.5,
+        "volcanico": 0.3
+      },
       "imagen": "img/marte/utopia.jpg",
-      "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Utopia Planitia", "url": "https://en.wikipedia.org/wiki/Utopia_Planitia" }]
+      "credito_imagen": "ESA / DLR / FU Berlin / CC BY-SA 3.0 IGO",
+      "fuentes": [
+        {
+          "titulo": "NASA · Misión Viking",
+          "url": "https://science.nasa.gov/mission/viking/"
+        },
+        {
+          "titulo": "ESA · Mars Express",
+          "url": "https://www.esa.int/Science_Exploration/Space_Science/Mars_Express"
+        },
+        {
+          "titulo": "USGS · Gazetteer of Planetary Nomenclature",
+          "url": "https://planetarynames.wr.usgs.gov/Page/MARS/target"
+        }
+      ]
     },
     {
       "id": "deuteronilus",
       "nombre": "Deuteronilus / Protonilus Mensae",
-      "lat": 43.9, "lon": 22.6,
+      "lat": 43.9,
+      "lon": 22.6,
       "resumen": "Glaciares cubiertos de detritos: grandes cantidades de hielo bajo polvo y roca.",
       "porque": "Reserva de agua accesible para soporte vital y combustible.",
       "uso": "Base permanente",
-      "atributos": { "hielo": 1, "frio": 0.9, "aridez": 0.6, "sedimentos": 0.4 },
+      "atributos": {
+        "hielo": 1,
+        "frio": 0.9,
+        "aridez": 0.6,
+        "sedimentos": 0.4
+      },
       "imagen": "img/marte/deuteronilus.jpg",
-      "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Deuteronilus Mensae", "url": "https://en.wikipedia.org/wiki/Deuteronilus_Mensae" }]
+      "credito_imagen": "CNSA/CLEP/PEC/MoRIC",
+      "fuentes": [
+        {
+          "titulo": "ESA · Mars Express",
+          "url": "https://www.esa.int/Science_Exploration/Space_Science/Mars_Express"
+        },
+        {
+          "titulo": "NASA · Mars Reconnaissance Orbiter (radar SHARAD)",
+          "url": "https://science.nasa.gov/mission/mars-reconnaissance-orbiter/"
+        },
+        {
+          "titulo": "USGS · Gazetteer of Planetary Nomenclature",
+          "url": "https://planetarynames.wr.usgs.gov/Page/MARS/target"
+        }
+      ]
     },
     {
       "id": "jezero",
       "nombre": "Cráter Jezero",
-      "lat": 18.38, "lon": 77.58,
+      "lat": 18.38,
+      "lon": 77.58,
       "resumen": "Antiguo lago con delta donde trabaja el rover Perseverance.",
       "porque": "Tiene mucho valor científico (posible vida pasada) y ya está muy bien cartografiado.",
       "uso": "Ciencia / astrobiología",
-      "atributos": { "sedimentos": 1, "arcillas": 0.7, "aridez": 0.8, "hidrotermal": 0.3, "frio": 0.6 },
+      "atributos": {
+        "sedimentos": 1,
+        "arcillas": 0.7,
+        "aridez": 0.8,
+        "hidrotermal": 0.3,
+        "frio": 0.6
+      },
       "imagen": "img/marte/jezero.jpg",
-      "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Jezero (crater)", "url": "https://en.wikipedia.org/wiki/Jezero_(crater)" }]
+      "credito_imagen": "ESA/DLR/FU Berlin, CC BY-SA 3.0 IGO",
+      "fuentes": [
+        {
+          "titulo": "NASA · Mars 2020 Perseverance",
+          "url": "https://science.nasa.gov/mission/mars-2020-perseverance/"
+        },
+        {
+          "titulo": "ESA · Mars Express",
+          "url": "https://www.esa.int/Science_Exploration/Space_Science/Mars_Express"
+        },
+        {
+          "titulo": "USGS · Gazetteer of Planetary Nomenclature",
+          "url": "https://planetarynames.wr.usgs.gov/Page/MARS/target"
+        }
+      ]
     },
     {
       "id": "gale",
       "nombre": "Cráter Gale",
-      "lat": -5.4, "lon": 137.8,
+      "lat": -5.4,
+      "lon": 137.8,
       "resumen": "Arcillas y sulfatos hidratados; muy estudiado por el rover Curiosity.",
       "porque": "Sus capas de sedimentos registran la transición de un Marte húmedo a uno seco.",
       "uso": "Ciencia / astrobiología",
-      "atributos": { "sedimentos": 0.9, "arcillas": 0.8, "sulfatos": 0.8, "aridez": 0.8, "frio": 0.6 },
+      "atributos": {
+        "sedimentos": 0.9,
+        "arcillas": 0.8,
+        "sulfatos": 0.8,
+        "aridez": 0.8,
+        "frio": 0.6
+      },
       "imagen": "img/marte/gale.jpg",
-      "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Gale (crater)", "url": "https://en.wikipedia.org/wiki/Gale_(crater)" }]
+      "credito_imagen": "NASA/JPL-Caltech/ESA/DLR/FU Berlin/MSSS",
+      "fuentes": [
+        {
+          "titulo": "NASA · Mars Science Laboratory Curiosity",
+          "url": "https://science.nasa.gov/mission/msl-curiosity/"
+        },
+        {
+          "titulo": "USGS · Gazetteer of Planetary Nomenclature",
+          "url": "https://planetarynames.wr.usgs.gov/Page/MARS/target"
+        }
+      ]
     },
     {
       "id": "mawrth",
       "nombre": "Mawrth Vallis",
-      "lat": 22.6, "lon": -16.5,
+      "lat": 22.6,
+      "lon": -16.5,
       "resumen": "Abundantes arcillas: agua ligada en minerales.",
       "porque": "Una de las mayores exposiciones de arcillas del planeta; buen recurso de agua mineral.",
       "uso": "Ciencia / recursos",
-      "atributos": { "arcillas": 1, "sedimentos": 0.6, "aridez": 0.8, "frio": 0.6 },
-      "imagen": "img/marte/mawrth.jpg",
-      "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Mawrth Vallis", "url": "https://en.wikipedia.org/wiki/Mawrth_Vallis" }]
+      "atributos": {
+        "arcillas": 1,
+        "sedimentos": 0.6,
+        "aridez": 0.8,
+        "frio": 0.6
+      },
+      "imagen": "img/marte/Perspective_view_of_Mawrth_Vallis_3.jpg",
+      "credito_imagen": "ESA/DLR/FU Berlin",
+      "fuentes": [
+        {
+          "titulo": "ESA · Mars Express",
+          "url": "https://www.esa.int/Science_Exploration/Space_Science/Mars_Express"
+        },
+        {
+          "titulo": "NASA · Mars Reconnaissance Orbiter",
+          "url": "https://science.nasa.gov/mission/mars-reconnaissance-orbiter/"
+        },
+        {
+          "titulo": "USGS · Gazetteer of Planetary Nomenclature",
+          "url": "https://planetarynames.wr.usgs.gov/Page/MARS/target"
+        }
+      ]
     },
     {
       "id": "hellas",
       "nombre": "Hellas Planitia",
-      "lat": -42.4, "lon": 70.5,
+      "lat": -42.4,
+      "lon": 70.5,
       "resumen": "El punto más bajo del planeta, con la atmósfera más densa.",
       "porque": "Mejor frenado al aterrizar y algo más de protección contra la radiación. Puede tener hielo.",
       "uso": "Aterrizaje / base",
-      "atributos": { "hielo": 0.6, "sedimentos": 0.6, "aridez": 0.7, "frio": 0.6 },
+      "atributos": {
+        "hielo": 0.6,
+        "sedimentos": 0.6,
+        "aridez": 0.7,
+        "frio": 0.6
+      },
       "imagen": "img/marte/hellas.jpg",
-      "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Hellas Planitia", "url": "https://en.wikipedia.org/wiki/Hellas_Planitia" }]
+      "credito_imagen": "ESA/DLR/FU",
+      "fuentes": [
+        {
+          "titulo": "ESA · Mars Express",
+          "url": "https://www.esa.int/Science_Exploration/Space_Science/Mars_Express"
+        },
+        {
+          "titulo": "USGS · Gazetteer of Planetary Nomenclature",
+          "url": "https://planetarynames.wr.usgs.gov/Page/MARS/target"
+        }
+      ]
     },
     {
       "id": "arsia",
       "nombre": "Tharsis / Arsia Mons",
-      "lat": -8.26, "lon": -120.1,
+      "lat": -8.26,
+      "lon": -120.1,
       "resumen": "Posibles tubos de lava que servirían de refugio natural.",
       "porque": "Protección contra radiación y micrometeoritos. Su problema es la altitud, que dificulta el aterrizaje.",
       "uso": "Hábitat subterráneo",
-      "atributos": { "volcanico": 1, "subterraneo": 0.9, "aridez": 0.9, "frio": 0.8 },
+      "atributos": {
+        "volcanico": 1,
+        "subterraneo": 0.9,
+        "aridez": 0.9,
+        "frio": 0.8
+      },
       "imagen": "img/marte/arsia.jpg",
-      "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Arsia Mons", "url": "https://en.wikipedia.org/wiki/Arsia_Mons" }]
+      "credito_imagen": "NASA/JPL/USGS",
+      "fuentes": [
+        {
+          "titulo": "NASA · Mars Reconnaissance Orbiter",
+          "url": "https://science.nasa.gov/mission/mars-reconnaissance-orbiter/"
+        },
+        {
+          "titulo": "NASA · Mars Trek (mapas)",
+          "url": "https://trek.nasa.gov/mars/"
+        },
+        {
+          "titulo": "USGS · Gazetteer of Planetary Nomenclature",
+          "url": "https://planetarynames.wr.usgs.gov/Page/MARS/target"
+        }
+      ]
     },
     {
       "id": "valles",
       "nombre": "Valles Marineris",
-      "lat": -13.9, "lon": -59.2,
+      "lat": -13.9,
+      "lon": -59.2,
       "resumen": "Sulfatos hidratados, buena luz y gran interés geológico.",
       "porque": "Expone kilómetros de capas de la corteza. Su terreno abrupto hace difícil aterrizar.",
       "uso": "Ciencia / geología",
-      "atributos": { "sulfatos": 0.9, "sedimentos": 0.7, "aridez": 0.8, "arcillas": 0.3, "sales": 0.3, "frio": 0.5 },
+      "atributos": {
+        "sulfatos": 0.9,
+        "sedimentos": 0.7,
+        "aridez": 0.8,
+        "arcillas": 0.3,
+        "sales": 0.3,
+        "frio": 0.5
+      },
       "imagen": "img/marte/valles.jpg",
-      "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Valles Marineris", "url": "https://en.wikipedia.org/wiki/Valles_Marineris" }]
-    }
-  ],
-  "luna": [
-    {
-      "id": "shackleton",
-      "nombre": "Cráter Shackleton (polo sur)",
-      "lat": -89.67, "lon": 129.78,
-      "resumen": "Borde con luz solar casi permanente y fondo en sombra permanente.",
-      "porque": "Región candidata para bases Artemis: energía solar estable y posible hielo en cráteres de sombra perpetua.",
-      "uso": "Base permanente",
-      "atributos": { "hielo": 0.8, "frio": 1, "aridez": 1 },
-      "imagen": "img/luna/shackleton.jpg",
-      "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Shackleton (crater)", "url": "https://en.wikipedia.org/wiki/Shackleton_(crater)" }]
-    },
-    {
-      "id": "peary",
-      "nombre": "Cráter Peary (polo norte)",
-      "lat": 88.6, "lon": 33.0,
-      "resumen": "Cerca del polo norte, con zonas muy iluminadas y otras en sombra.",
-      "porque": "Alternativa polar para energía solar y búsqueda de volátiles.",
-      "uso": "Base permanente",
-      "atributos": { "hielo": 0.6, "frio": 0.9, "aridez": 1 },
-      "imagen": "img/luna/peary.jpg",
-      "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Peary (crater)", "url": "https://en.wikipedia.org/wiki/Peary_(crater)" }]
-    },
-    {
-      "id": "marius",
-      "nombre": "Marius Hills (fosa)",
-      "lat": 14.09, "lon": -56.69,
-      "resumen": "Fosa que podría dar acceso a un tubo de lava.",
-      "porque": "Un tubo de lava protegería un hábitat de la radiación y de los cambios de temperatura.",
-      "uso": "Hábitat subterráneo",
-      "atributos": { "volcanico": 1, "subterraneo": 1, "aridez": 1, "frio": 0.5 },
-      "imagen": "img/luna/marius.jpg",
-      "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Marius Hills", "url": "https://en.wikipedia.org/wiki/Marius_Hills" }]
-    },
-    {
-      "id": "tranquillitatis",
-      "nombre": "Fosa de Mare Tranquillitatis",
-      "lat": 8.34, "lon": 33.22,
-      "resumen": "Fosa en un mar basáltico, cerca del sitio del Apolo 11.",
-      "porque": "Medidas del orbitador LRO indican temperaturas estables en su interior: buen candidato para refugio.",
-      "uso": "Hábitat subterráneo",
-      "atributos": { "volcanico": 0.9, "subterraneo": 0.9, "aridez": 1, "frio": 0.4 },
-      "imagen": "img/luna/tranquillitatis.jpg",
-      "credito_imagen": "",
-      "fuentes": [{ "titulo": "Wikipedia: Mare Tranquillitatis", "url": "https://en.wikipedia.org/wiki/Mare_Tranquillitatis" }]
+      "credito_imagen": "Generada con Celestia (Licencia GNU GPL",
+      "fuentes": [
+        {
+          "titulo": "NASA · Misión Viking",
+          "url": "https://science.nasa.gov/mission/viking/"
+        },
+        {
+          "titulo": "ESA · Mars Express",
+          "url": "https://www.esa.int/Science_Exploration/Space_Science/Mars_Express"
+        },
+        {
+          "titulo": "USGS · Gazetteer of Planetary Nomenclature",
+          "url": "https://planetarynames.wr.usgs.gov/Page/MARS/target"
+        }
+      ]
     }
   ]
 }

@@ -1,8 +1,8 @@
-# Análogos Terrestres · Colombia → Marte y Luna
+# Análogos Terrestres · Colombia → Marte
 
 Explorador web interactivo para el reto *Identify Earth Locations that Analog the Permanent Moon Base Locations and Mars*.
 
-1. El usuario elige un sitio en **Marte** o en la **Luna** (mapa interactivo con zoom).
+1. El usuario elige un sitio en **Marte** (mapa interactivo con zoom).
 2. El mapa de **Colombia** colorea los lugares análogos de más a menos parecido y muestra un ranking.
 3. Al elegir un lugar de Colombia se abre un panel con imagen, datos, por qué es análogo y enlaces a artículos.
 
@@ -56,10 +56,10 @@ analogos/
 │   ├── similitud.js           ← fórmula de similitud
 │   └── app.js                 ← lógica de mapas, ranking y paneles
 ├── data/
-│   ├── extraterrestres.json   ← sitios de Marte y la Luna             ← EDITAR AQUÍ
+│   ├── extraterrestres.json   ← sitios de Marte                       ← EDITAR AQUÍ
 │   └── colombia.json          ← lugares de Colombia                   ← EDITAR AQUÍ
 ├── img/
-│   ├── marte/  luna/  colombia/   ← fotos (ver abajo)
+│   ├── marte/  colombia/   ← fotos (ver abajo)
 ├── lib/                       ← Leaflet 1.9.4 (no tocar)
 └── scripts/validar_datos.py   ← validador en Python
 ```
@@ -91,7 +91,7 @@ Edita `data/colombia.json`:
 - `atributos`: puntaje de **0 a 1** por criterio. Los criterios que no apliquen se omiten (valen 0).
 - `datos` es opcional (lo usan sobre todo los lugares principales).
 
-Los sitios de Marte y la Luna (`data/extraterrestres.json`) tienen la misma forma, con el campo `uso` en lugar de `nivel`.
+Los sitios de Marte (`data/extraterrestres.json`) tienen la misma forma, con el campo `uso` en lugar de `nivel`.
 
 ### Criterios disponibles
 
@@ -116,7 +116,7 @@ Los pesos se cambian en `js/config.js`. Si los cambian, actualicen también `PES
 similitud = Σ peso_k · min(E_k, C_k)  ÷  Σ peso_k · E_k
 ```
 
-`E` es el sitio de Marte o la Luna y `C` el lugar de Colombia. La fórmula responde: *¿qué fracción de lo que caracteriza al sitio extraterrestre está presente en el lugar colombiano?* Va de 0 % a 100 %.
+`E` es el sitio de Marte y `C` el lugar de Colombia. La fórmula responde: *¿qué fracción de lo que caracteriza al sitio extraterrestre está presente en el lugar colombiano?* Va de 0 % a 100 %.
 
 > **Los puntajes actuales son preliminares.** Ajústenlos con su investigación y documenten en cada ficha de dónde salen los valores.
 
@@ -125,7 +125,7 @@ similitud = Σ peso_k · min(E_k, C_k)  ÷  Σ peso_k · E_k
 Guarden las fotos con el nombre que indica el campo `imagen` (por ejemplo `img/colombia/tatacoa.jpg`). Mientras falte una imagen, la página muestra un recuadro con la ruta esperada.
 
 Fuentes recomendadas, con licencia libre:
-- Marte y Luna: NASA Photojournal (photojournal.jpl.nasa.gov) y NASA Image Library (images.nasa.gov). Las imágenes de la NASA en general son de dominio público.
+- Marte: NASA Photojournal (photojournal.jpl.nasa.gov) y NASA Image Library (images.nasa.gov). Las imágenes de la NASA en general son de dominio público.
 - Colombia: Wikimedia Commons, o fotos propias del equipo.
 
 Pongan siempre el crédito en `credito_imagen`. Usen imágenes de unos 1200 px de ancho o menos para que la página cargue rápido.
@@ -134,8 +134,8 @@ Pongan siempre el crédito en `credito_imagen`. Usen imágenes de unos 1200 px d
 
 ## Mapas
 
-- **Colombia:** Leaflet con tres mapas base (oscuro de CARTO, calles de OpenStreetMap y relieve de OpenTopoMap), todos con nombres de ciudades. Se cambian con el botón de capas, arriba a la derecha.
-- **Marte y Luna:** Leaflet con mosaicos de OpenPlanetary / USGS. En `js/config.js` hay una **lista de fuentes**: si una falla, la app prueba la siguiente, y si todas fallan dibuja una cuadrícula de coordenadas (los sitios siguen funcionando). Para cambiar o agregar fuentes, editen `CONFIG.cuerpos.marte.fuentes`.
+- **Colombia:** Leaflet con dos mapas base (calles de OpenStreetMap y relieve de OpenTopoMap), todos con nombres de ciudades. Se cambian con el botón de capas, arriba a la derecha.
+- **Marte:** Leaflet con mosaicos de NASA Mars Trek (Viking MDIM 2.1 y, de respaldo, MOLA) en proyección geográfica, que incluye los polos. En `js/config.js` hay una **lista de fuentes**: si una falla, la app prueba la siguiente, y si todas fallan dibuja una cuadrícula de coordenadas (los sitios siguen funcionando). Para cambiar o agregar fuentes, editen `CONFIG.cuerpos.marte.fuentes`.
 - Los sitios polares (Shackleton, Peary) se dibujan en el borde del mapa, porque la proyección web no llega a los polos. La ficha indica la coordenada real.
 
 ## Despliegue
